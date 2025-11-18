@@ -12,7 +12,16 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
   modules: ["@nuxt/icon", "@pinia/nuxt"],
   runtimeConfig: {},
+
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: "fa",
+        dir: "rtl",
+      },
+    },
+  },
 });
