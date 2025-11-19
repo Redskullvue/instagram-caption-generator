@@ -22,7 +22,7 @@
 <script setup>
 const emits = defineEmits(["selectTone"]);
 const selectedTone = ref("رسمی");
-const tones = ref(["رسمی", "شوخ", "دوستانه", "عصبانی"]);
+const tones = ref(["رسمی", "شوخ", "دوستانه", "الهام بخش"]);
 
 const setTone = (value) => {
   if (value) {
