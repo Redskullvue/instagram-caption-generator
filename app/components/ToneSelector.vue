@@ -7,7 +7,7 @@
         :class="
           selectedTone === tone
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
-            : 'bg-white text-gray-500'
+            : 'bg-gray-200 text-gray-700'
         "
         v-for="(tone, index) in tones"
         :key="index"
