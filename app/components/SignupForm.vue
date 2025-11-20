@@ -41,7 +41,7 @@
           class="w-full focus:outline-0"
           type="password"
           required
-          placeholder="رمز عبور"
+          placeholder="رمز عبور(حداقل 8 کاراکتر)"
         />
       </div>
       <div class="w-full flex gap-x-3 mt-10 items-center">
