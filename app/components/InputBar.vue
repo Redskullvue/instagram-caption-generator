@@ -44,6 +44,7 @@ const generateCaption = () => {
     return;
   } else {
     emits("generate", inputValue.value);
+    inputValue.value = "";
   }
 };
 </script>
