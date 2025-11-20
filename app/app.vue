@@ -20,7 +20,7 @@ html {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: purple;
 }
 
 /* Handle on hover */

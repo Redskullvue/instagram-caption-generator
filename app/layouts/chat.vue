@@ -17,7 +17,9 @@
       <div
         class="w-full lg:flex lg:justify-center h-full bg-linear-to-r from-purple-600 to-pink-600 p-1"
       >
-        <div class="w-full lg:w-6/12 bg-white rounded-lg h-full py-4 px-2">
+        <div
+          class="w-full lg:w-6/12 bg-white lg:shadow-md shadow-gray-500 rounded-lg lg:rounded-xl h-full py-4 px-2"
+        >
           <slot />
         </div>
       </div>
