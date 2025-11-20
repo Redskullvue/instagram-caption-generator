@@ -13,7 +13,8 @@
       />
     </div>
     <small
-      class="text-xs text-green-500 w-full flex items-center justify-end mt-2"
+      class="text-xs w-full flex items-center justify-end mt-2"
+      :class="currentChars > maxChars ? 'text-red-500' : 'text-green-500'"
     >
       {{ maxChars }}/{{ currentChars }}</small
     >
@@ -38,11 +39,11 @@ const generateCaption = () => {
   if (currentChars.value > maxChars) {
     console.log("More Than 100 Chars");
     return;
-  }
-  if (currentChars.value.length === 0) {
+  } else if (inputValue.value.length <= 1) {
     console.log("Fill the input");
     return;
+  } else {
+    emits("generate", inputValue.value);
   }
-  emits("generate", inputValue.value);
 };
 </script>
