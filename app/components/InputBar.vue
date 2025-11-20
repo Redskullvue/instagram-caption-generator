@@ -20,8 +20,9 @@
     >
 
     <button
-      class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center justify-center gap-x-1 text-white px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
+      class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
       @click="generateCaption"
+      :disabled="isGenerating"
     >
       <Icon name="mingcute:ai-fill" size="20px" />
       تولید کن
@@ -31,6 +32,9 @@
 
 <script setup>
 const emits = defineEmits(["generate"]);
+const props = defineProps({
+  isGenerating: { type: Boolean, default: false },
+});
 const maxChars = 100;
 const inputValue = ref("");
 const currentChars = computed(() => inputValue.value.length);

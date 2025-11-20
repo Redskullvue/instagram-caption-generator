@@ -18,7 +18,11 @@
       class="w-full border-t max-h-1/2 border-gray-500 p-2 overflow-y-scroll flex flex-col"
     >
       <ToneSelector class="w-full h-full" @selectTone="setTone" />
-      <InputBar class="w-full h-full" @generate="sendMessage" />
+      <InputBar
+        class="w-full h-full"
+        @generate="sendMessage"
+        :isGenerating="isGenerating"
+      />
     </div>
   </div>
 </template>
