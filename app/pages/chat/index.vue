@@ -22,7 +22,7 @@
         @selectTone="setTone"
       />
       <InputBar
-        class="w-full h-full"
+        class="w-full h-full mt-4 lg:mt-0"
         @generate="sendMessage"
         :isGenerating="isGenerating"
       />
