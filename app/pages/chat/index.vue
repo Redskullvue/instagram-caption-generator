@@ -1,7 +1,10 @@
 <template>
   <div class="w-full flex items-center max-h-[79vh] flex-col">
     <!-- Chat box -->
-    <div class="w-full max-h-4/7 min-h-[50vh] overflow-y-scroll px-2 py-1">
+    <div
+      class="w-full max-h-4/7 min-h-[50vh] overflow-y-scroll px-2 py-1"
+      ref="chatContainer"
+    >
       <ChatBubble
         v-for="(message, index) in messages"
         :key="index"
@@ -26,6 +29,9 @@ definePageMeta({
 });
 const selectedTone = ref("");
 const isGenerating = ref(false);
+// This composable set the scroll to the end of chat box
+const { chatContainer, onMessageAdded } = useChatScroll();
+
 const messages = ref([
   {
     id: 1,
@@ -41,6 +47,7 @@ const sendMessage = (val) => {
     isUser: true,
   });
   generateCaption();
+  onMessageAdded();
 };
 
 const setTone = (val) => {
@@ -51,6 +58,7 @@ const generateCaption = async () => {
   setTimeout(() => {
     messages.value.push({ id: 2, text: "اکی دارم انجامش میدم", isUser: false });
     isGenerating.value = false;
+    onMessageAdded();
   }, 1000);
 };
 </script>
