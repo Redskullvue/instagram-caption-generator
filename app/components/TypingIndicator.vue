@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center gap-x-1 absolute w-max left-8">
+  <div class="flex items-center justify-end gap-x-1 w-full left-8">
     <div
       class="w-2 h-2 bg-purple-400 rounded-full typing-animation"
       style="animation-delay: 0.1s"
