@@ -40,9 +40,17 @@ const sendMessage = (val) => {
     text: val,
     isUser: true,
   });
+  generateCaption();
 };
 
 const setTone = (val) => {
   selectedTone.value = val;
+};
+const generateCaption = async () => {
+  isGenerating.value = true;
+  setTimeout(() => {
+    messages.value.push({ id: 2, text: "اکی دارم انجامش میدم", isUser: false });
+    isGenerating.value = false;
+  }, 1000);
 };
 </script>
