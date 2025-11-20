@@ -12,7 +12,14 @@
         شروع رایگان بدون نیاز به پرداخت
       </p>
       <!-- Form -->
-      <div class="w-full h-full">Form will be here</div>
+      <div class="w-full h-full">
+        <SignupForm />
+      </div>
+      <div class="w-full text-center text-gray-600 text-sm">
+        قبلا ثبت نام کردید؟<span class="text-purple-500 mx-1"
+          ><NuxtLink to="/">وارد شوید</NuxtLink></span
+        >
+      </div>
     </div>
   </div>
 </template>
