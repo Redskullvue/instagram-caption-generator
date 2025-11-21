@@ -2,10 +2,15 @@ import { useAuthStore } from "@/stores/authStore";
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const auth = useAuthStore();
-  if (!auth.isAuthenticated) {
-    return navigateTo("/login");
+  const protectedRoutes = ["/chat"];
+  // Only run hydration on client side
+  if (import.meta.server) {
+    return;
   }
-  if (auth.isAuthenticated) {
-    return navigateTo("/chat");
+  auth.hydrate();
+  if (protectedRoutes.includes(to.fullPath) && auth.isAuthenticated) {
+    return;
+  } else if (protectedRoutes.includes(to.fullPath) && !auth.isAuthenticated) {
+    return navigateTo("/login");
   }
 });
