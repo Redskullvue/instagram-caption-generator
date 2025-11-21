@@ -77,8 +77,9 @@
       <div class="w-full mt-10">
         <input
           type="submit"
-          value="ایجاد حساب"
-          class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white w-full cursor-pointer"
+          :disabled="isSendingRequest"
+          :value="isSendingRequest ? 'در حال ایجاد حساب' : 'ایجاد حساب'"
+          class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white w-full cursor-pointer disabled:opacity-50"
         />
       </div>
     </form>
@@ -87,12 +88,14 @@
 
 <script setup>
 const auth = useAuthStore();
+const isSendingRequest = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");
 
 const handelSignUp = async () => {
   try {
+    isSendingRequest.value = true;
     await auth.fakeSignUp({
       name: name.value,
       email: email.value,
@@ -101,6 +104,7 @@ const handelSignUp = async () => {
     await navigateTo("/chat");
   } catch (error) {
     console.log(error);
+    isSendingRequest.value = false;
   }
 };
 </script>
