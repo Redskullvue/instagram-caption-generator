@@ -12,7 +12,7 @@
     </div>
     <div>
       <NuxtLink
-        to="/"
+        to="/chat"
         class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white mx-4"
       >
         شروع رایگان

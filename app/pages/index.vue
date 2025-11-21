@@ -42,13 +42,14 @@
           class="mt-6 flex items-center gap-x-5 md:flex-row flex-col gap-y-3 w-full md:w-max"
         >
           <Transition name="slide-fade" appear>
-            <button
+            <NuxtLink
+              to="/chat"
               style="animation-delay: 1s"
               class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
             >
               <Icon name="mdi:instagram" size="20px" />
               دریافت 5 پست رایگان در ماه
-            </button>
+            </NuxtLink>
           </Transition>
           <Transition name="fade" appear>
             <button
@@ -150,7 +151,7 @@
             خداحافظی کرده‌اند.
           </p>
           <NuxtLink
-            to="/"
+            to="/chat"
             class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white mx-4"
           >
             تولید کپشن رایگان
