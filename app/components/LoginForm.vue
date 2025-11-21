@@ -36,6 +36,7 @@
       <div class="w-full mt-10">
         <input
           type="submit"
+          :disabled="isSendingRequest"
           :value="isSendingRequest ? 'در حال ورود' : 'ورود به حساب'"
           class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white w-full cursor-pointer disabled:opacity-50"
         />
