@@ -19,7 +19,12 @@ export const useAuthStore = defineStore("authStore", () => {
 
   const fakeSignUp = async (data) => {
     await new Promise((response) => setTimeout(response, 500));
-    user.value = { id: 1, email: data.email, password: data.password };
+    user.value = {
+      id: 1,
+      email: data.email,
+      password: data.password,
+      name: data.name,
+    };
     token.value = "FAKE_TOKEN_123";
 
     localStorage.setItem("token", token.value);
