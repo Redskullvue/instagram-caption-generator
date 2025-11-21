@@ -16,7 +16,7 @@ const props = defineProps({
   message: {
     type: Object,
     required: true,
-    default: {},
+    default: () => ({ text: "", isUser: false }),
     isUser: {
       type: Boolean,
       default: false,
