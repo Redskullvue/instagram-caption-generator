@@ -34,11 +34,11 @@
         />
       </div>
       <div class="w-full mt-10">
-        <button
+        <input
+          type="submit"
+          value="ورود به حساب"
           class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white w-full cursor-pointer"
-        >
-          ورود به حساب
-        </button>
+        />
       </div>
     </form>
   </div>
