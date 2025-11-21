@@ -42,14 +42,15 @@
           class="mt-6 flex items-center gap-x-5 md:flex-row flex-col gap-y-3 w-full md:w-max"
         >
           <Transition name="slide-fade" appear>
-            <NuxtLink
-              to="/chat"
-              style="animation-delay: 1s"
-              class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
-            >
-              <Icon name="mdi:instagram" size="20px" />
-              دریافت 5 پست رایگان در ماه
-            </NuxtLink>
+            <div style="animation-delay: 1s" class="w-full">
+              <NuxtLink
+                to="/chat"
+                class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
+              >
+                <Icon name="mdi:instagram" size="20px" />
+                دریافت 5 پست رایگان در ماه
+              </NuxtLink>
+            </div>
           </Transition>
           <Transition name="fade" appear>
             <button
