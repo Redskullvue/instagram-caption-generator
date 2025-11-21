@@ -4,6 +4,14 @@
   </NuxtLayout>
 </template>
 
+<script setup>
+// Ensure we set the user data
+const auth = useAuthStore();
+onMounted(() => {
+  auth.hydrate();
+});
+</script>
+
 <style>
 html {
   font-family: Vazir, "sans-serif";

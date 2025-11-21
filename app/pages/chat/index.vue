@@ -33,6 +33,7 @@
 <script setup>
 definePageMeta({
   layout: "chat",
+  middleware: "auth",
 });
 const selectedTone = ref("");
 const isGenerating = ref(false);
