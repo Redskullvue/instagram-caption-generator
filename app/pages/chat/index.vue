@@ -15,16 +15,19 @@
     </div>
     <!-- Buttons and input Selector -->
     <div
-      class="w-full border-t max-h-1/2 border-gray-500 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col"
+      class="w-full border-t max-h-1/2 border-gray-500 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col lg:min-h-[28vh]"
     >
       <ToneSelector
         class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[100px] lg:bg-white lg:rounded-xl lg:p-4"
         @selectTone="setTone"
       />
       <InputBar
-        class="w-full h-full mt-4 lg:mt-0"
+        class="w-full h-full mt-3 lg:mt-0"
         @generate="sendMessage"
         :isGenerating="isGenerating"
+        :promptsLimit="usageStore.usage.promptsLimit"
+        :hasPromptsLeft="usageStore.hasPromptsLeft"
+        :promptsRemaining="usageStore.promptsRemaining"
       />
     </div>
   </div>
@@ -35,8 +38,10 @@ definePageMeta({
   layout: "chat",
   middleware: "auth",
 });
+const usageStore = useUsageStore();
 const selectedTone = ref("");
 const isGenerating = ref(false);
+const usedAllPrompts = ref(false);
 // This composable set the scroll to the end of chat box
 const { chatContainer, onMessageAdded } = useChatScroll();
 
@@ -48,7 +53,7 @@ const messages = ref([
   },
 ]);
 
-const sendMessage = (val) => {
+const sendMessage = async (val) => {
   messages.value.push({
     id: messages.value.length + 1,
     text: val,
@@ -56,6 +61,11 @@ const sendMessage = (val) => {
   });
   generateCaption();
   onMessageAdded();
+  try {
+    await usageStore.incrementUsage();
+  } catch (error) {
+    usedAllPrompts.value = true;
+  }
 };
 
 const setTone = (val) => {

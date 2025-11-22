@@ -1,6 +1,9 @@
 <template>
   <div class="w-full h-16 mb-4">
     <label for="input-bar">موضوع کپشن را انتخاب کنید</label>
+    <p class="text-xs text-gray-500 mt-1" v-if="promptsLimit !== Infinity">
+      درخواست های باقی مانده : {{ promptsRemaining }} / {{ promptsLimit }}
+    </p>
     <div
       class="bg-linear-to-r mt-3 from-purple-600 to-pink-600 flex items-center justify-center p-1 rounded-xl"
     >
@@ -8,8 +11,13 @@
         id="input-bar"
         type="text"
         v-model="inputValue"
-        placeholder="موضوع خود را بنویسید"
-        class="w-full rounded-lg bg-white p-2 focus:outline-0"
+        :disabled="!hasPromptsLeft"
+        :placeholder="
+          hasPromptsLeft
+            ? 'موضوع خود را بنویسید'
+            : 'درخواست های شما به پایان رسیده'
+        "
+        class="w-full rounded-lg bg-white p-2 focus:outline-0 disabled:bg-gray-200"
       />
     </div>
     <small
@@ -20,6 +28,7 @@
     >
 
     <button
+      v-if="hasPromptsLeft"
       class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
       @click="generateCaption"
       :disabled="isGenerating"
@@ -27,6 +36,13 @@
       <Icon name="mingcute:ai-fill" size="20px" />
       تولید کن
     </button>
+    <NuxtLink
+      v-if="!hasPromptsLeft"
+      to="/"
+      class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
+    >
+      خرید درخواست های بیشتر
+    </NuxtLink>
   </div>
 </template>
 
@@ -34,6 +50,9 @@
 const emits = defineEmits(["generate"]);
 const props = defineProps({
   isGenerating: { type: Boolean, default: false },
+  promptsRemaining: { type: Number, default: 0 },
+  promptsLimit: { type: Number, default: 0 },
+  hasPromptsLeft: { type: Boolean, default: true },
 });
 const maxChars = 100;
 const inputValue = ref("");
