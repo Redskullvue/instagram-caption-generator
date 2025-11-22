@@ -13,6 +13,8 @@
     "@nuxt/icon": "^2.1.0",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.1.17",
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "nuxt": "^4.2.1",
     "pinia": "^3.0.4",

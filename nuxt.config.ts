@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   modules: ["@nuxt/icon", "@pinia/nuxt"],
   runtimeConfig: {
     mongodbUri: "",
+    jwtSecret: "",
   },
 
   app: {
