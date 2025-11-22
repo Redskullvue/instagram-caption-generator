@@ -8,22 +8,22 @@ export default defineEventHandler(async (event) => {
   //Check for available data
   if (!email || !password || !name) {
     throw createError({
-      statusCode: 400,
-      message: "Missing Data",
+      statusCode: 422,
+      message: "Email , Password and name is required",
     });
   }
   // Check for existing user
   const existingUser = await User.findByEmail();
   if (existingUser) {
     throw createError({
-      statusCode: 400,
+      statusCode: 409,
       message: "Email Already Exists",
     });
   }
 
   if (password.length < 6) {
     throw createError({
-      status: 400,
+      status: 422,
       message: "Password Requires At Least 6 Characters",
     });
   }
