@@ -14,7 +14,9 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
   modules: ["@nuxt/icon", "@pinia/nuxt"],
-  runtimeConfig: {},
+  runtimeConfig: {
+    mongodbUri: "",
+  },
 
   app: {
     head: {
