@@ -46,11 +46,13 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
 
-  const fakeLogout = () => {
+  const logOut = () => {
     user.value = null;
     token.value = null;
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+
+    if (import.meta.client) {
+      localStorage.removeItem("user");
+    }
   };
   // reloads the auth state from localStorage and puts it back into Pinia.
   const hydrate = () => {
@@ -66,7 +68,7 @@ export const useAuthStore = defineStore("authStore", () => {
     isAuthenticated,
     login,
     signUp,
-    fakeLogout,
+    logOut,
     hydrate,
   };
 });

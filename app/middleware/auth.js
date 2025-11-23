@@ -1,14 +1,30 @@
 import { useAuthStore } from "@/stores/authStore";
 
-export default defineNuxtRouteMiddleware((to, from) => {
-  const auth = useAuthStore();
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const authStore = useAuthStore();
   if (import.meta.server) {
     return;
   }
   const protectedRoutes = ["/chat"];
-  if (protectedRoutes.includes(to.fullPath) && auth.isAuthenticated) {
+  if (!protectedRoutes.includes(to.fullPath)) {
     return;
-  } else if (protectedRoutes.includes(to.fullPath) && !auth.isAuthenticated) {
+  }
+  if (!authStore.token) {
+    return navigateTo("/login");
+  }
+
+  try {
+    const response = await $fetch("/api/auth/validate", {
+      headers: {
+        Authorization: `Bearer ${authStore.token}`,
+      },
+    });
+    if (response.valid && response.user) {
+      authStore.user = response.user;
+    }
+    return;
+  } catch (error) {
+    authStore.logOut();
     return navigateTo("/login");
   }
 });

@@ -38,7 +38,7 @@ export const useUsageStore = defineStore("usageStore", () => {
       });
       usage.value = response;
     } catch (error) {
-      console.log(error);
+      authStore.logOut();
     } finally {
       isLoading.value = false;
     }
@@ -62,9 +62,9 @@ export const useUsageStore = defineStore("usageStore", () => {
     }
   };
 
-  const hydrate = () => {
+  const hydrate = async () => {
     if (authStore.isAuthenticated) {
-      fetchUsage();
+      await fetchUsage();
     }
   };
   return {

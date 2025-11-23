@@ -1,4 +1,4 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
   const authStore = useAuthStore();
   const usageStore = useUsageStore();
 
@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
   authStore.hydrate();
 
   // Then hydrate usage if authenticated
-  if (authStore.isAuthenticated) {
-    usageStore.hydrate();
+  if (authStore.token) {
+    await usageStore.hydrate();
   }
 });

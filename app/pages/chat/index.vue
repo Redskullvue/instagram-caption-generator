@@ -45,6 +45,13 @@ const usedAllPrompts = ref(false);
 // This composable set the scroll to the end of chat box
 const { chatContainer, onMessageAdded } = useChatScroll();
 
+// Fetch usage when page loads
+onMounted(async () => {
+  if (!usageStore.usage.promptsUsed && !usageStore.isLoading) {
+    await usageStore.fetchUsage();
+  }
+});
+
 const messages = ref([
   {
     id: 1,
