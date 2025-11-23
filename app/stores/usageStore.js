@@ -19,14 +19,14 @@ export const useUsageStore = defineStore("usageStore", () => {
   });
 
   //Actions
-  const getPlanLimit = (plan) => {
-    const limits = {
-      free: 5,
-      pro: 50,
-      enterprise: Infinity,
-    };
-    return limits[plan] || 5;
-  };
+  // const getPlanLimit = (plan) => {
+  //   const limits = {
+  //     free: 5,
+  //     pro: 50,
+  //     enterprise: Infinity,
+  //   };
+  //   return limits[plan] || 5;
+  // };
 
   const fetchUsage = async () => {
     isLoading.value = true;
