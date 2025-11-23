@@ -36,7 +36,6 @@ export const useUsageStore = defineStore("usageStore", () => {
           Authorization: `Bearer ${authStore.token}`,
         },
       });
-      console.log(response);
       usage.value = response;
     } catch (error) {
       console.log(error);
@@ -46,12 +45,21 @@ export const useUsageStore = defineStore("usageStore", () => {
   };
 
   const incrementUsage = async () => {
+    try {
+      const response = await $fetch("/api/usage/increment", {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+        method: "POST",
+      });
+
+      usage.value = response;
+    } catch (error) {
+      throw new Error(error.data.message);
+    }
     if (!hasPromptsLeft.value) {
       throw new Error("No Prompts Remaining");
     }
-
-    // Fake Logic | Replace with API Later
-    usage.value.promptsUsed++;
   };
 
   const hydrate = () => {
