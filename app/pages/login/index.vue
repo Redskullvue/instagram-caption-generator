@@ -16,6 +16,11 @@
         <LoginForm />
       </div>
       <div class="w-full text-center text-gray-600 text-sm">
+        حساب کاربری ندارید ؟<span class="text-purple-500 mx-1"
+          ><NuxtLink to="/signup">ثبت نام کنید</NuxtLink></span
+        >
+      </div>
+      <div class="w-full text-center text-gray-600 text-sm">
         فراموشی رمز عبور؟<span class="text-purple-500 mx-1"
           ><NuxtLink to="/">دریافت رمز</NuxtLink></span
         >
