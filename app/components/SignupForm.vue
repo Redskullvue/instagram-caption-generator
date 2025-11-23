@@ -44,7 +44,7 @@
           type="password"
           v-model="password"
           required
-          placeholder="رمز عبور(حداقل 8 کاراکتر)"
+          placeholder="رمز عبور(حداقل 6 کاراکتر)"
         />
       </div>
       <div class="w-full flex gap-x-3 mt-10 items-center">
@@ -74,7 +74,8 @@
           موافقم
         </label>
       </div>
-      <div class="w-full mt-10">
+      <p class="text-red-500 mt-6" v-if="requestError">{{ requestError }}</p>
+      <div class="w-full mt-8">
         <input
           type="submit"
           :disabled="isSendingRequest"
@@ -92,19 +93,25 @@ const isSendingRequest = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");
+const requestError = ref(null);
 
 const handelSignUp = async () => {
   try {
     isSendingRequest.value = true;
-    await auth.fakeSignUp({
+    await auth.signUp({
       name: name.value,
       email: email.value,
       password: password.value,
     });
+    isSendingRequest.value = false;
     await navigateTo("/chat");
   } catch (error) {
-    console.log(error);
+    // Setting the error text --> This text will be sent from auth store catch block
+    requestError.value = error.message;
     isSendingRequest.value = false;
+    setTimeout(() => {
+      requestError.value = false;
+    }, 3000);
   }
 };
 </script>

@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("authStore", () => {
   // Auth States
   const user = ref(null);
-  const token = ref(null);
+  const token = useCookie("auth_token");
   // Computed(Getters)
   const isAuthenticated = computed(() => !!token.value);
 
@@ -17,18 +17,23 @@ export const useAuthStore = defineStore("authStore", () => {
     localStorage.setItem("user", JSON.stringify(user.value));
   };
 
-  const fakeSignUp = async (data) => {
-    await new Promise((response) => setTimeout(response, 500));
-    user.value = {
-      id: 1,
-      email: data.email,
-      password: data.password,
-      name: data.name,
-    };
-    token.value = "FAKE_TOKEN_123";
+  const signUp = async (data) => {
+    try {
+      const response = await $fetch("/api/auth/signup", {
+        method: "POST",
+        body: data,
+      });
+      user.value = response.user;
+      token.value = response.token;
 
-    localStorage.setItem("token", token.value);
-    localStorage.setItem("user", JSON.stringify(user.value));
+      if (import.meta.client) {
+        localStorage.setItem("user", JSON.stringify(user.value));
+      }
+      return response;
+    } catch (error) {
+      // The catch block will send error message to signup form
+      throw new Error(error.data.message);
+    }
   };
 
   const fakeLogout = () => {
@@ -51,7 +56,7 @@ export const useAuthStore = defineStore("authStore", () => {
     token,
     isAuthenticated,
     fakeLogin,
-    fakeSignUp,
+    signUp,
     fakeLogout,
     hydrate,
   };

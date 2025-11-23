@@ -4,22 +4,23 @@ const userSchema = new mongoose.Schema({
   // Basic Info
   email: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, "ایمیل اجباری میباشد"],
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
+    match: [/^\S+@\S+\.\S+$/, "لطفا ایمیل صحیح وارد کنید"],
   },
 
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: [true, "پسورد اجباری می باشد"],
+    trim: true,
     minlength: 6,
     select: false, // Won't return password in queries by default
   },
   name: {
     type: String,
-    required: [true, "Name Is Required"],
+    required: [true, "نام و نام خانوادگی اجباری است"],
     trim: true,
     maxlength: [50, "Name cannot exceed 50 characters"],
   },
