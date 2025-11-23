@@ -8,13 +8,23 @@ export const useAuthStore = defineStore("authStore", () => {
   const isAuthenticated = computed(() => !!token.value);
 
   //Actions
-  const fakeLogin = async (email, password) => {
-    await new Promise((response) => setTimeout(response, 500));
-    user.value = { id: 1, email: email, password: password };
-    token.value = "FAKE_TOKEN_123";
+  const login = async (email, password) => {
+    try {
+      const response = await $fetch("/api/auth/login", {
+        method: "POST",
+        body: { email: email, password: password },
+      });
 
-    localStorage.setItem("token", token.value);
-    localStorage.setItem("user", JSON.stringify(user.value));
+      user.value = response.user;
+      token.value = response.token;
+      // Only Store User Data in local if we are not on server enviorment
+      if (import.meta.client) {
+        localStorage.setItem("user", JSON.stringify(response.user));
+      }
+      return response;
+    } catch (error) {
+      throw new Error(error.data.message);
+    }
   };
 
   const signUp = async (data) => {
@@ -55,7 +65,7 @@ export const useAuthStore = defineStore("authStore", () => {
     user,
     token,
     isAuthenticated,
-    fakeLogin,
+    login,
     signUp,
     fakeLogout,
     hydrate,

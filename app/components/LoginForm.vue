@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full lg:p-4">
-    <form class="w-full h-full" @submit.prevent="handelLogin">
+    <form class="w-full h-full" @submit.prevent="handleLogin">
       <label for="email" class="text-gray-800">آدرس ایمیل</label>
       <div
         class="w-full my-3 flex items-center justify-start gap-x-2 bg-gray-100 rounded-xl py-4 px-3"
@@ -33,6 +33,7 @@
           placeholder="رمز عبور(حداقل 8 کاراکتر)"
         />
       </div>
+      <p class="text-red-500 mt-6" v-if="requestError">{{ requestError }}</p>
       <div class="w-full mt-10">
         <input
           type="submit"
@@ -50,15 +51,20 @@ const auth = useAuthStore();
 const isSendingRequest = ref(false);
 const email = ref("");
 const password = ref("");
+const requestError = ref(null);
 
-const handelLogin = async () => {
+const handleLogin = async () => {
+  isSendingRequest.value = true;
   try {
-    isSendingRequest.value = true;
-    await auth.fakeLogin(email, password);
+    await auth.login(email.value, password.value);
     await navigateTo("/chat");
   } catch (error) {
-    console.log(error);
+    requestError.value = error.message;
+  } finally {
     isSendingRequest.value = false;
+    setTimeout(() => {
+      requestError.value = null;
+    }, 2000);
   }
 };
 </script>
