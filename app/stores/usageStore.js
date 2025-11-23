@@ -30,15 +30,14 @@ export const useUsageStore = defineStore("usageStore", () => {
 
   const fetchUsage = async () => {
     isLoading.value = true;
-
     try {
-      // instead of API this is the fake logic
-      await new Promise((r) => setTimeout(r, 500));
-      usage.value = {
-        promptsUsed: 0,
-        promptsLimit: getPlanLimit("free"),
-        resetDate: null,
-      };
+      const response = await $fetch("/api/usage", {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      });
+      console.log(response);
+      usage.value = response;
     } catch (error) {
       console.log(error);
     } finally {
