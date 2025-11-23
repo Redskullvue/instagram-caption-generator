@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
-
+// We created this authenticator as util so we can explicit call it in routes
 export async function requireAuth(event) {
   const config = useRuntimeConfig();
-  const authHeader = getHeader(event, "authorization");
-
+  const authHeader = getHeader(event, "Authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw createError({
       statusCode: 401,
