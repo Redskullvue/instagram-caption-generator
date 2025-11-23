@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
     }
     throw createError({
       statusCode: 500,
-      message: error.message,
+      message: error.message || "خطای سرور",
     });
   }
 });
