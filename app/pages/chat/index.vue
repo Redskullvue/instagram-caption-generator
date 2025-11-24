@@ -5,12 +5,14 @@
       class="w-full lg:max-h-[55vh] lg:min-h-[55vh] min-h-[50vh] max-h-[50vh] overflow-y-scroll px-2 py-1"
       ref="chatContainer"
     >
-      <ChatBubble
-        v-for="(message, index) in messages"
-        :key="index"
-        :message="message"
-        class="mb-6"
-      />
+      <template v-for="(message, index) in messages" :key="index">
+        <ChatBubble :message="message" class="mb-6" />
+        <CopyButton
+          v-if="!message.isUser && index !== 0"
+          class="-mt-2 w-full text-end pl-4"
+          :message="message.text"
+        />
+      </template>
       <TypingIndicator v-if="isGenerating === true" />
     </div>
     <!-- Buttons and input Selector -->
