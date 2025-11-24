@@ -17,7 +17,7 @@
       </div>
       <div class="w-full text-center text-gray-600 text-sm">
         قبلا ثبت نام کردید؟<span class="text-purple-500 mx-1"
-          ><NuxtLink to="/">وارد شوید</NuxtLink></span
+          ><NuxtLink to="/login">وارد شوید</NuxtLink></span
         >
       </div>
     </div>
