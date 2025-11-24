@@ -14,9 +14,15 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
   modules: ["@nuxt/icon", "@pinia/nuxt"],
+
+  routeRules: {
+    "/chat": { ssr: false },
+  },
   runtimeConfig: {
     mongodbUri: "",
     jwtSecret: "",
+    geminiApiKey: "",
+    geminiBaseUrl: "",
   },
 
   app: {
