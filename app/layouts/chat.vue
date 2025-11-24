@@ -25,10 +25,12 @@
       <Transition name="slideInRight" appear>
         <div
           v-if="toggleMenu"
-          class="fixed inset-0 z-50 lg:z-0 overflow-hidden backdrop-blur-lg lg:backdrop-blur-none"
+          class="fixed inset-0 z-50 backdrop-blur-lg lg:pointer-events-none lg:backdrop-blur-none"
         >
-          <div class="absolute left-0 top-0 h-full w-64 bg-white shadow-lg">
-            <SideMobileMenu @close-menu="closeMenu" />
+          <div
+            class="absolute left-0 top-0 h-full w-64 bg-white shadow-lg lg:pointer-events-auto"
+          >
+            <SideBarMenu @close-menu="closeMenu" />
           </div>
         </div>
       </Transition>
