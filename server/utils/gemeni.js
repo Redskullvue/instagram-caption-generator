@@ -22,7 +22,7 @@ export async function generateCaption(prompt, options = {}) {
     includeEmojis = true,
     includeHashtags = true,
     language = "fa", // Default Persian
-    maxLength = 300,
+    maxLength = 500,
   } = options;
 
   const systemPrompt = buildSystemPrompt({
