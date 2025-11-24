@@ -39,6 +39,7 @@ definePageMeta({
   middleware: "auth",
 });
 const usageStore = useUsageStore();
+const authStore = useAuthStore();
 const selectedTone = ref("");
 const isGenerating = ref(false);
 const usedAllPrompts = ref(false);
@@ -66,7 +67,7 @@ const sendMessage = async (val) => {
     text: val,
     isUser: true,
   });
-  generateCaption();
+  generateCaption(val);
   onMessageAdded();
   try {
     await usageStore.incrementUsage();
@@ -78,12 +79,54 @@ const sendMessage = async (val) => {
 const setTone = (val) => {
   selectedTone.value = val;
 };
-const generateCaption = async () => {
+const generateCaption = async (userInput) => {
   isGenerating.value = true;
-  setTimeout(() => {
-    messages.value.push({ id: 2, text: "اکی دارم انجامش میدم", isUser: false });
-    isGenerating.value = false;
+  try {
+    const response = await $fetch("/api/caption/generate", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authStore.token}`,
+      },
+      body: {
+        prompt: userInput,
+        options: {
+          tone: selectedTone.value,
+          includeEmojies: true,
+          includeHashtags: true,
+          language: "fa",
+        },
+      },
+    });
+
+    messages.value.push({
+      isUser: false,
+      text: response.caption,
+      id: messages.value.length + 1,
+    });
+  } catch (error) {
+    console.error("Caption generation error:", error);
+
+    // Check if limit reached
+    if (error.data?.data?.code === "LIMIT_REACHED") {
+      usedAllPrompts.value = true;
+      usageStore.usage = error.data.data.usage;
+
+      messages.value.push({
+        id: messages.value.length + 1,
+        text: "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
+        isUser: false,
+      });
+    } else {
+      messages.value.push({
+        id: messages.value.length + 1,
+        text: "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
+        isUser: false,
+      });
+    }
+
     onMessageAdded();
-  }, 1000);
+  } finally {
+    isGenerating.value = false;
+  }
 };
 </script>

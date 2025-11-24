@@ -5,15 +5,15 @@
       <button
         class="m-1 rounded-xl cursor-pointer py-2 transition-colors duration-300"
         :class="
-          selectedTone === tone
+          selectedTone === tone.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
             : 'bg-gray-200 text-gray-700'
         "
         v-for="(tone, index) in tones"
         :key="index"
-        @click="setTone(tone)"
+        @click="setTone(tone.value)"
       >
-        {{ tone }}
+        {{ tone.title }}
       </button>
     </div>
   </div>
@@ -21,8 +21,13 @@
 
 <script setup>
 const emits = defineEmits(["selectTone"]);
-const selectedTone = ref("رسمی");
-const tones = ref(["رسمی", "شوخ", "دوستانه", "الهام بخش"]);
+const selectedTone = ref("casual");
+const tones = ref([
+  { title: "رسمی", value: "professional" },
+  { title: "دوستانه", value: "casual" },
+  { title: "شوخ", value: "funny" },
+  { title: "الهام بخش", value: "inspirational" },
+]);
 
 const setTone = (value) => {
   if (value) {
