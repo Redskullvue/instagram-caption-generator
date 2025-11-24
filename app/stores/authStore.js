@@ -53,6 +53,8 @@ export const useAuthStore = defineStore("authStore", () => {
     if (import.meta.client) {
       localStorage.removeItem("user");
     }
+
+    return navigateTo("/login");
   };
   // reloads the auth state from localStorage and puts it back into Pinia.
   const hydrate = () => {
