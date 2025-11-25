@@ -96,6 +96,7 @@ const generateCaption = async (userInput) => {
           includeEmojies: true,
           includeHashtags: true,
           language: "fa",
+          maxLength: 600,
         },
       },
     });
