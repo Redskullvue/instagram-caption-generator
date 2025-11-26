@@ -26,7 +26,7 @@
         <small>درخواست ها</small>
       </div>
       <div class="border-l border-r px-3 flex flex-col items-center">
-        {{ faDate }}
+        {{ date }}
         <small> تاریخ شارژ </small>
       </div>
       <div class="px-1 flex flex-col items-center">
@@ -40,13 +40,7 @@
 <script setup>
 const usageStore = useUsageStore();
 const authStore = useAuthStore();
-// Changind Date to persian Calender
-const options = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-  calendar: "persian",
-};
-const date = new Date(usageStore.usage.resetDate);
-const faDate = date.toLocaleDateString("fa-IR", options);
+const { formatDate } = useDateChanger();
+const date = ref(null);
+date.value = formatDate(usageStore.usage.resetDate);
 </script>
