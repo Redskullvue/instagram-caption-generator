@@ -7,11 +7,13 @@
         : 'mr-auto bg-gray-200'
     "
   >
-    {{ message.text }}
+    <p v-if="!message.isUser">{{ display }}</p>
+    <p v-if="message.isUser">{{ message.text }}</p>
   </div>
 </template>
 
 <script setup>
+const display = ref("");
 const props = defineProps({
   message: {
     type: Object,
@@ -22,5 +24,13 @@ const props = defineProps({
       default: false,
     },
   },
+});
+
+onMounted(async () => {
+  if (!props.message.isUser) {
+    await typeLine(props.message.text, (chunk) => {
+      display.value = chunk;
+    });
+  }
 });
 </script>
