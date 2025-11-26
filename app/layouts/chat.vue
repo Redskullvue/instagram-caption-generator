@@ -28,7 +28,7 @@
           class="fixed inset-0 z-50 backdrop-blur-lg lg:pointer-events-none lg:backdrop-blur-none"
         >
           <div
-            class="absolute left-0 top-0 h-full w-64 bg-white shadow-lg lg:pointer-events-auto"
+            class="absolute left-0 top-0 h-full w-64 lg:w-80 bg-white shadow-lg lg:pointer-events-auto"
           >
             <SideBarMenu @close-menu="closeMenu" />
           </div>
