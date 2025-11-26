@@ -41,7 +41,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     const result = await generateCaption(prompt, options);
-    await user.incrementUsage();
     return {
       success: true,
       caption: result.caption,
