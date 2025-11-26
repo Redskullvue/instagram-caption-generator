@@ -17,7 +17,7 @@ export async function typeLine(text, callback) {
     await wait(20 + Math.random() * 40);
   }
 
-  await wait(150);
+  await wait(100);
 
   return current;
 }
