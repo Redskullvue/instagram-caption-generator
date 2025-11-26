@@ -10,7 +10,7 @@ export async function typeLine(text, callback) {
   for (const c of text) {
     current += c;
 
-    // Send current text to whoever is listening (chat page)
+    // Returning to chatpage
     callback(current);
 
     await nextTick();
