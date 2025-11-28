@@ -44,7 +44,12 @@
           <p class="text-gray-700 text-sm mb-4">
             {{ chat.lastMessage.substring(0, 30) }}....
           </p>
-          <p class="text-xs">{{ timeAgo(chat.createdAt) }}</p>
+          <div class="w-full flex items-center justify-between">
+            <p class="text-xs">{{ timeAgo(chat.createdAt) }}</p>
+            <p @click="chatStore.deleteChat(chat.id)" class="text-red-500">
+              <Icon name="line-md:trash" size="20px" />
+            </p>
+          </div>
         </li>
       </ul>
       <p v-else class="w-full flex items-center justify-center mt-3">
