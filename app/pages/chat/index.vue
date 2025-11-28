@@ -21,7 +21,7 @@
 
     <!-- Buttons and input Selector -->
     <div
-      class="w-full border-t max-h-1/2 border-gray-500 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col lg:min-h-[28vh]"
+      class="w-full border-t lg:border-0 max-h-1/2 border-gray-500 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col lg:min-h-[28vh]"
     >
       <ToneSelector
         class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[100px] lg:bg-white lg:rounded-xl lg:p-4"
