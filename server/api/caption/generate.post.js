@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { prompt, options } = await readBody(event);
+  const { prompt, options, chatHistory } = await readBody(event);
 
   if (!prompt || prompt.trim().length === 0) {
     throw createError({
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const result = await generateCaption(prompt, options);
+    const result = await generateCaption(prompt, options, chatHistory || []);
     await user.incrementUsage();
     return {
       success: true,

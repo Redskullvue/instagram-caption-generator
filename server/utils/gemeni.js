@@ -16,7 +16,11 @@ function getOpenAIClient() {
   return openaiClient;
 }
 
-export async function generateCaption(prompt, options = {}) {
+export async function generateCaption(
+  prompt,
+  options = {},
+  conversationHistory = []
+) {
   const {
     tone = "casual",
     includeEmojis = true,
@@ -36,18 +40,31 @@ export async function generateCaption(prompt, options = {}) {
   try {
     const client = getOpenAIClient();
 
+    // In here we get sure that gemeni gets the context of last messages so It can be relateable
+    const messages = [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+    ];
+    if (conversationHistory && conversationHistory.length > 0) {
+      conversationHistory.forEach((msg) => {
+        messages.push({
+          role: msg.isUser ? "user" : "assistant",
+          content: msg.text,
+        });
+      });
+    }
+
+    // Add current user message
+    messages.push({
+      role: "user",
+      content: `موضوع پست ${prompt}`,
+    });
+
     const response = await client.chat.completions.create({
       model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `موضوع پست: ${prompt}`,
-        },
-      ],
+      messages: messages,
       temperature: 0.8,
       max_tokens: 1024,
     });
@@ -165,7 +182,9 @@ function buildSystemPrompt({
     en: "Write the caption in English.",
   };
 
-  return `شما یک نویسنده متخصص کپشن اینستاگرام هستید. یک کپشن جذاب و تاثیرگذار بر اساس موضوع کاربر بسازید.
+  return `شما یک نویسنده متخصص کپشن اینستاگرام هستید که می‌تواند گفتگوهای طبیعی و پیوسته داشته باشید.
+
+مهم: شما باید به تاریخچه گفتگو توجه کنید و پاسخ‌های خود را بر اساس زمینه قبلی بدهید. اگر کاربر به پیام قبلی اشاره کند، باید آن را درک کنید و پاسخ مرتبط بدهید.
 
 الزامات استایل:
 - تُن: ${toneDescriptions[tone] || toneDescriptions.casual}
@@ -174,7 +193,7 @@ function buildSystemPrompt({
       ? "از ایموجی‌های مناسب در کپشن استفاده کن"
       : "بدون استفاده از ایموجی"
   }
-- ${includeHashtags ? "در پایان 5-10 هشتگ مرتبط اضافه کن" : "بدون هشتگ"}
+- ${includeHashtags ? "در پایان 5-8 هشتگ مرتبط اضافه کن" : "بدون هشتگ"}
 - حداکثر طول: ${maxLength} کاراکتر
 - ${languageInstructions[language] || languageInstructions.fa}
 
@@ -184,7 +203,7 @@ function buildSystemPrompt({
 - در صورت مناسب بودن، یک call-to-action اضافه کن
 - اصیل و واقعی بنویس
 - از کلیشه‌ها و عبارات تکراری دوری کن
--مطمعن شو کپشن مناسب اکسپلور باشه
+- اگر کاربر درخواست تغییر یا بهبود کپشن قبلی رو داره، به اون کپشن اشاره کن و نسخه بهتری بساز
 
 فقط متن کپشن رو برگردون، هیچ چیز دیگه‌ای نباشه.`;
 }

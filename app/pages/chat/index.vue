@@ -80,6 +80,18 @@ const generateCaption = async (userInput) => {
   isGenerating.value = true;
 
   try {
+    // Creating the recent history of the user chat + limit so we won't burn tokens
+    const recentHistory = chatStore.messages
+      .filter(
+        (msg) => msg.text !== "سلام من کپشن ساز هستم چطور میتونم کمکت کنم ؟"
+      )
+      .slice(-6) // Last 6 messages
+      .slice(0, -1) // Exclude current user message
+      .map((msg) => ({
+        text: msg.text,
+        isUser: msg.isUser,
+      }));
+
     const response = await $fetch("/api/caption/generate", {
       method: "POST",
       headers: {
@@ -87,6 +99,7 @@ const generateCaption = async (userInput) => {
       },
       body: {
         prompt: userInput,
+        chatHistory: recentHistory,
         options: {
           tone: selectedTone.value,
           includeEmojis: true,
