@@ -5,7 +5,10 @@
       class="w-full lg:max-h-[55vh] lg:min-h-[55vh] min-h-[50vh] max-h-[50vh] overflow-y-scroll px-2 py-1"
       ref="chatContainer"
     >
-      <template v-for="(message, index) in messages" :key="index">
+      <template
+        v-for="(message, index) in chatStore.messages"
+        :key="message.id"
+      >
         <ChatBubble :message="message" class="mb-6" />
         <CopyButton
           v-if="!message.isUser && index !== 0"
@@ -15,6 +18,7 @@
       </template>
       <TypingIndicator v-if="isGenerating === true" />
     </div>
+
     <!-- Buttons and input Selector -->
     <div
       class="w-full border-t max-h-1/2 border-gray-500 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col lg:min-h-[28vh]"
@@ -40,12 +44,15 @@ definePageMeta({
   layout: "chat",
   middleware: "auth",
 });
+
 const usageStore = useUsageStore();
 const authStore = useAuthStore();
+const chatStore = useChatStore();
+
 const selectedTone = ref("");
 const isGenerating = ref(false);
 const usedAllPrompts = ref(false);
-// This composable set the scroll to the end of chat box
+
 const { chatContainer, onMessageAdded } = useChatScroll();
 
 // Fetch usage when page loads
@@ -53,36 +60,25 @@ onMounted(async () => {
   if (!usageStore.usage.promptsUsed && !usageStore.isLoading) {
     await usageStore.fetchUsage();
   }
+
+  chatStore.initializeChat();
 });
 
-const messages = ref([
-  {
-    id: 1,
-    text: "سلام من کپشن ساز هستم چطور میتونم کمکت کتم ؟",
-    isUser: false,
-  },
-]);
-
 const sendMessage = async (val) => {
-  messages.value.push({
-    id: messages.value.length + 1,
-    text: val,
-    isUser: true,
-  });
-  generateCaption(val);
+  // Add user message to chatStore
+  chatStore.addMessage(val, true);
+  // Generate AI response
+  await generateCaption(val);
   onMessageAdded();
-  try {
-    await usageStore.incrementUsage();
-  } catch (error) {
-    usedAllPrompts.value = true;
-  }
 };
 
 const setTone = (val) => {
   selectedTone.value = val;
 };
+
 const generateCaption = async (userInput) => {
   isGenerating.value = true;
+
   try {
     const response = await $fetch("/api/caption/generate", {
       method: "POST",
@@ -93,19 +89,16 @@ const generateCaption = async (userInput) => {
         prompt: userInput,
         options: {
           tone: selectedTone.value,
-          includeEmojies: true,
+          includeEmojis: true,
           includeHashtags: true,
           language: "fa",
           maxLength: 600,
         },
       },
     });
-
-    messages.value.push({
-      isUser: false,
-      text: response.caption,
-      id: messages.value.length + 1,
-    });
+    chatStore.addMessage(response.caption, false, true);
+    usageStore.usage = response.usage;
+    onMessageAdded();
   } catch (error) {
     console.error("Caption generation error:", error);
 
@@ -114,17 +107,17 @@ const generateCaption = async (userInput) => {
       usedAllPrompts.value = true;
       usageStore.usage = error.data.data.usage;
 
-      messages.value.push({
-        id: messages.value.length + 1,
-        text: "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
-        isUser: false,
-      });
+      chatStore.addMessage(
+        "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
+        false,
+        true
+      );
     } else {
-      messages.value.push({
-        id: messages.value.length + 1,
-        text: "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
-        isUser: false,
-      });
+      chatStore.addMessage(
+        "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
+        false,
+        true
+      );
     }
 
     onMessageAdded();

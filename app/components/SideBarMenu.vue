@@ -16,6 +16,39 @@
     <div class="w-full bg-pink-100">
       <UserProfile />
     </div>
+    <div class="w-full mt-2 p-2">
+      <button
+        @click="chatStore.createNewChat"
+        class="rounded-xl bg-linear-to-r from-purple-600 to-pink-600 w-full text-white py-2 flex items-center gap-x-2 justify-center cursor-pointer transition-all duration-300 hover:opacity-80"
+      >
+        <Icon name="ic:outline-plus" size="24px" />
+        ایجاد گفتگو جدید
+      </button>
+    </div>
+    <div class="w-full h-full p-3">
+      <h2 class="mb-2 text-sm">تاریخچه گفت گو ها</h2>
+      <ul
+        class="w-full h-[70vh] rounded-xl p-4 overflow-y-auto"
+        v-if="chatStore.chatHistory.length >= 1"
+      >
+        <li
+          v-for="(chat, index) in chatStore.chatHistory"
+          :key="index"
+          class="rounded-xl p-2 w-full mb-3 cursor-pointer shadow-md shadow-gray-400"
+          :class="
+            chatStore.currentChatId === chat.id ? 'bg-pink-100' : 'bg-gray-100'
+          "
+          @click="handleLoadChat(chat.id)"
+        >
+          <h2 class="mb-3">{{ chat.title }}</h2>
+          <p class="text-gray-700 text-sm mb-4">
+            {{ chat.lastMessage.substring(0, 30) }}....
+          </p>
+          <p class="text-xs">{{ timeAgo(chat.createdAt) }}</p>
+        </li>
+      </ul>
+      <p v-else>هنوز گفتگویی ایجاد نکردید</p>
+    </div>
     <div class="fixed bottom-0 p-2 mb-2 w-full lg:w-[20%]">
       <button
         @click="authStore.logOut"
@@ -31,6 +64,14 @@
 <script setup>
 const emits = defineEmits(["closeMenu"]);
 const authStore = useAuthStore();
-</script>
+const chatStore = useChatStore();
+const { timeAgo } = useDateChanger();
 
-<style lang="scss" scoped></style>
+const handleLoadChat = (chatId) => {
+  const width = window.innerWidth;
+  chatStore.loadChat(chatId);
+  if (width <= 1024) {
+    emits("closeMenu");
+  }
+};
+</script>

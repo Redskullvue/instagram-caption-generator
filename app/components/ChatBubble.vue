@@ -27,10 +27,12 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-  if (!props.message.isUser) {
+  if (!props.message.isUser && props.message.shouldAnimate) {
     await typeLine(props.message.text, (chunk) => {
       display.value = chunk;
     });
+  } else {
+    display.value = props.message.text;
   }
 });
 </script>
