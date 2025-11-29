@@ -49,7 +49,7 @@
               <NuxtLink
                 v-show="mounted"
                 to="/chat"
-                class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
+                class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 transition-all duration-300 hover:opacity-70 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
               >
                 <Icon name="mdi:instagram" size="20px" />
                 دریافت 5 پست رایگان در ماه

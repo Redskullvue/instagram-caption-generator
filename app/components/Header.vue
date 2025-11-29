@@ -13,7 +13,7 @@
     <div>
       <NuxtLink
         to="/chat"
-        class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white mx-4"
+        class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white mx-4 transition-all duration-300 hover:opacity-70"
       >
         شروع رایگان
       </NuxtLink>
