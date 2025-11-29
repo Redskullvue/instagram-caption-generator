@@ -1,5 +1,44 @@
 import mongoose from "mongoose";
 
+// This section is about creating chatHistory for each user
+const messageSchema = new mongoose.Schema({
+  role: {
+    type: String,
+    enum: ["user", "assistant"],
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  shouldAnimate: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const chatSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    default: "چت جدید",
+  },
+  messages: [messageSchema],
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// This section is totally about the User and their stuff
 const userSchema = new mongoose.Schema({
   // Basic Info
   email: {
@@ -45,6 +84,13 @@ const userSchema = new mongoose.Schema({
       type: Date,
       default: () => getNextResetDate(),
     },
+  },
+
+  // Chat history embedded in user
+  chats: [chatSchema],
+  currentChatId: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
   },
   //   Accout Status
   isVerfied: {
@@ -124,6 +170,104 @@ userSchema.methods.incrementUsage = async function () {
   return this.getUsage();
 };
 
+// Chat Management Methods
+// 1-This will create an empty new Chat
+userSchema.methods.createNewChat = function (title = "چت جدید") {
+  const newChat = {
+    title,
+    messages: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  this.chats.push(newChat);
+  this.currentChatId = this.chats[this.chats.length - 1]._id;
+
+  return {
+    id: this.chats[this.chats.length - 1]._id,
+    title: newChat.title,
+    messages: [],
+    createdAt: newChat.createdAt,
+  };
+};
+
+// Add each message to the said chatId
+userSchema.methods.addMessageToChat = function (
+  chatId,
+  role,
+  content,
+  shouldAnimate = false
+) {
+  const chat = this.chats.id(chatId);
+  if (!chat) {
+    throw new Error("Chat not Found");
+  }
+
+  const message = {
+    role,
+    content,
+    timestamp: new Date(),
+    shouldAnimate,
+  };
+  chat.messages.push(message);
+  chat.updateAt = new Date();
+  if (chat.messages.length === 1 && role === "user") {
+    chat.title = content.substring(0, 50) + (content.length > 50 ? "..." : "");
+  }
+  return {
+    message,
+  };
+};
+
+// get the history of all chats from DB and send
+userSchema.methods.getChatHistory = function () {
+  return this.chats
+    .sort((a, b) => b.updatedAt - a.updatedAt)
+    .map((chat) => ({
+      id: chat._id,
+      title: chat.title,
+      messageCount: chat.messages.length,
+      lastMessage:
+        chat.messages[chat.messages.length - 1]?.content.substring(0, 100) ||
+        "",
+      createdAt: chat.createdAt,
+      updatedAt: chat.updatedAt,
+    }));
+};
+
+// Getting an specific chat from DB and show in the chat UI
+userSchema.methods.getChat = function (chatId) {
+  const chat = this.chats.id(chatId);
+  if (!chat) {
+    return null;
+  }
+  return {
+    id: chat._id,
+    title: chat.title,
+    messages: chat.messages.map((msg) => ({
+      id: msg._id,
+      text: msg.content,
+      isUser: msg.role === "user",
+      timestamp: msg.timestamp,
+      shouldAnimate: false,
+    })),
+    createdAt: chat.createdAt,
+    updatedAt: chat.updatedAt,
+  };
+};
+
+//Removing a chat histroy from chat history
+userSchema.methods.deleteChat = function (chatId) {
+  const chat = this.chats.id(chatId);
+  if (chat) {
+    chat.deleteOne();
+
+    // If deleting current chat, clear currentChatId
+    if (this.currentChatId?.toString() === chatId.toString()) {
+      this.currentChatId = null;
+    }
+  }
+};
+
 // update Plan and adjust limits
 userSchema.methods.updatePlan = async function (newPlan) {
   const planLimits = {
@@ -141,10 +285,6 @@ userSchema.methods.updatePlan = async function (newPlan) {
 userSchema.statics.findByEmail = function (email) {
   return this.findOne({ email: email });
 };
-
-// Indexes for performance
-// userSchema.index({ email: 1 });
-// userSchema.index({ createdAt: -1 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
