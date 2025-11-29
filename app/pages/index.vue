@@ -8,6 +8,7 @@
       <div class="flex-1 p-6 flex flex-col items-center md:items-start">
         <Transition name="slide-fade" appear>
           <div
+            v-show="mounted"
             style="animation-delay: 0.2s"
             class="w-max h-10 rounded-xl mb-6 bg-white shadow-sm shadow-gray-300 px-4 py-2 text-sm font-light flex gap-x-2 items-center"
           >
@@ -18,6 +19,7 @@
         </Transition>
         <Transition name="fade" appear>
           <h1
+            v-show="mounted"
             class="mr-1 font-bold text-xl text-center md:text-start"
             style="animation-delay: 0.5s"
           >
@@ -30,6 +32,7 @@
         </Transition>
         <Transition name="fade" appear>
           <p
+            v-show="mounted"
             style="animation-delay: 0.7s"
             class="mt-6 text-gray-600 font-light text-base w-full md:max-w-[600px] text-center md:text-start"
           >
@@ -44,6 +47,7 @@
           <Transition name="slide-fade" appear>
             <div style="animation-delay: 1s" class="w-full">
               <NuxtLink
+                v-show="mounted"
                 to="/chat"
                 class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
               >
@@ -54,6 +58,7 @@
           </Transition>
           <Transition name="fade" appear>
             <button
+              v-show="mounted"
               style="animation-delay: 1s"
               class="p-3 bg-white w-full rounded-lg border border-gray-300 text-sm font-light cursor-pointer"
             >
@@ -66,6 +71,7 @@
       <div class="flex-1 md:p-6 mb-4">
         <Transition name="fade" appear>
           <img
+            v-show="mounted"
             style="animation-delay: 0.7s"
             src="/preview.png"
             alt="instagram-content-creator-preview"
@@ -198,11 +204,19 @@
 
 <script setup>
 const observerTarget = ref(null);
+const mounted = ref(false);
 const observerRoot = ref(null);
 const { isVisible } = useObserver(observerTarget, {
   threshold: 0.2,
   root: observerRoot.value,
   once: true,
+});
+
+// This block is used to handel the mismatch on SSR and cSR
+onMounted(() => {
+  setTimeout(() => {
+    mounted.value = true;
+  }, 100);
 });
 
 const boxesData = [
