@@ -18,7 +18,7 @@
     </div>
     <div class="w-full mt-2 p-2">
       <button
-        @click="chatStore.createNewChat"
+        @click="createNewChat"
         class="rounded-xl bg-linear-to-r from-purple-600 to-pink-600 w-full text-white py-2 flex items-center gap-x-2 justify-center cursor-pointer transition-all duration-300 hover:opacity-80"
       >
         <Icon name="ic:outline-plus" size="24px" />
@@ -38,12 +38,14 @@
           :class="
             chatStore.currentChatId === chat.id ? 'bg-pink-100' : 'bg-gray-100'
           "
-          @click="handleLoadChat(chat.id)"
         >
-          <h2 class="mb-3">{{ chat.title }}</h2>
-          <p class="text-gray-700 text-sm mb-4">
-            {{ chat.lastMessage.substring(0, 30) }}....
-          </p>
+          <div @click="handleLoadChat(chat.id)">
+            <h2 class="mb-3">{{ chat.title }}</h2>
+            <p class="text-gray-700 text-sm mb-4">
+              {{ chat.lastMessage.substring(0, 25) }}....
+            </p>
+          </div>
+
           <div class="w-full flex items-center justify-between">
             <p class="text-xs">{{ timeAgo(chat.createdAt) }}</p>
             <p @click="chatStore.deleteChat(chat.id)" class="text-red-500">
@@ -80,5 +82,10 @@ const handleLoadChat = (chatId) => {
   if (width <= 1024) {
     emits("closeMenu");
   }
+};
+
+const createNewChat = () => {
+  chatStore.createNewChat();
+  emits("closeMenu");
 };
 </script>
