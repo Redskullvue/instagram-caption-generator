@@ -100,8 +100,13 @@ export const useChatStore = defineStore("chatStore", () => {
       });
       chatHistory.value = chatHistory.value.filter((c) => c.id !== chatId);
       // If deleting current chat, create new one
-      if (currentChatId.value === chatId) {
+      if (currentChatId.value === chatId && chatHistory.value.length === 0) {
         await createNewChat();
+      }
+      if (currentChatId.value === chatId && chatHistory.value.length > 0) {
+        currentChatId.value =
+          chatHistory.value[chatHistory.value.length - 1].id;
+        await loadChat(currentChatId.value);
       }
     } catch (error) {
       console.error("Failed to delete chat:", error);

@@ -62,7 +62,16 @@ onMounted(async () => {
     await chatStore.hydrate();
   }
 
-  chatStore.createNewChat();
+  // Smart initialization: only create if no current chat exists
+  if (!chatStore.currentChatId || chatStore.messages.length === 0) {
+    // Check if we need to load existing chat or create new
+    if (chatStore.currentChatId) {
+      // We have a chatId but no messages - load it
+      await chatStore.loadChat(chatStore.currentChatId);
+    } else {
+      chatStore.initializeChat();
+    }
+  }
 });
 
 const sendMessage = async (val) => {
