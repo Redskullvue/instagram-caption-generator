@@ -286,6 +286,20 @@ userSchema.statics.findByEmail = function (email) {
   return this.findOne({ email: email });
 };
 
+userSchema.methods.getChatForContext = function (chatId) {
+  const chat = this.chats.id(chatId);
+
+  if (!chat) {
+    return [];
+  }
+
+  // Return last 10 messages for context
+  return chat.messages.slice(-6).map((msg) => ({
+    text: msg.content,
+    isUser: msg.role === "user",
+  }));
+};
+
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
