@@ -7,7 +7,6 @@ export default defineNuxtPlugin(async () => {
 
   // Then hydrate usage if authenticated
   if (authStore.token) {
-    await usageStore.hydrate();
+    await Promise.all([usageStore.hydrate(), chatStore.hydrate()]);
   }
-  chatStore.hydrate();
 });

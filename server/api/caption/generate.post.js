@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { prompt, options, chatHistory } = await readBody(event);
+  const { prompt, options, chatId } = await readBody(event);
 
   if (!prompt || prompt.trim().length === 0) {
     throw createError({
@@ -40,12 +40,29 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const result = await generateCaption(prompt, options, chatHistory || []);
+    // Create New Chat if not exist or get currentchat
+    let currentChatId = chatId;
+    if (!currentChatId) {
+      const newChat = user.createNewChat();
+      currentChatId = newChat.id;
+    }
+    // Get conversation history for context
+    const conversationHistory = user.getChatForContext(currentChatId);
+    // Add user message to chat
+    user.addMessageToChat(currentChatId, "user", prompt, false);
+
+    const result = await generateCaption(prompt, options, conversationHistory);
+    // Add AI response to chat
+    user.addMessageToChat(currentChatId, "assistant", result.caption, true);
+    // Update current chat ID
+    user.currentChatId = currentChatId;
+
     await user.incrementUsage();
     return {
       success: true,
       caption: result.caption,
       usage: user.getUsage(),
+      chatId: currentChatId.toString(),
       tokens: result.usage,
     };
   } catch (error) {

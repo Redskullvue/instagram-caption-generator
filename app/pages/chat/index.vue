@@ -59,17 +59,18 @@ const { chatContainer, onMessageAdded } = useChatScroll();
 onMounted(async () => {
   if (!usageStore.usage.promptsUsed && !usageStore.isLoading) {
     await usageStore.fetchUsage();
+    await chatStore.hydrate();
   }
 
-  chatStore.initializeChat();
+  chatStore.createNewChat();
 });
 
 const sendMessage = async (val) => {
   // Add user message to chatStore
   chatStore.addMessage(val, true);
+  onMessageAdded();
   // Generate AI response
   await generateCaption(val);
-  onMessageAdded();
 };
 
 const setTone = (val) => {
@@ -80,18 +81,6 @@ const generateCaption = async (userInput) => {
   isGenerating.value = true;
 
   try {
-    // Creating the recent history of the user chat + limit so we won't burn tokens
-    const recentHistory = chatStore.messages
-      .filter(
-        (msg) => msg.text !== "سلام من کپشن ساز هستم چطور میتونم کمکت کنم ؟"
-      )
-      .slice(-6) // Last 6 messages
-      .slice(0, -1) // Exclude current user message
-      .map((msg) => ({
-        text: msg.text,
-        isUser: msg.isUser,
-      }));
-
     const response = await $fetch("/api/caption/generate", {
       method: "POST",
       headers: {
@@ -99,7 +88,7 @@ const generateCaption = async (userInput) => {
       },
       body: {
         prompt: userInput,
-        chatHistory: recentHistory,
+        chatId: chatStore.currentChatId,
         options: {
           tone: selectedTone.value,
           includeEmojis: true,
@@ -109,9 +98,12 @@ const generateCaption = async (userInput) => {
         },
       },
     });
+    chatStore.currentChatId = response.chatId;
     chatStore.addMessage(response.caption, false, true);
     usageStore.usage = response.usage;
     onMessageAdded();
+    // Refresh history to update title/count
+    await chatStore.loadChatHistory();
   } catch (error) {
     console.error("Caption generation error:", error);
 
