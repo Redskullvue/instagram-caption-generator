@@ -48,7 +48,7 @@
 
           <div class="w-full flex items-center justify-between">
             <p class="text-xs">{{ timeAgo(chat.createdAt) }}</p>
-            <p @click="chatStore.deleteChat(chat.id)" class="text-red-500">
+            <p @click="deleteChat(chat.id)" class="text-red-500">
               <Icon name="line-md:trash" size="20px" />
             </p>
           </div>
@@ -87,5 +87,9 @@ const handleLoadChat = (chatId) => {
 const createNewChat = () => {
   chatStore.createNewChat();
   emits("closeMenu");
+};
+
+const deleteChat = (chatId) => {
+  chatStore.deleteChat(chatId);
 };
 </script>
