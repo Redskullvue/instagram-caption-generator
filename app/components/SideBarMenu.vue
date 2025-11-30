@@ -73,9 +73,9 @@ const emits = defineEmits(["closeMenu"]);
 const authStore = useAuthStore();
 const chatStore = useChatStore();
 const { timeAgo } = useDateChanger();
+const width = window.innerWidth;
 
 const handleLoadChat = (chatId) => {
-  const width = window.innerWidth;
   chatStore.loadChat(chatId);
   if (width <= 1024) {
     emits("closeMenu");
@@ -84,7 +84,9 @@ const handleLoadChat = (chatId) => {
 
 const createNewChat = () => {
   chatStore.createNewChat();
-  emits("closeMenu");
+  if (width <= 1024) {
+    emits("closeMenu");
+  }
 };
 
 const deleteChat = (chatId) => {
