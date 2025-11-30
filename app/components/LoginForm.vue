@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full lg:p-4">
+  <div class="w-full h-max lg:p-4">
     <form class="w-full h-full" @submit.prevent="handleLogin">
       <label for="email" class="text-gray-800">آدرس ایمیل</label>
       <div
