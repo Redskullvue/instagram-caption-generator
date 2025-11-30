@@ -10,11 +10,13 @@
         :key="message.id"
       >
         <ChatBubble :message="message" class="mb-6" />
-        <CopyButton
-          v-if="!message.isUser && index !== 0"
-          class="-mt-2 w-full text-end pl-4"
-          :message="message.text"
-        />
+        <div class="w-full flex items-center justify-end">
+          <CopyButton
+            v-if="!message.isUser && index !== 0"
+            class="-mt-2 w-max text-end pl-4"
+            :message="message.text"
+          />
+        </div>
       </template>
       <TypingIndicator v-if="isGenerating === true" />
     </div>

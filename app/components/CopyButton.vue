@@ -1,7 +1,7 @@
 <template>
   <div class="text-purple-500 cursor-pointer" @click="copyText">
     <Icon name="mingcute:copy-line" size="24px" v-if="!isCopied" />
-    <Icon name="tabler:copy-check" size="23px" v-if="isCopied" />
+    <Icon name="tabler:copy-check" size="24px" v-if="isCopied" />
   </div>
 </template>
 
