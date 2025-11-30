@@ -19,7 +19,7 @@
     <div class="w-full mt-2 p-2 border-b border-gray-300">
       <button
         @click="createNewChat"
-        class="rounded-xl bg-linear-to-r from-purple-600 mb-2 to-pink-600 w-full text-white py-2 flex items-center gap-x-2 justify-center cursor-pointer transition-all duration-300 hover:opacity-80"
+        class="rounded-xl bg-linear-to-r text-sm from-purple-600 mb-2 to-pink-600 w-full text-white py-2 flex items-center gap-x-2 justify-center cursor-pointer transition-all duration-300 hover:opacity-80"
       >
         <Icon name="ic:outline-plus" size="24px" />
         ایجاد گفتگو جدید
