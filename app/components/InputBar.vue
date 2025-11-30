@@ -2,7 +2,8 @@
   <div class="w-full h-16 mb-4">
     <label for="input-bar">موضوع کپشن را انتخاب کنید</label>
     <p class="text-xs text-gray-500 mt-1" v-if="promptsLimit !== Infinity">
-      درخواست های باقی مانده : {{ promptsRemaining }} / {{ promptsLimit }}
+      درخواست های باقی مانده : {{ promptsRemaining }} /
+      <span class="text-purple-600">{{ promptsLimit }} </span>
     </p>
     <div
       class="bg-linear-to-r mt-3 from-purple-600 to-pink-600 flex items-center justify-center p-1 rounded-xl"
