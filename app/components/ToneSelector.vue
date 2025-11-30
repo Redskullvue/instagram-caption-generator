@@ -26,7 +26,7 @@ const tones = ref([
   { title: "رسمی", value: "professional" },
   { title: "دوستانه", value: "casual" },
   { title: "شوخ", value: "funny" },
-  { title: "الهام بخش", value: "inspirational" },
+  { title: "انگیزشی", value: "inspirational" },
 ]);
 
 const setTone = (value) => {
