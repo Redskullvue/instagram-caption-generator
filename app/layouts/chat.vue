@@ -27,8 +27,19 @@
           v-if="toggleMenu"
           class="fixed inset-0 z-50 backdrop-blur-lg lg:pointer-events-none lg:backdrop-blur-none"
         >
+          <button
+            @click="toggleMenu = false"
+            class="flex items-center gap lg:hidden px-2 py-1 rounded-lg text-white"
+          >
+            بستن
+            <Icon
+              name="material-symbols-light:chevron-left"
+              size="28px"
+              class="font-bold"
+            />
+          </button>
           <div
-            class="absolute left-0 top-0 h-full w-64 lg:w-80 bg-white shadow-lg lg:pointer-events-auto"
+            class="absolute left-0 top-0 h-full w-84 lg:w-80 bg-white shadow-lg lg:pointer-events-auto"
           >
             <SideBarMenu @close-menu="closeMenu" />
           </div>

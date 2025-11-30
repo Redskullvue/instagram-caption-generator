@@ -1,18 +1,6 @@
 <template>
   <div class="w-full flex flex-col h-[99vh] bg-white text-gray-800">
-    <div class="w-full flex items-center justify-end absolute text-xs">
-      <button
-        @click="$emit('closeMenu', false)"
-        class="flex items-center gap lg:hidden px-2 py-1 rounded-lg bg-white"
-      >
-        بستن
-        <Icon
-          name="material-symbols-light:chevron-left"
-          size="20px"
-          class="font-bold"
-        />
-      </button>
-    </div>
+    <div class="w-full flex items-center justify-end absolute text-xs"></div>
     <div class="w-full bg-pink-100">
       <UserProfile />
     </div>
