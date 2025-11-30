@@ -12,10 +12,10 @@
         به کپشن ساز خوش آمدید
       </p>
       <!-- Form -->
-      <div class="w-full h-full">
+      <div class="w-full h-max">
         <LoginForm />
       </div>
-      <div class="w-full text-center text-gray-600 text-sm">
+      <div class="w-full text-center text-gray-600 text-sm mt-10 mb-3">
         حساب کاربری ندارید ؟<span class="text-purple-500 mx-1"
           ><NuxtLink to="/signup">ثبت نام کنید</NuxtLink></span
         >
