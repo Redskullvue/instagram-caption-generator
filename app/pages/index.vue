@@ -5,7 +5,7 @@
       class="w-full min-h-[600px] md:min-h-[600px] bg-pink-100 flex flex-col md:flex-row justify-center items-center"
     >
       <!-- Right Side -->
-      <div class="flex-1 p-6 flex flex-col items-center md:items-start">
+      <div class="flex-1 p-1 lg:p-6 flex flex-col items-center mt-5 lg:mt-0">
         <Transition name="slide-fade" appear>
           <div
             v-show="mounted"
@@ -20,7 +20,7 @@
         <Transition name="fade" appear>
           <h1
             v-show="mounted"
-            class="mr-1 font-bold text-xl text-center md:text-start"
+            class="mr-1 font-bold text-2xl lg:text-3xl text-center md:text-start"
             style="animation-delay: 0.5s"
           >
             کپشن اینستاگرام در
@@ -34,7 +34,7 @@
           <p
             v-show="mounted"
             style="animation-delay: 0.7s"
-            class="mt-6 text-gray-600 font-light text-base w-full md:max-w-[600px] text-center md:text-start"
+            class="mt-6 text-gray-600 font-light text-base w-[38ch] lg:w-[50ch] text-center text-balance"
           >
             دیگر به صفحه خالی خیره نشوید. بگذارید هوش مصنوعی کپشن‌های جذاب و
             هماهنگ با برند شما را بسازد که مخاطبانتان را به کلیک، کامنت و
@@ -42,14 +42,14 @@
           </p>
         </Transition>
         <div
-          class="mt-6 flex items-center gap-x-5 md:flex-row flex-col gap-y-3 w-full md:w-max"
+          class="mt-6 flex items-center gap-x-5 md:flex-row flex-col gap-y-3 lg:w-max w-full mb-10 lg:mb-0"
         >
           <Transition name="slide-fade" appear>
             <div style="animation-delay: 1s" class="w-full">
               <NuxtLink
                 v-show="mounted"
                 to="/chat"
-                class="bg-linear-to-r min-w-max w-full from-purple-600 justify-center to-pink-600 transition-all duration-300 hover:opacity-70 text-white p-3 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
+                class="bg-linear-to-r min-w-max w-full lg:w-[350px] from-purple-600 justify-center to-pink-600 transition-all duration-300 hover:opacity-70 text-white px-3 py-4 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
               >
                 <Icon name="mdi:instagram" size="20px" />
                 دریافت 5 پست رایگان در ماه
@@ -60,7 +60,7 @@
             <button
               v-show="mounted"
               style="animation-delay: 1s"
-              class="p-3 bg-white w-full rounded-lg border border-gray-300 text-sm font-light cursor-pointer"
+              class="px-3 py-4 bg-white w-full rounded-xl border border-gray-300 text-sm font-light cursor-pointer"
             >
               آموزش استفاده
             </button>
@@ -68,14 +68,14 @@
         </div>
       </div>
       <!-- Left Side -->
-      <div class="flex-1 md:p-6 mb-4">
+      <div class="flex-1 md:p-6 mb-4 flex items-center justify-center">
         <Transition name="fade" appear>
           <img
             v-show="mounted"
             style="animation-delay: 0.7s"
             src="/preview.png"
             alt="instagram-content-creator-preview"
-            class="max-w-[470px] max-h-[580px] w-[360px] md:w-[470px] shadow-lg shadow-gray-400"
+            class="max-w-[470px] max-h-[580px] w-[360px] md:w-[470px] p-6 lg:p-2"
           />
         </Transition>
       </div>
@@ -84,10 +84,10 @@
     <section
       class="w-full min-h-[450px] bg-slate-50 flex flex-col p-6 relative"
     >
-      <h2 class="w-full text-center mt-6 font-bold text-2xl">
+      <h2 class="w-full text-center mt-6 font-bold text-2xl lg:text-3xl">
         کپشن طراحی شده در 3 مرحله
       </h2>
-      <p class="text-gray-600 w-full text-center mt-4">
+      <p class="text-gray-600 w-full text-center mt-4 text-sm">
         ژنراتور هوش مصنوعی ما کپشن‌های جذاب و هماهنگ با برند شما را متناسب با
         محتوایتان می‌سازد
       </p>
@@ -132,8 +132,12 @@
               </div>
               <!-- Text -->
 
-              <p class="w-full mt-4 text-center text-lg">{{ box.title }}</p>
-              <p class="w-7/12 mt-2 text-center text-gray-600">
+              <p class="w-full mt-4 text-center text-xl mb-3">
+                {{ box.title }}
+              </p>
+              <p
+                class="w-full lg:w-7/12 mt-2 text-center text-gray-600 text-sm text-balance"
+              >
                 {{ box.description }}
               </p>
             </div>
