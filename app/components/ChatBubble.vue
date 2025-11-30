@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-max max-w-[90%] whitespace-pre-line lg:min-h-[70px] mt-4 p-3 rounded-xl min-h-[10] shadow-md shadow-gray-500 flex items-center justify-center"
+    class="w-max max-w-[90%] whitespace-pre-line lg:min-h-[70px] mt-4 p-3 rounded-xl min-h-[10] shadow-md shadow-gray-400 flex items-center justify-center lg:text-sm"
     :class="
       message.isUser
         ? 'ml-auto bg-linear-to-r  from-purple-600 to-pink-600 text-white'
-        : 'mr-auto bg-gray-200'
+        : 'mr-auto bg-gray-100'
     "
   >
     <p v-if="!message.isUser">{{ display }}</p>
