@@ -30,7 +30,7 @@
           type="password"
           v-model="password"
           required
-          placeholder="رمز عبور(حداقل 8 کاراکتر)"
+          placeholder="رمز عبور"
         />
       </div>
       <p class="text-red-500 mt-6" v-if="requestError">{{ requestError }}</p>
