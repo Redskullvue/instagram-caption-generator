@@ -126,6 +126,13 @@ export const useChatStore = defineStore("chatStore", () => {
 
       currentChatId.value = response.id;
       messages.value = response.messages;
+      messages.value.unshift({
+        id: Date.now(),
+        text: "سلام من کپشن ساز هستم چطور میتونم کمکت کنم ؟",
+        isUser: false,
+        timestamp: new Date(),
+        shouldAnimate: false,
+      });
       return true;
     } catch (error) {
       console.error("Failed to load chat:", error);
