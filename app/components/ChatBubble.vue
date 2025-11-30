@@ -7,7 +7,7 @@
         : 'mr-auto bg-gray-100'
     "
   >
-    <p v-if="!message.isUser">{{ display }}</p>
+    <p v-if="!message.isUser" class="text-purple-800">{{ display }}</p>
     <p v-if="message.isUser">{{ message.text }}</p>
   </div>
 </template>
