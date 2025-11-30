@@ -7,7 +7,7 @@
 <script setup></script>
 <style>
 html {
-  font-family: Vazir, "sans-serif";
+  font-family: iransans, "sans-serif";
 }
 /* width */
 ::-webkit-scrollbar {
