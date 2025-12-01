@@ -117,12 +117,21 @@ const userSchema = new mongoose.Schema({
 });
 
 // Helper function for reset date
-function getNextResetDate() {
-  const now = new Date();
-  now.setMonth(now.getMonth() + 1);
-  now.setDate(1);
-  now.setHours(0, 0, 0, 0);
-  return now;
+function getNextResetDate(prevResetDate) {
+  const date = new Date(prevResetDate);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+
+  // Add 1 month, same day & time
+  return new Date(
+    year,
+    month + 1,
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds(),
+    date.getMilliseconds()
+  );
 }
 // Update timestamp on save
 userSchema.pre("save", async function () {
