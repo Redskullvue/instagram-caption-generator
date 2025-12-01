@@ -31,12 +31,7 @@
             @click="toggleMenu = false"
             class="flex items-center gap lg:hidden px-2 py-1 rounded-lg text-white"
           >
-            بستن
-            <Icon
-              name="material-symbols-light:chevron-left"
-              size="28px"
-              class="font-bold"
-            />
+            <Icon name="zondicons:close-solid" size="24px" class="mt-4" />
           </button>
           <div
             class="absolute left-0 top-0 h-full w-84 lg:w-80 bg-white shadow-lg lg:pointer-events-auto"
