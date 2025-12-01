@@ -8,7 +8,7 @@ export const plans = {
     durationDays: 30,
   },
   Enterprise: {
-    promptsLimit: Infinity,
+    promptsLimit: 999999,
     durationDays: 30,
   },
 };

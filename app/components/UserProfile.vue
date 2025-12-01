@@ -16,13 +16,11 @@
     </div>
     <div class="flex items-center justify-center gap-x-2 mt-4 text-xs">
       <div class="px-1 flex flex-col items-center">
-        <p v-if="usageStore.usage.promptsLimit !== null">
+        <p v-if="usageStore.usage.promptsLimit < 999998">
           {{ usageStore.promptsRemaining }} /
           {{ usageStore.usage.promptsLimit }}
         </p>
-        <p v-if="usageStore.usage.promptsLimit === null">
-          {{ usageStore.promptsRemaining }} / بی نهایت
-        </p>
+        <p v-if="usageStore.usage.promptsLimit >= 999998">∞</p>
         <small>درخواست ها</small>
       </div>
       <div class="border-l border-r px-3 flex flex-col items-center">

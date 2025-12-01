@@ -17,17 +17,6 @@ export const useUsageStore = defineStore("usageStore", () => {
   const hasPromptsLeft = computed(() => {
     return promptsRemaining.value > 0;
   });
-
-  //Actions
-  // const getPlanLimit = (plan) => {
-  //   const limits = {
-  //     free: 5,
-  //     pro: 50,
-  //     enterprise: Infinity,
-  //   };
-  //   return limits[plan] || 5;
-  // };
-
   const fetchUsage = async () => {
     isLoading.value = true;
     try {
