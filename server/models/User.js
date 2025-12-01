@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { plans } from "~~/server/utils/plans";
 
 // This section is about creating chatHistory for each user
 const messageSchema = new mongoose.Schema({
@@ -69,6 +70,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Free", "Pro", "Enterprise"],
     default: "Free",
+  },
+  planExpiresAt: {
+    type: Date,
+    default: null,
   },
   //   Usage Tracking
   usage: {
@@ -270,14 +275,18 @@ userSchema.methods.deleteChat = function (chatId) {
 
 // update Plan and adjust limits
 userSchema.methods.updatePlan = async function (newPlan) {
-  const planLimits = {
-    free: 5,
-    pro: 70,
-    enterprise: Infinity,
-  };
+  console.log(newPlan);
+  if (!plans[newPlan]) {
+    throw new Error("Invalid Plan");
+  }
 
+  const config = plans[newPlan];
   this.plan = newPlan;
-  this.usage.promptsLimit = planLimits[newPlan] || 5;
+  this.usage.promptsLimit = config.promptsLimit || 5;
+  this.planExpiresAt =
+    newPlan === "Free"
+      ? null
+      : new Date(Date.now() + config.durationDays * 24 * 60 * 60 * 1000);
   await this.save();
   return this.toClientJSON();
 };

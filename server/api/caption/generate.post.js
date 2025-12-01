@@ -1,7 +1,7 @@
 import { requireAuth } from "~~/server/utils/auth";
 import { generateCaption } from "~~/server/utils/gemeni";
 import User from "~~/server/models/User";
-
+import { checkPlanExpiry } from "~~/server/utils/checkPlanExpiry";
 export default defineEventHandler(async (event) => {
   const userId = await requireAuth(event);
   const user = await User.findById(userId);
@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
       message: "User Not Found",
     });
   }
+  // Check for the plan on each chat request to server
+  checkPlanExpiry(user);
   user.checkAndResetUsage();
   if (user.usage.promptsUsed >= user.usage.promptsLimit) {
     throw createError({
