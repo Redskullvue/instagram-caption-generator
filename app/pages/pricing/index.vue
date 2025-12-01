@@ -54,8 +54,9 @@
           {{ plan.mainPrice }}تومان
         </p>
         <h3 class="mt-6 text-2xl lg:text-3xl">{{ plan.price || "رایگان" }}</h3>
-        <button
-          class="w-full mt-10 bg-red-500 text-white rounded-xl py-3 cursor-pointer transition-all duration-300 hover:opacity-80"
+        <NuxtLink
+          to="/chat"
+          class="w-full mt-10 bg-red-500 text-center text-white rounded-xl py-3 cursor-pointer transition-all duration-300 hover:opacity-80"
           :class="
             plan.title === 'Free'
               ? 'bg-slate-800'
@@ -63,7 +64,7 @@
           "
         >
           شروع {{ plan.title }}
-        </button>
+        </NuxtLink>
         <div class="w-full text-start mt-10">
           <h4>امکانات :</h4>
         </div>
@@ -116,7 +117,7 @@ const plans = [
       { title: "70 کپشن در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
-      { title: "دسترسی به سناریو نویس", isValid: true },
+      { title: "دسترسی به سناریو نویس (به زودی)", isValid: true },
     ],
   },
   {
@@ -129,7 +130,7 @@ const plans = [
       { title: "کپشن های نامحدود", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
-      { title: "دسترسی به سناریو نویس", isValid: true },
+      { title: "دسترسی به سناریو نویس (به زودی)", isValid: true },
     ],
   },
 ];
