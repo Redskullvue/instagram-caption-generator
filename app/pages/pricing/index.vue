@@ -55,7 +55,11 @@
         </p>
         <h3 class="mt-6 text-2xl lg:text-3xl">{{ plan.price || "رایگان" }}</h3>
         <NuxtLink
-          to="/chat"
+          :to="
+            authStore.token
+              ? `/upgrade?plan=${plan.title}`
+              : `/login?redirect=${plan.title}`
+          "
           class="w-full mt-10 bg-red-500 text-center text-white rounded-xl py-3 cursor-pointer transition-all duration-300 hover:opacity-80"
           :class="
             plan.title === 'Free'
@@ -94,6 +98,8 @@
 </template>
 
 <script setup>
+const authStore = useAuthStore();
+
 const plans = [
   {
     title: "Free",
