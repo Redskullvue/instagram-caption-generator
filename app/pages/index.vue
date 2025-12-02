@@ -57,13 +57,14 @@
             </div>
           </Transition>
           <Transition name="fade" appear>
-            <button
+            <NuxtLink
+              to="/pricing"
               v-show="mounted"
               style="animation-delay: 1s"
               class="px-3 py-4 bg-white w-full rounded-xl border border-gray-300 text-sm font-light cursor-pointer"
             >
-              آموزش استفاده
-            </button>
+              قیمت ها
+            </NuxtLink>
           </Transition>
         </div>
       </div>
