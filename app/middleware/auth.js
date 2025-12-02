@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (import.meta.server) {
     return;
   }
-  const protectedRoutes = ["/chat"];
+  const protectedRoutes = ["/chat", "/upgrade"];
   if (!protectedRoutes.includes(to.fullPath)) {
     return;
   }
