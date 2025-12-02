@@ -58,7 +58,7 @@
           :to="
             authStore.token
               ? `/upgrade?plan=${plan.title}`
-              : `/login?redirect=${plan.title}`
+              : `/signup?redirect=${plan.title}`
           "
           class="w-full mt-10 bg-red-500 text-center text-white rounded-xl py-3 cursor-pointer transition-all duration-300 hover:opacity-80"
           :class="
