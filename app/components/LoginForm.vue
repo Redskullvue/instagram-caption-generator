@@ -52,12 +52,17 @@ const isSendingRequest = ref(false);
 const email = ref("");
 const password = ref("");
 const requestError = ref(null);
+const route = useRoute();
 
 const handleLogin = async () => {
   isSendingRequest.value = true;
   try {
     await auth.login(email.value, password.value);
-    await navigateTo("/chat");
+    if (route.query.redirect) {
+      await navigateTo(route.query.redirect);
+    } else {
+      await navigateTo("/chat");
+    }
   } catch (error) {
     requestError.value = error.message;
   } finally {
