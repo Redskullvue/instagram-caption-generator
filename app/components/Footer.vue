@@ -17,7 +17,9 @@
         </p>
       </div>
     </div>
-    <div class="w-full px-10 mt-4 flex gap-x-7">
+    <div
+      class="w-full px-10 mt-4 flex gap-x-7 items-center justify-center lg:justify-start"
+    >
       <NuxtLink to="/about">درباره ما</NuxtLink>
       <NuxtLink to="/pricing">قیمت ها</NuxtLink>
     </div>
