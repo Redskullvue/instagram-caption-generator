@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
       }
     );
     if (bitPayResponse.status === 1) {
-      const updatedUser = await user.updatePlan(plan, trans_id, 0);
-      return sendRedirect(event, `/chat`);
+      await user.updatePlan(plan, trans_id, 0);
+      return sendRedirect(event, `/payments/success?trans_id=${trans_id}`);
     } else {
       user.transactions.push({
         transId: trans_id,
@@ -38,18 +38,9 @@ export default defineEventHandler(async (event) => {
       });
 
       await user.save();
-      throw createError({
-        statusCode: 400,
-        message:
-          "متاسفانه مشکلی در پرداخت پیش آمده در صورت عدم بازشگت وجه در 72 ساعت با پشتیبانی تماس حاصل فرمایید" +
-          bitPayResponse.status,
-      });
+      return sendRedirect(event, `/payments/error?trans_id=${trans_id}`);
     }
   } catch (error) {
-    throw createError({
-      statusCode: 500,
-      message: error,
-    });
-    // return sendRedirect(event, "/login");
+    return sendRedirect(event, "/payments/error");
   }
 });
