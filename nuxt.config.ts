@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     jwtSecret: "",
     geminiApiKey: "",
     geminiBaseUrl: "",
+    gatewayApiKey: "",
   },
 
   app: {

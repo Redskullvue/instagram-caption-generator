@@ -1,6 +1,35 @@
 import mongoose from "mongoose";
 import { plans } from "~~/server/utils/plans";
 
+// In order to track created transactions
+const transactionSchema = new mongoose.Schema({
+  transId: {
+    type: String,
+    required: true,
+  },
+  planName: {
+    type: String,
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["pending", "success", "failed"],
+    default: "pending",
+  },
+  gateway: {
+    type: String,
+    default: "bitpay",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 // This section is about creating chatHistory for each user
 const messageSchema = new mongoose.Schema({
   role: {
@@ -64,7 +93,8 @@ const userSchema = new mongoose.Schema({
     trim: true,
     maxlength: [50, "Name cannot exceed 50 characters"],
   },
-
+  // Transaction History
+  transactions: [transactionSchema],
   //   Subscription / Plan
   plan: {
     type: String,
@@ -274,7 +304,7 @@ userSchema.methods.deleteChat = function (chatId) {
 };
 
 // update Plan and adjust limits
-userSchema.methods.updatePlan = async function (newPlan) {
+userSchema.methods.updatePlan = async function (newPlan, transId, amount) {
   console.log(newPlan);
   if (!plans[newPlan]) {
     throw new Error("Invalid Plan");
@@ -287,6 +317,15 @@ userSchema.methods.updatePlan = async function (newPlan) {
     newPlan === "Free"
       ? null
       : new Date(Date.now() + config.durationDays * 24 * 60 * 60 * 1000);
+  // Add transaction
+  this.transactions.push({
+    transId: transId,
+    planName: newPlan,
+    amount: amount,
+    status: "success",
+    gateway: "bitpay",
+    createdAt: new Date(),
+  });
   await this.save();
   return this.toClientJSON();
 };
