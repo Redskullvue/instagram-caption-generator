@@ -40,5 +40,7 @@ const usageStore = useUsageStore();
 const authStore = useAuthStore();
 const { formatDate } = useDateChanger();
 const date = ref(null);
-date.value = formatDate(usageStore.usage.resetDate);
+onMounted(() => {
+  date.value = formatDate(usageStore.usage.resetDate);
+});
 </script>
