@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 401,
-      message: "Invaild or expired token",
+      message: "زمان حساب شما منقضی شده دوباره وارد شوید",
     });
   }
 });

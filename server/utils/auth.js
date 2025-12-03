@@ -16,7 +16,7 @@ export async function requireAuth(event) {
   } catch (error) {
     throw createError({
       statusCode: 401,
-      message: "Invalid Or Expired Token",
+      message: " توکن منقضی شده محددا وارد حساب کاربری خود شوید",
     });
   }
 }
