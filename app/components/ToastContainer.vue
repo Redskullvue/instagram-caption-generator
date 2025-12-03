@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[300px] absolute top-5 right-5 h-max z-9999 flex items-center justify-center flex-col gap-y-4"
+    class="w-[300px] fixed top-5 mt-2 right-5 h-max z-9999 flex items-center justify-center flex-col gap-y-4"
   >
     <TransitionGroup name="toast">
       <div
