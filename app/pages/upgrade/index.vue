@@ -67,6 +67,7 @@ definePageMeta({
 const authStore = useAuthStore();
 const selectedPlan = ref(null);
 const route = useRoute();
+const toastStore = useToastStore();
 onMounted(() => {
   if (route.query.plan) {
     selectedPlan.value = plans.find(({ title }) => title === route.query.plan);
@@ -134,7 +135,7 @@ const sendToGateWay = async () => {
       window.location.href = `https://bitpay.ir/payment-test/gateway-${response.code}-get`;
     }
   } catch (error) {
-    console.log(error);
+    toastStore.addToast("error", error.data.message);
   }
 };
 </script>
