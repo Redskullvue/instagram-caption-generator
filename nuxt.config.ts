@@ -13,7 +13,22 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
-  modules: ["@nuxt/icon", "@pinia/nuxt"],
+  modules: ["@nuxt/icon", "@pinia/nuxt", "nuxt-api-shield"],
+  nuxtApiShield: {
+    limit: {
+      max: 60,
+      duration: 300,
+      ban: 3600,
+    },
+    delayOnBan: true,
+    errorMessage: " درخواست های زیاد چند دقیقه بعد تلاش کنید",
+    retryAfterHeader: false,
+    log: {
+      path: "logs",
+      attempts: 100,
+    },
+    routes: [],
+  },
 
   routeRules: {
     "/chat": { ssr: false },

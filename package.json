@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "nuxt": "^4.2.1",
+    "nuxt-api-shield": "^0.9.0",
     "openai": "^6.9.1",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.1.17",
