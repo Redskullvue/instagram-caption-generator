@@ -74,7 +74,6 @@
           موافقم
         </label>
       </div>
-      <p class="text-red-500 mt-6" v-if="requestError">{{ requestError }}</p>
       <div class="w-full mt-8">
         <input
           type="submit"
@@ -93,7 +92,7 @@ const isSendingRequest = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");
-const requestError = ref(null);
+const toastStore = useToastStore();
 
 const handelSignUp = async () => {
   try {
@@ -103,15 +102,12 @@ const handelSignUp = async () => {
       email: email.value,
       password: password.value,
     });
-    isSendingRequest.value = false;
+    toastStore.addToast("success", `${name.value} عزیز خوش آمدی`);
     await navigateTo("/chat");
   } catch (error) {
-    // Setting the error text --> This text will be sent from auth store catch block
-    requestError.value = error.message;
+    toastStore.addToast("error", error.message);
+  } finally {
     isSendingRequest.value = false;
-    setTimeout(() => {
-      requestError.value = false;
-    }, 3000);
   }
 };
 </script>

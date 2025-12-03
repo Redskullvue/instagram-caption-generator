@@ -60,6 +60,7 @@ const handleLogin = async () => {
     if (route.query.redirect) {
       await navigateTo(route.query.redirect);
     } else {
+      toastStore.addToast("success", "خوش آمدید");
       await navigateTo("/chat");
     }
   } catch (error) {
