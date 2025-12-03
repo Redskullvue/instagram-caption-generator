@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     formData.append("amount", String(planConfig.price * 10));
     formData.append(
       "redirect",
-      `http://localhost:3000/api/payments/verify?plan=${planName}&userId=${userId}`
+      `${config.gatewayRedirectUrl}payments/verify?plan=${planName}&userId=${userId}`
     );
     const bitPayResponse = await $fetch(
       "https://bitpay.ir/payment-test/gateway-send",
