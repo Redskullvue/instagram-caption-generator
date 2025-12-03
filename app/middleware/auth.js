@@ -6,7 +6,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
   const protectedRoutes = ["/chat", "/upgrade"];
-  if (!protectedRoutes.includes(to.fullPath)) {
+  // Check if the path starts with any protected route
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    to.path.startsWith(route)
+  );
+  if (!isProtectedRoute) {
     return;
   }
   if (!authStore.token) {
