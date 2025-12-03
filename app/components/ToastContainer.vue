@@ -6,7 +6,7 @@
       <div
         v-for="toast in toastStore.toasts"
         :key="toast.id"
-        class="w-[300px] h-24 rounded-xl flex items-center justify-center flex-col text-white z-9999 relative"
+        class="w-[300px] h-20 px-2 rounded-xl flex items-center justify-center flex-col text-white z-9999 relative"
         :class="toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'"
         @click="toastStore.removeToast(toast.id)"
       >
@@ -14,9 +14,9 @@
           class="w-max absolute right-3 top-3 cursor-pointer"
           @click="toastStore.removeToast(toast.id)"
         >
-          <Icon name="zondicons:close-solid" size="20px" />
+          <Icon name="zondicons:close-solid" size="18px" />
         </button>
-        <p class="w-full text-center">{{ toast.message }}</p>
+        <p class="w-full text-center mr-2 text-xs">{{ toast.message }}</p>
       </div>
     </TransitionGroup>
   </div>
