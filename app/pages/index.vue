@@ -61,7 +61,7 @@
               to="/pricing"
               v-show="mounted"
               style="animation-delay: 1s"
-              class="px-3 py-4 bg-white w-full rounded-xl border border-gray-300 text-sm font-light cursor-pointer"
+              class="px-3 py-4 bg-white w-full rounded-xl border border-gray-300 text-sm font-light cursor-pointer text-center"
             >
               قیمت ها
             </NuxtLink>
