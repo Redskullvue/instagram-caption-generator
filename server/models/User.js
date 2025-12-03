@@ -326,6 +326,7 @@ userSchema.methods.updatePlan = async function (newPlan, transId, amount) {
     gateway: "bitpay",
     createdAt: new Date(),
   });
+  this.usage.promptsUsed = 0;
   await this.save();
   return this.toClientJSON();
 };
