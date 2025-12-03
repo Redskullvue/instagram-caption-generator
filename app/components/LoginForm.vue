@@ -33,7 +33,6 @@
           placeholder="رمز عبور"
         />
       </div>
-      <p class="text-red-500 mt-6" v-if="requestError">{{ requestError }}</p>
       <div class="w-full mt-10">
         <input
           type="submit"
@@ -51,8 +50,8 @@ const auth = useAuthStore();
 const isSendingRequest = ref(false);
 const email = ref("");
 const password = ref("");
-const requestError = ref(null);
 const route = useRoute();
+const toastStore = useToastStore();
 
 const handleLogin = async () => {
   isSendingRequest.value = true;
@@ -64,12 +63,9 @@ const handleLogin = async () => {
       await navigateTo("/chat");
     }
   } catch (error) {
-    requestError.value = error.message;
+    toastStore.addToast("error", error.message);
   } finally {
     isSendingRequest.value = false;
-    setTimeout(() => {
-      requestError.value = null;
-    }, 2000);
   }
 };
 </script>
