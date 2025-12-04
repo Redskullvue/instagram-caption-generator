@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { plans } from "~~/server/utils/plans";
-
+import crypto from "crypto";
 // In order to track created transactions
 const transactionSchema = new mongoose.Schema({
   transId: {
@@ -132,6 +132,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  verificationToken: {
+    type: String,
+    select: false, // Don't return in queries
+  },
+  verificationTokenExpires: {
+    type: Date,
+    select: false, // Don't return in queries
+  },
   isActive: {
     type: Boolean,
     default: false,
@@ -163,6 +171,36 @@ function getNextResetDate() {
 userSchema.pre("save", async function () {
   this.updatedAt = new Date();
 });
+
+// User Email Verification Methods
+userSchema.methods.generateVerificationToken = async function () {
+  const token = await crypto.randomBytes(32).toString("hex");
+  this.verificationToken = token;
+  this.verificationTokenExpires = Date.now() + 1000 * 60 * 15;
+
+  this.save();
+
+  return token;
+};
+
+// Verify the token
+userSchema.methods.verifyEmail = function (token) {
+  if (this.verificationToken !== token) {
+    throw new Error("توکن اشتباه می باشد ایمیل تایید نشد");
+  }
+
+  if (this.verificationTokenExpires < new Date()) {
+    throw new Error("زمان توکن منقضی شده لطفا لینک جدید دریافت کنید");
+  }
+
+  this.isVerfied = true;
+  this.verificationToken = undefined;
+  this.verificationTokenExpires = undefined;
+
+  this.save();
+  return true;
+};
+
 // Transform output to match front-end structure
 userSchema.methods.toClientJSON = function () {
   return {

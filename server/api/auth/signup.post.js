@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "~~/server/models/User";
+import { sendMail } from "~~/server/utils/mailSender";
 
 export default defineEventHandler(async (event) => {
   const { email, password, name } = await readBody(event);
@@ -41,6 +42,10 @@ export default defineEventHandler(async (event) => {
     const token = jwt.sign({ userId: user._id }, config.jwtSecret, {
       expiresIn: "1d",
     });
+    // Generate A Token For Email Verification : Lasts 15 Mins
+    let mailToken = await user.generateVerificationToken();
+    // Send Verification Email
+    await sendMail(email.toLowerCase(), name, mailToken, user._id);
     return {
       user: user.toClientJSON(),
       token,

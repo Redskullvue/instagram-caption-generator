@@ -40,6 +40,7 @@ export default defineNuxtConfig({
     geminiBaseUrl: "",
     gatewayApiKey: "",
     gatewayRedirectUrl: "",
+    mailApiKey: "",
   },
 
   app: {
