@@ -20,7 +20,19 @@
       <NuxtLink to="/pricing">قیمت ها</NuxtLink>
       <NuxtLink to="/">تماس با ما</NuxtLink>
     </div>
-    <div class="flex items-center justify-center">Enamad</div>
+    <div class="flex items-center justify-center">
+      <a
+        referrerpolicy="origin"
+        target="_blank"
+        href="https://trustseal.enamad.ir/?id=682141&Code=XKxJIQEhpAM4C0tMRXzgSLQZPXOeC9yA"
+        ><img
+          referrerpolicy="origin"
+          src="https://trustseal.enamad.ir/logo.aspx?id=682141&Code=XKxJIQEhpAM4C0tMRXzgSLQZPXOeC9yA"
+          alt=""
+          style="cursor: pointer"
+          code="XKxJIQEhpAM4C0tMRXzgSLQZPXOeC9yA"
+      /></a>
+    </div>
   </div>
   <div class="bg-white flex items-center justify-center w-full">
     <p
