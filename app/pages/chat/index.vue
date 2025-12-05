@@ -36,6 +36,7 @@
         :promptsLimit="usageStore.usage.promptsLimit"
         :hasPromptsLeft="usageStore.hasPromptsLeft"
         :promptsRemaining="usageStore.promptsRemaining"
+        :isVerified="authStore.user.isVerified"
       />
     </div>
   </div>

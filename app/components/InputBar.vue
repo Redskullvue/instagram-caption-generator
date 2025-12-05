@@ -12,7 +12,7 @@
         id="input-bar"
         type="text"
         v-model="inputValue"
-        :disabled="!hasPromptsLeft"
+        :disabled="!hasPromptsLeft || !isVerified"
         :placeholder="
           hasPromptsLeft
             ? 'موضوع خود را بنویسید'
@@ -54,6 +54,7 @@ const props = defineProps({
   promptsRemaining: { type: Number, default: 0 },
   promptsLimit: { type: Number, default: 0 },
   hasPromptsLeft: { type: Boolean, default: true },
+  isVerified: { type: Boolean, default: false },
 });
 const maxChars = 100;
 const inputValue = ref("");
