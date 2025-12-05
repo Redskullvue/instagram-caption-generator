@@ -208,6 +208,7 @@ userSchema.methods.toClientJSON = function () {
     email: this.email,
     name: this.name,
     plan: this.plan,
+    planExpiresAt: this.planExpiresAt,
     isVerified: this.isVerified,
     createdAt: this.createdAt,
   };
