@@ -2,6 +2,10 @@
   <div
     class="w-full h-screen flex justify-center items-center overflow-x-hidden"
   >
+    <EmailVerificationModal
+      class="absolute top-4 max-w-[300px]"
+      @send-email="sendEmail"
+    />
     <div
       class="w-full flex justify-start min-h-screen h-screen flex-col p-1 bg-linear-to-r from-purple-600 to-pink-600"
     >
@@ -55,10 +59,9 @@
 </template>
 
 <script setup>
+const toastStore = useToastStore();
 const toggleMenu = ref(false);
-
 // Check if window is bigger than 1024px set toggleMenu to true
-
 onMounted(() => {
   const width = window.innerWidth;
   if (width >= 1024) {
@@ -71,6 +74,19 @@ const closeMenu = (val) => {
 };
 const showMenu = () => {
   toggleMenu.value = true;
+};
+
+const sendEmail = async (val) => {
+  try {
+    const response = await $fetch("/api/auth/sendmail", {
+      headers: {
+        Authorization: `Bearer ${val}`,
+      },
+    });
+    toastStore.addToast("success", "ایمیل ارسال شد");
+  } catch (error) {
+    toastStore.addToast("error", error.data.message);
+  }
 };
 </script>
 <style>
