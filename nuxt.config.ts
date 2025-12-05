@@ -41,6 +41,8 @@ export default defineNuxtConfig({
     gatewayApiKey: "",
     gatewayRedirectUrl: "",
     mailApiKey: "",
+    // This is used to return the right link in production when user wants to reset password
+    mailUrl: "",
   },
 
   app: {

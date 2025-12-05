@@ -56,6 +56,28 @@ export const useAuthStore = defineStore("authStore", () => {
 
     return navigateTo("/login");
   };
+
+  const sendEmailForPassword = async (email) => {
+    try {
+      const response = await $fetch("/api/auth/forgot", {
+        method: "POST",
+        body: { email: email },
+      });
+    } catch (error) {
+      throw new Error(error.data.message);
+    }
+  };
+
+  const resetPassword = async (token, password, userId) => {
+    try {
+      const response = await $fetch("/api/auth/resetpass", {
+        method: "POST",
+        body: { newPassword: password, token: token, userId: userId },
+      });
+    } catch (error) {
+      throw new Error(error.data.message);
+    }
+  };
   // reloads the auth state from localStorage and puts it back into Pinia.
   const hydrate = () => {
     if (import.meta.client && token.value) {
@@ -71,6 +93,8 @@ export const useAuthStore = defineStore("authStore", () => {
     login,
     signUp,
     logOut,
+    sendEmailForPassword,
+    resetPassword,
     hydrate,
   };
 });

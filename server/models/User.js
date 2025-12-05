@@ -87,6 +87,16 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     select: false, // Won't return password in queries by default
   },
+  // Reset and Change Password
+  resetPasswordToken: {
+    type: String,
+    select: false,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    select: false,
+  },
+
   name: {
     type: String,
     required: [true, "نام و نام خانوادگی اجباری است"],
@@ -199,6 +209,22 @@ userSchema.methods.verifyEmail = function (token) {
 
   this.save();
   return true;
+};
+
+// Generate Token For Password Reset
+userSchema.methods.generateResetPasswordToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  // Hash Token Before Storing
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Token Expires in 15 mins
+  this.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+  this.save();
+  return resetToken;
 };
 
 // Transform output to match front-end structure

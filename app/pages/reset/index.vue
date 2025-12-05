@@ -6,24 +6,14 @@
       <h2
         class="w-full text-center text-lg font-semibold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
       >
-        ورود به حساب کاربری
+        تغییر رمز عبود
       </h2>
       <p class="w-full text-center text-gray-600 mt-3 mb-12">
         به کپشن ساز خوش آمدید
       </p>
       <!-- Form -->
       <div class="w-full h-max">
-        <LoginForm />
-      </div>
-      <div class="w-full text-center text-gray-600 text-sm mt-10 mb-3">
-        حساب کاربری ندارید ؟<span class="text-purple-500 mx-1"
-          ><NuxtLink to="/signup">ثبت نام کنید</NuxtLink></span
-        >
-      </div>
-      <div class="w-full text-center text-gray-600 text-sm">
-        فراموشی رمز عبور؟<span class="text-purple-500 mx-1"
-          ><NuxtLink to="/forgotpassword">دریافت رمز</NuxtLink></span
-        >
+        <ResetPasswordForm />
       </div>
     </div>
   </div>
