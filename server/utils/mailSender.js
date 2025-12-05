@@ -1,24 +1,12 @@
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+import { Resend } from "resend";
+const config = useRuntimeConfig();
+const resend = new Resend(config.mailApiKey);
 export async function sendMail(email, name, token, userId) {
-  const config = useRuntimeConfig();
-  const mailerSend = new MailerSend({
-    apiKey: config.mailApiKey,
-  });
-
-  const sentFrom = new Sender(
-    "info@captionsaz.ir",
-    "کپشن ساز - فعالسازی ایمیل"
-  );
-
-  const recipients = [new Recipient(email, name)];
-
-  const emailParams = new EmailParams()
-    .setFrom(sentFrom)
-    .setTo(recipients)
-    .setReplyTo(sentFrom)
-    .setSubject("فعالسازی ایمیل - کپشن ساز")
-    .setHtml(
-      `
+  const { data, error } = await resend.emails.send({
+    from: "فعال سازی ایمیل <info@captionsaz.ir>",
+    to: [email],
+    subject: "کپشن ساز - فعال سازی حساب کاربری",
+    html: `
       <!DOCTYPE html>
       <html dir="rtl" lang="fa">
       <head>
@@ -96,15 +84,14 @@ export async function sendMail(email, name, token, userId) {
         </div>
       </body>
       </html>
-    `
-    )
-    .setText(" ");
-  try {
-    await mailerSend.email.send(emailParams);
-  } catch (error) {
+    `,
+  });
+  if (error) {
     throw createError({
       statusCode: 500,
-      message: "Internal Server Error : Email Failed",
+      message: "خطا در ارسال ایمیل",
     });
   }
+
+  return { success: true };
 }
