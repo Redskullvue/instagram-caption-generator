@@ -12,7 +12,7 @@ export const plans = {
   Enterprise: {
     promptsLimit: 999999,
     durationDays: 30,
-    price: 79900,
+    price: 149000,
   },
 };
 export function getPlanConfig(planName) {

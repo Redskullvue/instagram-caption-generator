@@ -128,8 +128,8 @@ const plans = [
   },
   {
     title: "Enterprise",
-    price: "۷۹.۹۰۰ تومان ",
-    mainPrice: "۲۱۹,۹۰۰",
+    price: "۱۴۹.۰۰۰ تومان ",
+    mainPrice: "۳۱۹,۹۰۰",
     image: "/Pricing-3.png",
     description: "برای کسب‌وکارها و آژانس‌ها",
     products: [
