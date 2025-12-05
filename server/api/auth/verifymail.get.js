@@ -6,16 +6,15 @@ export default defineEventHandler(async (event) => {
       "+verificationToken +verificationTokenExpires"
     );
     if (!user) {
-      return sendRedirect(event, "/login");
+      return sendRedirect(event, "/signup");
     }
     const isValid = user.verifyEmail(token);
     if (isValid) {
       return sendRedirect(event, "/chat");
     } else {
-      return sendRedirect(event, "/pricing");
+      return sendRedirect(event, "/signup");
     }
   } catch (error) {
-    console.log("Error");
-    // return sendRedirect(event, "/signup");
+    return sendRedirect(event, "/signup");
   }
 });
