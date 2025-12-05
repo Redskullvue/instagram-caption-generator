@@ -128,7 +128,7 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   //   Accout Status
-  isVerfied: {
+  isVerified: {
     type: Boolean,
     default: false,
   },
@@ -193,7 +193,7 @@ userSchema.methods.verifyEmail = function (token) {
     throw new Error("زمان توکن منقضی شده لطفا لینک جدید دریافت کنید");
   }
 
-  this.isVerfied = true;
+  this.isVerified = true;
   this.verificationToken = undefined;
   this.verificationTokenExpires = undefined;
 
