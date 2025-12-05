@@ -20,7 +20,10 @@
       <NuxtLink to="/pricing">قیمت ها</NuxtLink>
       <NuxtLink to="/">تماس با ما</NuxtLink>
     </div>
-    <div class="flex items-center justify-center">
+    <div
+      class="flex items-center justify-center"
+      v-if="config.mailUrl !== 'http://localhost:3000/'"
+    >
       <a
         referrerpolicy="origin"
         target="_blank"
@@ -43,4 +46,6 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const config = useRuntimeConfig();
+</script>
