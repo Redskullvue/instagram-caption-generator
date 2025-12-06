@@ -12,6 +12,11 @@
         <Icon name="ic:outline-plus" size="24px" />
         ایجاد گفتگو جدید
       </button>
+      <NuxtLink
+        to="/upgrade?plan=Enterprise"
+        class="rounded-xl bg-gray-200 py-2 flex items-center justify-center transition-colors duration-300 hover:bg-gray-300 text-sm"
+        >ارتقا/تعویض پلن</NuxtLink
+      >
     </div>
     <div class="w-full h-full p-3">
       <h2 class="mb-2 text-xs text-gray-500">تاریخچه گفت گو ها</h2>
