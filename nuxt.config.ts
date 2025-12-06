@@ -27,7 +27,27 @@ export default defineNuxtConfig({
       path: "logs",
       attempts: 100,
     },
-    routes: [],
+    routes: [
+      // Specific routes limiters
+      {
+        path: "/api/auth/forgot",
+        max: 1, // custom max requests
+        duration: 120,
+        ban: 3600,
+      },
+      {
+        path: "/api/auth/sendmail",
+        max: 1, // custom max requests
+        duration: 120,
+        ban: 3600,
+      },
+      {
+        path: "/api/auth/signup",
+        max: 2,
+        duration: 120,
+        ban: 3600,
+      },
+    ],
   },
 
   routeRules: {
