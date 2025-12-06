@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (password.length < 6) {
+  if (newPassword.length < 6) {
     throw createError({
       statusCode: 422,
       message: "پسورد باید بیشتر از 6 کاراکتر باشد",
