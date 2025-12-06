@@ -29,6 +29,10 @@
         class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[100px] lg:bg-white lg:rounded-xl lg:p-4"
         @selectTone="setTone"
       />
+      <SocialSelector
+        class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4 lg:mt-0"
+        @selectSocial="setSocial"
+      />
       <InputBar
         class="w-full h-full mt-3 lg:mt-0"
         @generate="sendMessage"
@@ -53,6 +57,7 @@ const authStore = useAuthStore();
 const chatStore = useChatStore();
 
 const selectedTone = ref("");
+const selectedSocialMedia = ref("");
 const isGenerating = ref(false);
 const usedAllPrompts = ref(false);
 
@@ -88,6 +93,9 @@ const sendMessage = async (val) => {
 const setTone = (val) => {
   selectedTone.value = val;
 };
+const setSocial = (val) => {
+  selectedSocialMedia.value = val;
+};
 
 const generateCaption = async (userInput) => {
   isGenerating.value = true;
@@ -103,6 +111,7 @@ const generateCaption = async (userInput) => {
         chatId: chatStore.currentChatId,
         options: {
           tone: selectedTone.value,
+          socialMedia: selectedSocialMedia.value,
           includeEmojis: true,
           includeHashtags: true,
           language: "fa",
