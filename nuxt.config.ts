@@ -16,9 +16,22 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
-  modules: ["@nuxt/icon", "@pinia/nuxt", "nuxt-api-shield", "@nuxt/image"],
+  modules: [
+    "@nuxt/icon",
+    "@pinia/nuxt",
+    "nuxt-api-shield",
+    "@nuxt/image",
+    "@nuxtjs/sitemap",
+  ],
   image: {
     quality: 80,
+  },
+  // @ts-ignore
+  sitemap: {
+    // @ts-ignore
+    hostname: "https://captionsaz.ir",
+    gzip: true,
+    routes: ["/", "/about", "/pricing", "/contact-us", "/login", "/signup"],
   },
   nuxtApiShield: {
     limit: {
