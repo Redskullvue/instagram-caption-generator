@@ -157,6 +157,25 @@
 </template>
 
 <script setup>
+useHead({
+  title: "درباره کپشن ساز",
+  meta: [
+    {
+      name: "description",
+      content:
+        "درباره تیم کپشن ساز و ماموریت ما : کمک به تولید کنندگان محتوا برای بهتر دیده شدن در شبکه های مجازی و افزایش سرعت تولید محتوای این افراد",
+    },
+    { property: "og:title", content: "درباره ما | کپشن‌ساز" },
+    {
+      property: "og:description",
+      content:
+        "آشنایی با تیم و هدف کپشن‌ساز؛ چطور به تولیدکنندگان کمک می‌کنیم در اکسپلور دیده شوند.",
+    },
+    { property: "og:url", content: "https://captionsaz.ir/about" },
+  ],
+  link: [{ rel: "canonical", href: "https://captionsaz.ir/about" }],
+});
+
 const boxes = [
   { title: "کاربر فعال", value: "+500" },
   { title: "کپشن ها", value: "+10,000" },
