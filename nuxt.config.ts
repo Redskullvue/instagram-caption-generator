@@ -77,6 +77,15 @@ export default defineNuxtConfig({
         lang: "fa",
         dir: "rtl",
       },
+      link: [
+        {
+          rel: "preload",
+          href: "~/assets/fonts/IRANSans-web.woff",
+          as: "font",
+          type: "font/woff",
+          crossorigin: "anonymous",
+        },
+      ],
     },
   },
   nitro: {
