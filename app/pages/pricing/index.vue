@@ -98,6 +98,25 @@
 </template>
 
 <script setup>
+useHead({
+  title: "قیمت‌ها و پلن‌ها",
+  meta: [
+    {
+      name: "description",
+      content:
+        "از پلن رایگان شروع کن پیج خودتو بالا بیار. انتخاب پلن مناسب برای تولید کپشن روزانه و رسیدن به قله های شبکه های مجازی مثل اینستاگرام",
+    },
+    { property: "og:title", content: "قیمت‌ها | کپشن‌ساز" },
+    {
+      property: "og:description",
+      content:
+        "قیمت‌ها و مقایسه پلن‌ها: رایگان، پرو و سازمانی. پلنی مناسب برای سطح استفاده خود انتخاب کنید.",
+    },
+    { property: "og:url", content: "https://captionsaz.ir/pricing" },
+  ],
+  link: [{ rel: "canonical", href: "https://captionsaz.ir/pricing" }],
+});
+
 const authStore = useAuthStore();
 
 const plans = [
