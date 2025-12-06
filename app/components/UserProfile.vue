@@ -44,7 +44,7 @@ onMounted(() => {
   if (authStore.user.planExpiresAt) {
     date.value = formatDate(authStore.user.planExpiresAt);
   } else {
-    date.value = "-";
+    date.value = formatDate(usageStore.usage.resetDate);
   }
 });
 </script>
