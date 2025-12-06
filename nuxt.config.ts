@@ -73,11 +73,33 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      titleTemplate: "%s | کپشن‌ساز",
+      title: "کپشن ساز - تولید کپشن و پست شبکه های مجازی با هوش مصنوعی",
+      meta: [
+        { name: "charset", content: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "author", content: "کپشن ساز" },
+        {
+          name: "description",
+          content:
+            "افزایش بازدید و حضور در اکسپلور به کمک هوش مصنوعی کپشن ساز - نرخ بازدید خودتون رو افزایش بدید",
+        },
+        { property: "og:site_name", content: "کپشن‌ساز" },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "fa_IR" },
+        { name: "twitter:site", content: "@captionsaz" },
+      ],
       htmlAttrs: {
         lang: "fa",
         dir: "rtl",
       },
       link: [
+        { rel: "canonical", href: "https://captionsaz.ir/" },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "",
+        },
         {
           rel: "preload",
           href: "/fonts/IRANSans-web.woff",
