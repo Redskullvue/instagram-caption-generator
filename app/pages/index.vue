@@ -212,6 +212,29 @@
 </template>
 
 <script setup>
+useHead({
+  title: "تولید کپشن و پست به صورت هوشمند با هوش مصنوعی برای رسیدن به اکسپلور",
+  meta: [
+    {
+      name: "description",
+      content:
+        "فقط در چند ثانیه کپشن های حرفه ای بسازید و راه خودتون رو برای رسیدن به اکسپلور و دیده شدن هموار کنید",
+    },
+    {
+      property: "og:title",
+      content:
+        "کپشن‌ساز — تولید کپشن برای نمایش در اکسپلور اینستاگرام و سایر شبکه های مجازی",
+    },
+    {
+      property: "og:description",
+      content:
+        "کپشن‌ساز به شما کمک می‌کند کپشن‌های جذاب و ترند بسازید تا پست‌های شما مخاطب بیشتری جذب کنند.",
+    },
+    { property: "og:url", content: "https://captionsaz.ir/" },
+  ],
+  link: [{ rel: "canonical", href: "https://captionsaz.ir/" }],
+});
+
 const observerTarget = ref(null);
 const mounted = ref(false);
 const observerRoot = ref(null);
