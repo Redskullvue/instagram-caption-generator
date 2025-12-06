@@ -132,7 +132,7 @@ const sendToGateWay = async () => {
       },
     });
     if (response.code > 0) {
-      window.location.href = `https://bitpay.ir/payment-test/gateway-${response.code}-get`;
+      window.location.href = `https://bitpay.ir/payment/gateway-${response.code}-get`;
     }
   } catch (error) {
     toastStore.addToast("error", error.data.message);

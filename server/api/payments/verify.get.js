@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   }
   try {
     const bitPayResponse = await $fetch(
-      "https://bitpay.ir/payment-test/gateway-result-second",
+      "https://bitpay.ir/payment/gateway-result-second",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },

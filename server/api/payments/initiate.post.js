@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
       `${config.gatewayRedirectUrl}payments/verify?plan=${planName}&userId=${userId}`
     );
     const bitPayResponse = await $fetch(
-      "https://bitpay.ir/payment-test/gateway-send",
+      "https://bitpay.ir/payment/gateway-send",
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
