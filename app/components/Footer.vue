@@ -20,10 +20,7 @@
       <NuxtLink to="/pricing">قیمت ها</NuxtLink>
       <NuxtLink to="/">تماس با ما</NuxtLink>
     </div>
-    <div
-      class="flex items-center justify-center"
-      v-if="config.mailUrl !== 'http://localhost:3000/'"
-    >
+    <div class="flex items-center justify-center">
       <a
         referrerpolicy="origin"
         target="_blank"
