@@ -71,11 +71,11 @@
       <!-- Left Side -->
       <div class="flex-1 md:p-6 mb-4 flex items-center justify-center">
         <Transition name="fade" appear>
-          <img
-            v-show="mounted"
-            style="animation-delay: 0.7s"
+          <NuxtImg
             src="/preview.png"
-            alt="instagram-content-creator-preview"
+            style="animation-delay: 0.7s"
+            v-show="mounted"
+            alt="instagram-caption-generator-preview"
             class="max-w-[470px] max-h-[580px] w-[360px] md:w-[470px] p-6 lg:p-2"
           />
         </Transition>
@@ -154,7 +154,11 @@
         class="w-full md:w-7/12 rounded-xl bg-white shadow-md shadow-gray-400 p-6 flex items-center justify-start flex-col min-h-[450px] md:min-h-[400px]"
       >
         <div class="w-full flex items-center justify-center">
-          <img src="/logo-2.png" alt="captionsaz-logo" />
+          <NuxtImg
+            src="/logo-2.png"
+            alt="captionsaz-logo"
+            class="w-[150px] h-[150px] object-contain"
+          />
         </div>
         <div class="w-full text-center border-b border-gray-200 min-h-[200px]">
           <h2 class="font-bold mb-2">آماده صرفه جویی در ساعت ها زمان؟</h2>

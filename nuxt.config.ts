@@ -9,11 +9,17 @@ export default defineNuxtConfig({
   $development: {
     devtools: { enabled: true },
   },
+  experimental: {
+    payloadExtraction: true,
+  },
   vite: {
     plugins: [tailwindcss()],
   },
   css: ["~/assets/css/main.css", "~/assets/fonts/font.css"],
-  modules: ["@nuxt/icon", "@pinia/nuxt", "nuxt-api-shield"],
+  modules: ["@nuxt/icon", "@pinia/nuxt", "nuxt-api-shield", "@nuxt/image"],
+  image: {
+    quality: 80,
+  },
   nuxtApiShield: {
     limit: {
       max: 60,
@@ -75,5 +81,6 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "node-server",
+    compressPublicAssets: true,
   },
 });
