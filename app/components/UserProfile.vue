@@ -25,7 +25,7 @@
       </div>
       <div class="border-l border-r px-3 flex flex-col items-center">
         {{ date }}
-        <small> تاریخ شارژ </small>
+        <small> انقضا پلن </small>
       </div>
       <div class="px-1 flex flex-col items-center">
         {{ authStore.user.plan }}
@@ -41,6 +41,10 @@ const authStore = useAuthStore();
 const { formatDate } = useDateChanger();
 const date = ref(null);
 onMounted(() => {
-  date.value = formatDate(usageStore.usage.resetDate);
+  if (authStore.user.planExpiresAt) {
+    date.value = formatDate(authStore.user.planExpiresAt);
+  } else {
+    date.value = "-";
+  }
 });
 </script>
