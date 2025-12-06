@@ -80,7 +80,7 @@ export default defineNuxtConfig({
       link: [
         {
           rel: "preload",
-          href: "~/assets/fonts/IRANSans-web.woff",
+          href: "/fonts/IRANSans-web.woff",
           as: "font",
           type: "font/woff",
           crossorigin: "anonymous",
