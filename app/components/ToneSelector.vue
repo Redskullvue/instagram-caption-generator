@@ -1,7 +1,29 @@
 <template>
   <div class="w-full h-max">
-    <p>لحن خود را انتخاب کنید</p>
-    <div class="w-full min-h-5 grid grid-cols-2 mt-2 text-sm">
+    <div
+      class="w-full flex items-center gap-x-3"
+      @click="
+        width > 1024
+          ? (showToneSelector = true)
+          : (showToneSelector = !showToneSelector)
+      "
+    >
+      <p>لحن خود را انتخاب کنید</p>
+      <p class="text-xs text-gray-600 lg:hidden">
+        {{ tones[toneIndex].title }}
+      </p>
+      <i
+        class="lg:hidden flex items-center justify-center transition-all duration-300"
+        :class="showToneSelector ? 'rotate-180' : 'rotate-0'"
+      >
+        <Icon name="mdi-light:chevron-down" size="20px" />
+      </i>
+    </div>
+
+    <div
+      class="w-full min-h-5 grid grid-cols-2 mt-2 text-sm"
+      v-if="showToneSelector"
+    >
       <button
         class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300"
         :class="
@@ -11,7 +33,7 @@
         "
         v-for="(tone, index) in tones"
         :key="index"
-        @click="setTone(tone.value)"
+        @click="setTone(tone.value, index)"
       >
         {{ tone.title }}
       </button>
@@ -20,6 +42,7 @@
 </template>
 
 <script setup>
+const width = window.innerWidth;
 const emits = defineEmits(["selectTone"]);
 const selectedTone = ref("casual");
 const tones = ref([
@@ -28,11 +51,25 @@ const tones = ref([
   { title: "شوخ", value: "funny" },
   { title: "انگیزشی", value: "inspirational" },
 ]);
+// To show users what has been selected already
+const toneIndex = ref(1);
+// Show or not show the selection in mobile for better UX
+const showToneSelector = ref(false);
+onMounted(() => {
+  if (width > 1024) {
+    showToneSelector.value = true;
+  }
+});
 
-const setTone = (value) => {
+// Set the tone
+const setTone = (value, index) => {
   if (value) {
     selectedTone.value = value;
+    toneIndex.value = index;
     emits("selectTone", selectedTone.value);
+    if (width < 1024) {
+      showToneSelector.value = false;
+    }
     return;
   }
 };
