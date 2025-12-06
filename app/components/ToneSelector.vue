@@ -8,8 +8,10 @@
           : (showToneSelector = !showToneSelector)
       "
     >
-      <p>لحن خود را انتخاب کنید</p>
-      <p class="text-xs text-gray-600 lg:hidden">
+      <p class="text-sm text-gray-800">لحن خود را انتخاب کنید</p>
+      <p
+        class="text-xs text-gray-600 lg:hidden bg-gray-100 rounded-xl px-3 py-2"
+      >
         {{ tones[toneIndex].title }}
       </p>
       <i
