@@ -56,16 +56,17 @@ const props = defineProps({
   hasPromptsLeft: { type: Boolean, default: true },
   isVerified: { type: Boolean, default: false },
 });
-const maxChars = 100;
+const toastStore = useToastStore();
+const maxChars = 150;
 const inputValue = ref("");
 const currentChars = computed(() => inputValue.value.length);
 
 const generateCaption = () => {
   if (currentChars.value > maxChars) {
-    console.log("More Than 100 Chars");
+    toastStore.addToast("error", "موضوع نمیتواند بیشتر از 150 باشد");
     return;
   } else if (inputValue.value.length <= 1) {
-    console.log("Fill the input");
+    toastStore.addToast("error", "لطفا موضوعی بنویسید");
     return;
   } else {
     emits("generate", inputValue.value);
