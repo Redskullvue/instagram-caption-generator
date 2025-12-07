@@ -408,7 +408,7 @@ userSchema.methods.getChatForContext = function (chatId) {
   }
 
   // Return last 10 messages for context
-  return chat.messages.slice(-6).map((msg) => ({
+  return chat.messages.slice(-8).map((msg) => ({
     text: msg.content,
     isUser: msg.role === "user",
   }));
