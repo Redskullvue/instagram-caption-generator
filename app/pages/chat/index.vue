@@ -4,6 +4,7 @@
     <div
       class="w-full lg:max-h-[55vh] lg:min-h-[55vh] min-h-[50vh] max-h-[50vh] overflow-y-scroll px-2 py-1"
       ref="chatContainer"
+      @scroll="handleScroll"
     >
       <template
         v-for="(message, index) in chatStore.messages"
@@ -19,6 +20,9 @@
         </div>
       </template>
       <TypingIndicator v-if="isGenerating === true" />
+    </div>
+    <div class="absolute bottom-[30%] lg:left-[50%] left-[48%]">
+      <ScrollButton v-if="needsScroll" @click="setScrollToBottom" />
     </div>
 
     <!-- Buttons and input Selector -->
@@ -60,6 +64,8 @@ const selectedTone = ref("");
 const selectedSocialMedia = ref("");
 const isGenerating = ref(false);
 const usedAllPrompts = ref(false);
+// Check if user needs to scroll
+const needsScroll = ref(false);
 
 const { chatContainer, onMessageAdded } = useChatScroll();
 
@@ -69,7 +75,6 @@ onMounted(async () => {
     await usageStore.fetchUsage();
     await chatStore.hydrate();
   }
-
   // Smart initialization: only create if no current chat exists
   if (!chatStore.currentChatId || chatStore.messages.length === 0) {
     // Check if we need to load existing chat or create new
@@ -95,6 +100,24 @@ const setTone = (val) => {
 };
 const setSocial = (val) => {
   selectedSocialMedia.value = val;
+};
+
+// Check and see if user needs scrolling
+const handleScroll = () => {
+  const isAtBottom =
+    chatContainer.value.scrollHeight -
+      chatContainer.value.clientHeight -
+      chatContainer.value.scrollTop <
+    10;
+  needsScroll.value = !isAtBottom;
+};
+
+// send user to the bottom of chat
+const setScrollToBottom = () => {
+  chatContainer.value.scrollTo({
+    top: chatContainer.value.scrollHeight,
+    behavior: "smooth",
+  });
 };
 
 const generateCaption = async (userInput) => {
