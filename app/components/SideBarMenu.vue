@@ -15,7 +15,7 @@
       <NuxtLink
         to="/upgrade?plan=Enterprise"
         class="rounded-xl bg-gray-200 py-2 flex items-center justify-center transition-colors duration-300 hover:bg-gray-300 text-sm"
-        >ارتقا/تعویض پلن</NuxtLink
+        >ارتقا/تمدید پلن</NuxtLink
       >
     </div>
     <div class="w-full h-full p-3">
