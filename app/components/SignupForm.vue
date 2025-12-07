@@ -58,19 +58,19 @@
           class="text-gray-700 leading-relaxed cursor-pointer text-sm"
         >
           با
-          <NuxtLink
-            to="/"
+          <a
+            href="/Captionsaz-Policy.pdf"
             class="text-purple-600 font-semibold hover:underline"
           >
             قوانین و مقررات
-          </NuxtLink>
+          </a>
           و
-          <NuxtLink
-            to="/"
+          <a
+            href="/Privacy-Policy.pdf"
             class="text-purple-600 font-semibold hover:underline"
           >
             حریم خصوصی
-          </NuxtLink>
+          </a>
           موافقم
         </label>
       </div>
