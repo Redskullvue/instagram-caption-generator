@@ -76,6 +76,7 @@ export default defineNuxtConfig({
     mongodbUri: "",
     jwtSecret: "",
     geminiApiKey: "",
+    gptApiKey: "",
     geminiBaseUrl: "",
     gatewayApiKey: "",
     gatewayRedirectUrl: "",

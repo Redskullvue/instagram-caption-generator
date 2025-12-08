@@ -1,5 +1,6 @@
 import { requireAuth } from "~~/server/utils/auth";
 import { generateCaption } from "~~/server/utils/gemeni";
+import { generateGptCaption } from "~~/server/utils/gpt";
 import User from "~~/server/models/User";
 import { checkPlanExpiry } from "~~/server/utils/checkPlanExpiry";
 export default defineEventHandler(async (event) => {
@@ -26,7 +27,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { prompt, options, chatId } = await readBody(event);
+  const { prompt, options, chatId, selectedAIEngine } = await readBody(event);
 
   if (!prompt || prompt.trim().length === 0) {
     throw createError({
@@ -43,6 +44,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Create New Chat if not exist or get currentchat
+    let result;
     let currentChatId = chatId;
     if (!currentChatId) {
       const newChat = user.createNewChat();
@@ -52,8 +54,20 @@ export default defineEventHandler(async (event) => {
     const conversationHistory = user.getChatForContext(currentChatId);
     // Add user message to chat
     user.addMessageToChat(currentChatId, "user", prompt, false);
+    if (selectedAIEngine === "gpt") {
+      if (user.plan === "Free") {
+        throw createError({
+          statusCode: 404,
+          message: "متاسفانه شما قابلیت استفاده از این هوش مصنوعی را ندارید",
+        });
+      }
+      result = await generateGptCaption(prompt, options, conversationHistory);
+    } else if (selectedAIEngine === "gemeni") {
+      result = await generateCaption(prompt, options, conversationHistory);
+    } else {
+      result = await generateCaption(prompt, options, conversationHistory);
+    }
 
-    const result = await generateCaption(prompt, options, conversationHistory);
     // Add AI response to chat
     user.addMessageToChat(currentChatId, "assistant", result.caption, true);
     // Update current chat ID

@@ -48,6 +48,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error;
     }
+    console.log(error);
     // For unexpected errors, create a proper error response
     throw createError({
       statusCode: 500,

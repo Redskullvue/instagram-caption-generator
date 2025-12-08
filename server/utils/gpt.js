@@ -8,7 +8,7 @@ function getOpenAIClient() {
     const config = useRuntimeConfig();
 
     openaiClient = new OpenAI({
-      apiKey: config.geminiApiKey,
+      apiKey: config.gptApiKey,
       baseURL: config.geminiBaseUrl, // Liara's endpoint
     });
   }
@@ -16,7 +16,7 @@ function getOpenAIClient() {
   return openaiClient;
 }
 
-export async function generateCaption(
+export async function generateGptCaption(
   prompt,
   options = {},
   conversationHistory = []
@@ -65,13 +65,10 @@ export async function generateCaption(
     });
 
     const response = await client.chat.completions.create({
-      model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
+      model: "openai/gpt-5-nano", // Check Liara docs for exact model name
       messages: messages,
-      max_tokens: 512,
-      temperature: 1,
     });
-
-    const generatedText = response.choices[0]?.message?.content;
+    const generatedText = response.choices[0]?.message.content;
 
     if (!generatedText) {
       throw new Error("No caption generated");
@@ -90,80 +87,6 @@ export async function generateCaption(
     throw new Error(error.message || "Failed to generate caption");
   }
 }
-
-export async function generateCaptionVariations(
-  prompt,
-  options = {},
-  count = 3
-) {
-  const {
-    includeEmojis = true,
-    includeHashtags = true,
-    language = "fa",
-  } = options;
-
-  const systemPrompt = `شما یک نویسنده حرفه‌ای کپشن اینستاگرام هستید. ${count} کپشن متفاوت برای موضوع کاربر بسازید.
-
-هر کپشن باید یک استایل متفاوت داشته باشد:
-1. کوتاه و جذاب (کمتر از 100 کاراکتر)
-2. داستانی (طول متوسط)
-3. تعاملی با سوال (تشویق به کامنت)
-
-${includeEmojis ? "از ایموجی‌های مناسب استفاده کنید." : "بدون ایموجی."}
-${includeHashtags ? "در پایان هر کپشن 3-5 هشتگ اضافه کنید." : "بدون هشتگ."}
-
-پاسخ را به صورت JSON array بده:
-[
-  {"style": "short", "caption": "..."},
-  {"style": "story", "caption": "..."},
-  {"style": "engaging", "caption": "..."}
-]
-
-فقط JSON array رو برگردون، هیچ متن اضافی نباید باشه.`;
-
-  try {
-    const client = getOpenAIClient();
-
-    const response = await client.chat.completions.create({
-      model: "gemini-2.0-flash-exp",
-      messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `موضوع پست: ${prompt}`,
-        },
-      ],
-      temperature: 0.9,
-      max_tokens: 2048,
-    });
-
-    const generatedText = response.choices[0]?.message?.content;
-
-    if (!generatedText) {
-      throw new Error("No captions generated");
-    }
-
-    // Parse JSON response
-    const cleanedText = generatedText.replace(/```json\n?|\n?```/g, "").trim();
-    const captions = JSON.parse(cleanedText);
-
-    return {
-      captions,
-      usage: {
-        promptTokens: response.usage?.prompt_tokens || 0,
-        completionTokens: response.usage?.completion_tokens || 0,
-        totalTokens: response.usage?.total_tokens || 0,
-      },
-    };
-  } catch (error) {
-    console.error("Gemini API error:", error);
-    throw new Error(error.message || "Failed to generate captions");
-  }
-}
-
 function buildSystemPrompt({
   tone,
   socialMedia,
@@ -217,11 +140,7 @@ LinkedIn → حرفه‌ای، ارزش‌افزا، مودبانه، مختصر
 
 قواعد سبک:
 - لحن کپشن باید مطابق این سبک باشد: ${toneDescriptions[tone]}.
-- ${
-    includeEmojis
-      ? "از ایموجی‌های طبیعی و مرتبط استفاده کن."
-      : "هیچ ایموجی استفاده نکن."
-  }
+- ${includeEmojis ? "از ایموجی استفاده کن." : "هیچ ایموجی استفاده نکن."}
 - ${
     includeHashtags
       ? "در پایان کپشن، فقط در یک خط، دقیقاً 5 تا 8 هشتگ مرتبط اضافه کن."

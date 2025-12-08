@@ -29,12 +29,16 @@
     <div
       class="w-full max-h-1/2 p-2 overflow-y-scroll lg:overflow-y-hidden flex flex-col lg:min-h-[28vh]"
     >
-      <ToneSelector
+      <AiSelector
+        @selectAi="setAi"
         class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[100px] lg:bg-white lg:rounded-xl lg:p-4"
+      />
+      <ToneSelector
+        class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[250px] lg:bg-white lg:rounded-xl lg:p-4 mt-4 lg:mt-0"
         @selectTone="setTone"
       />
       <SocialSelector
-        class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4 lg:mt-0"
+        class="w-full h-full lg:max-w-[300px] lg:absolute lg:right-4 lg:top-[450px] lg:bg-white lg:rounded-xl lg:p-4 mt-4 lg:mt-0"
         @selectSocial="setSocial"
       />
       <InputBar
@@ -85,6 +89,7 @@ const chatStore = useChatStore();
 
 const selectedTone = ref("");
 const selectedSocialMedia = ref("");
+const selectedAIEngine = ref("gemeni");
 const isGenerating = ref(false);
 const usedAllPrompts = ref(false);
 // Check if user needs to scroll
@@ -124,7 +129,9 @@ const setTone = (val) => {
 const setSocial = (val) => {
   selectedSocialMedia.value = val;
 };
-
+const setAi = (val) => {
+  selectedAIEngine.value = val;
+};
 // Check and see if user needs scrolling
 const handleScroll = () => {
   const isAtBottom =
@@ -155,6 +162,7 @@ const generateCaption = async (userInput) => {
       body: {
         prompt: userInput,
         chatId: chatStore.currentChatId,
+        selectedAIEngine: selectedAIEngine.value,
         options: {
           tone: selectedTone.value,
           socialMedia: selectedSocialMedia.value,
