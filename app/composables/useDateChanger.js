@@ -22,7 +22,7 @@ export function useDateChanger(date) {
     if (diffDays === 0) return "امروز";
     if (diffDays === 1) return "دیروز";
     if (diffDays < 7) return `${diffDays} روز پیش`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} خفته پیش`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} هفته پیش`;
 
     return formatDate(date);
   };
