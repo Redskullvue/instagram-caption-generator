@@ -64,6 +64,30 @@
 definePageMeta({
   middleware: "auth",
 });
+
+useHead({
+  title: "ارتقاغ و تمدید پلن",
+  meta: [
+    {
+      name: "description",
+      content:
+        "فقط در چند ثانیه کپشن های حرفه ای بسازید و راه خودتون رو برای رسیدن به اکسپلور و دیده شدن هموار کنید",
+    },
+    {
+      property: "og:title",
+      content:
+        "کپشن‌ساز — تولید کپشن برای نمایش در اکسپلور اینستاگرام و سایر شبکه های مجازی",
+    },
+    {
+      property: "og:description",
+      content:
+        "کپشن‌ساز به شما کمک می‌کند کپشن‌های جذاب و ترند بسازید تا پست‌های شما مخاطب بیشتری جذب کنند.",
+    },
+    { property: "og:url", content: "https://captionsaz.ir/upgrade" },
+  ],
+  link: [{ rel: "canonical", href: "https://captionsaz.ir/upgrade" }],
+});
+
 const authStore = useAuthStore();
 const selectedPlan = ref(null);
 const route = useRoute();
