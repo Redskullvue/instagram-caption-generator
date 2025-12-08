@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-max">
+  <div class="w-full h-max bg-gray-100 p-3 rounded-xl md:bg-transparent md:p-0">
     <div
       class="w-full flex items-center gap-x-3"
       @click="
