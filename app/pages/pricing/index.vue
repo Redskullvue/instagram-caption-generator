@@ -82,12 +82,14 @@
             <Icon
               name="lets-icons:check-fill"
               size="23px"
+              class="min-w-[23px]"
               v-if="product.isValid"
             />
             <Icon
               name="zondicons:close-solid"
-              size="20px"
+              size="18px"
               v-if="!product.isValid"
+              class="mr-0.5"
             />
             {{ product.title }}
           </li>
