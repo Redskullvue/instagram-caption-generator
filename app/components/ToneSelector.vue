@@ -10,7 +10,7 @@
     >
       <p class="text-sm text-gray-800">لحن خود را انتخاب کنید</p>
       <p
-        class="text-xs text-gray-600 lg:hidden bg-gray-100 rounded-xl px-3 py-2"
+        class="text-xs text-gray-600 lg:hidden bg-gray-200 rounded-xl px-3 py-2"
       >
         {{ tones[toneIndex].title }}
       </p>
@@ -31,7 +31,7 @@
         :class="
           selectedTone === tone.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
-            : 'bg-gray-100 text-gray-700'
+            : 'bg-gray-200 text-gray-700'
         "
         v-for="(tone, index) in tones"
         :key="index"
