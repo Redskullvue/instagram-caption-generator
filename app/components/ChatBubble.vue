@@ -7,12 +7,14 @@
         : 'mr-auto bg-gray-100'
     "
   >
-    <p v-if="!message.isUser" class="text-purple-800">{{ display }}</p>
+    <p v-if="!message.isUser" class="text-purple-800" v-html="display"></p>
     <p v-if="message.isUser">{{ message.text }}</p>
   </div>
 </template>
 
 <script setup>
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 const display = ref("");
 const props = defineProps({
   message: {
@@ -26,13 +28,18 @@ const props = defineProps({
   },
 });
 
+function renderMarkdown(mdText) {
+  const rawHtml = marked.parse(mdText); //Transforming the text
+  return DOMPurify.sanitize(rawHtml); //Make the HTML safe
+}
+
 onMounted(async () => {
   if (!props.message.isUser && props.message.shouldAnimate) {
     await typeLine(props.message.text, (chunk) => {
-      display.value = chunk;
+      display.value = renderMarkdown(chunk);
     });
   } else {
-    display.value = props.message.text;
+    display.value = renderMarkdown(props.message.text);
   }
 });
 </script>
