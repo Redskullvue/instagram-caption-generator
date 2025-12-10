@@ -31,7 +31,15 @@ export default defineNuxtConfig({
     // @ts-ignore
     hostname: "https://captionsaz.ir",
     gzip: true,
-    routes: ["/", "/about", "/pricing", "/contact-us", "/login", "/signup"],
+    routes: [
+      "/",
+      "/about",
+      "/pricing",
+      "/contact-us",
+      "/login",
+      "/signup",
+      "/blog/تولید-کپشن-با-هوش-مصنوعی",
+    ],
   },
   nuxtApiShield: {
     limit: {
