@@ -4,19 +4,19 @@
       class="w-full flex items-center gap-x-3"
       @click="
         width > 1024
-          ? (showMediaSelector = true)
-          : (showMediaSelector = !showMediaSelector)
+          ? (showModeSelector = true)
+          : (showModeSelector = !showModeSelector)
       "
     >
-      <p class="text-sm text-gray-800">انتخاب پلتفرم :</p>
+      <p class="text-sm text-gray-800">انتخاب حالت :</p>
       <p
         class="text-xs text-gray-600 lg:hidden bg-gray-200 rounded-xl px-3 py-2"
       >
-        {{ socials[mediaIndex].title }}
+        {{ modes[modeIndex].title }}
       </p>
       <i
         class="lg:hidden flex items-center justify-center transition-all duration-300"
-        :class="showMediaSelector ? 'rotate-180' : 'rotate-0'"
+        :class="showModeSelector ? 'rotate-180' : 'rotate-0'"
       >
         <Icon name="mdi-light:chevron-down" size="20px" />
       </i>
@@ -24,18 +24,18 @@
 
     <div
       class="w-full min-h-5 grid grid-cols-2 mt-2 text-sm"
-      v-if="showMediaSelector"
+      v-if="showModeSelector"
     >
       <button
         class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300"
         :class="
-          selectedMedia === social.value
+          selectedMode === social.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
             : 'bg-gray-200 text-gray-700'
         "
-        v-for="(social, index) in socials"
+        v-for="(social, index) in modes"
         :key="index"
-        @click="setSocial(social.value, index)"
+        @click="setMode(social.value, index)"
       >
         {{ social.title }}
       </button>
@@ -46,31 +46,35 @@
 <script setup>
 const width = window.innerWidth;
 const generateStore = useGenerateStore();
-const selectedMedia = ref("instagram");
-const socials = ref([
-  { title: "اینستاگرام", value: "instagram" },
-  { title: "تیک تاک", value: "tiktok" },
-  { title: "یوتیوب", value: "youtube" },
-  { title: "لینکداین", value: "linkedin" },
+const authStore = useAuthStore();
+const toastStore = useToastStore();
+const selectedMode = ref("captioner");
+const modes = ref([
+  { title: "کپشن نویس", value: "captioner" },
+  { title: "برنامه ریز", value: "planner" },
 ]);
 // To show users what has been selected already
-const mediaIndex = ref(0);
+const modeIndex = ref(0);
 // Show or not show the selection in mobile for better UX
-const showMediaSelector = ref(false);
+const showModeSelector = ref(false);
 onMounted(() => {
   if (width > 1024) {
-    showMediaSelector.value = true;
+    showModeSelector.value = true;
   }
 });
 
-// Set the Social
-const setSocial = (value, index) => {
+// Set the Mode
+const setMode = (value, index) => {
+  if (authStore.user.plan === "Free") {
+    toastStore.addToast("error", "در پلن رایگان این مورد پشتیبانی نمیشود");
+    return;
+  }
   if (value) {
-    selectedMedia.value = value;
-    mediaIndex.value = index;
-    generateStore.setSocial(value);
+    selectedMode.value = value;
+    modeIndex.value = index;
+    generateStore.setMode(value);
     if (width < 1024) {
-      showMediaSelector.value = false;
+      showModeSelector.value = false;
     }
     return;
   }

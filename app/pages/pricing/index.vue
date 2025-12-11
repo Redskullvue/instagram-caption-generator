@@ -131,7 +131,7 @@ const plans = [
       { title: "5 کپشن در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: false },
-      { title: "دسترسی به سناریو نویس", isValid: false },
+      { title: "امکان استفاده از برنامه ریز", isValid: false },
       { title: "امکان دسترسی به مدل های دیگر", isValid: false },
     ],
   },
@@ -146,7 +146,7 @@ const plans = [
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
-      { title: "دسترسی به سناریو نویس (به زودی)", isValid: true },
+      { title: "امکان استفاده از برنامه ریز", isValid: true },
     ],
   },
   {
@@ -160,7 +160,7 @@ const plans = [
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
-      { title: "دسترسی به سناریو نویس (به زودی)", isValid: true },
+      { title: "امکان استفاده از برنامه ریز", isValid: true },
     ],
   },
 ];

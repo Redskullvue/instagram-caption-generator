@@ -45,7 +45,7 @@
 
 <script setup>
 const width = window.innerWidth;
-const emits = defineEmits(["selectAi"]);
+const generateStore = useGenerateStore();
 const authStore = useAuthStore();
 const toastStore = useToastStore();
 const selectedAi = ref("gemeni");
@@ -69,7 +69,7 @@ const setAi = (value, index) => {
     if (value) {
       selectedAi.value = value;
       AiIndex.value = index;
-      emits("selectAi", selectedAi.value);
+      generateStore.setAi(value);
       if (width < 1024) {
         showAiSelector.value = false;
       }

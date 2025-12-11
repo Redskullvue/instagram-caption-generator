@@ -45,7 +45,7 @@
 
 <script setup>
 const width = window.innerWidth;
-const emits = defineEmits(["selectTone"]);
+const generateStore = useGenerateStore();
 const selectedTone = ref("casual");
 const tones = ref([
   { title: "رسمی", value: "professional" },
@@ -68,7 +68,7 @@ const setTone = (value, index) => {
   if (value) {
     selectedTone.value = value;
     toneIndex.value = index;
-    emits("selectTone", selectedTone.value);
+    generateStore.setTone(value);
     if (width < 1024) {
       showToneSelector.value = false;
     }
