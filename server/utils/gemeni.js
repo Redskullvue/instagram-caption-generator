@@ -1,5 +1,6 @@
 // server/utils/gemini.js
 import OpenAI from "openai";
+import { tools, newsForm } from "./tools";
 
 let openaiClient = null;
 
@@ -69,22 +70,48 @@ export async function generateCaption(
       messages: messages,
       max_tokens: 512,
       temperature: 1,
+      tools: tools,
+      tool_choice: "auto",
     });
 
-    const generatedText = response.choices[0]?.message?.content;
+    const generatedText = response.choices[0]?.message;
+    if (generatedText.tool_calls) {
+      console.log("AI is trying to use tools");
+      const functionResponse = newsForm(prompt);
+      messages.push({
+        tool_call_id: generatedText.tool_calls[0].id,
+        role: "tool",
+        name: "newsForm",
+        content: JSON.stringify(functionResponse), // Must be a string
+      });
+      const finalResponse = await client.chat.completions.create({
+        model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
+        messages: messages,
+        max_tokens: 512,
+        temperature: 1,
+      });
+      return {
+        caption: finalResponse.choices[0].message.content.trim(),
+        usage: {
+          promptTokens: response.usage?.prompt_tokens || 0,
+          completionTokens: response.usage?.completion_tokens || 0,
+          totalTokens: response.usage?.total_tokens || 0,
+        },
+      };
+    } else {
+      if (!generatedText) {
+        throw new Error("No caption generated");
+      }
 
-    if (!generatedText) {
-      throw new Error("No caption generated");
+      return {
+        caption: generatedText.content.trim(),
+        usage: {
+          promptTokens: response.usage?.prompt_tokens || 0,
+          completionTokens: response.usage?.completion_tokens || 0,
+          totalTokens: response.usage?.total_tokens || 0,
+        },
+      };
     }
-
-    return {
-      caption: generatedText.trim(),
-      usage: {
-        promptTokens: response.usage?.prompt_tokens || 0,
-        completionTokens: response.usage?.completion_tokens || 0,
-        totalTokens: response.usage?.total_tokens || 0,
-      },
-    };
   } catch (error) {
     console.error("Gemini API error:", error);
     throw new Error(error.message || "Failed to generate caption");
