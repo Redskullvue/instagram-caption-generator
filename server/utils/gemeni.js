@@ -85,7 +85,7 @@ export async function generateCaption(
         content: JSON.stringify(functionResponse), // Must be a string
       });
       const finalResponse = await client.chat.completions.create({
-        model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
+        model: "google/gemini-2.0-flash-001",
         messages: messages,
         max_tokens: 512,
         temperature: 1,
