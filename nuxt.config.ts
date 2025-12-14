@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     "nuxt-api-shield",
     "@nuxt/image",
     "@nuxtjs/sitemap",
+    "nuxt-gtag",
   ],
   image: {
     quality: 80,
@@ -96,6 +97,9 @@ export default defineNuxtConfig({
     rapidApiKey: "",
   },
 
+  gtag: {
+    id: "G-D79N78T0PY",
+  },
   app: {
     head: {
       titleTemplate: "%s | کپشن‌ساز",
