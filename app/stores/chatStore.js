@@ -106,7 +106,7 @@ export const useChatStore = defineStore("chatStore", () => {
     } catch (error) {
       console.error("Failed to load chat history:", error);
     } finally {
-      isLoading.value = true;
+      isLoading.value = false;
     }
   };
 
