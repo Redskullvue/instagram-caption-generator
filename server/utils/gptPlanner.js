@@ -61,28 +61,83 @@ export async function generateGptPlan(
     // Add current user message
     messages.push({
       role: "user",
-      content: `موضوع پیج ${prompt}`,
+      content: ` ${prompt}`,
     });
 
     const response = await client.chat.completions.create({
       model: "openai/gpt-5-nano", // Check Liara docs for exact model name
       messages: messages,
+      max_tokens: 1024,
+      tools: tools,
+      tool_choice: "auto",
     });
 
-    const generatedText = response.choices[0]?.message?.content;
+    const generatedText = response.choices[0]?.message;
 
-    if (!generatedText) {
-      throw new Error("No caption generated");
+    if (generatedText.tool_calls) {
+      console.log("AI USING TOOLS TO PLAN");
+
+      // Add the assistant's message with tool_calls to the conversation
+      const cleanAssistantMessage = {
+        role: generatedText.role,
+        content: generatedText.content || null,
+      };
+      messages.push(cleanAssistantMessage);
+
+      // Select which tool ai is using and what argument it's passing
+      const toolCall = generatedText.tool_calls[0];
+      const functionArgs = JSON.parse(toolCall.function.arguments);
+      const username = functionArgs.username;
+
+      const toolResponse = await getInstagramData(username);
+      // Add the tool response to messages with correct format
+      messages.push({
+        role: "tool",
+        content: JSON.stringify(toolResponse),
+        tool_call_id: toolCall.id,
+      });
+
+      // Get final response after tool execution
+      const finalResponse = await client.chat.completions.create({
+        model: "google/gemini-2.0-flash-001",
+        messages: messages,
+        max_tokens: 1024,
+        temperature: 1,
+      });
+
+      if (!finalResponse) {
+        throw new Error("No Caption Generated");
+      }
+
+      return {
+        plan: finalResponse.choices[0].message.content.trim(),
+        usage: {
+          promptTokens:
+            (response.usage?.prompt_tokens || 0) +
+            (finalResponse.usage?.prompt_tokens || 0),
+          completionTokens:
+            (response.usage?.completion_tokens || 0) +
+            (finalResponse.usage?.completion_tokens || 0),
+          totalTokens:
+            (response.usage?.total_tokens || 0) +
+            (finalResponse.usage?.total_tokens || 0),
+        },
+      };
+    } else {
+      // No tool calls - return direct response
+      if (!generatedText) {
+        throw new Error("No caption generated");
+      }
+
+      return {
+        plan: generatedText.content.trim(),
+        usage: {
+          promptTokens: response.usage?.prompt_tokens || 0,
+          completionTokens: response.usage?.completion_tokens || 0,
+          totalTokens: response.usage?.total_tokens || 0,
+        },
+      };
     }
-
-    return {
-      plan: generatedText.trim(),
-      usage: {
-        promptTokens: response.usage?.prompt_tokens || 0,
-        completionTokens: response.usage?.completion_tokens || 0,
-        totalTokens: response.usage?.total_tokens || 0,
-      },
-    };
   } catch (error) {
     console.error("Gemini API error:", error);
     throw new Error(error.message || "Failed to generate caption");
@@ -109,6 +164,13 @@ function buildSystemPrompt({
   تو یک استراتژیست حرفه‌ای تولید محتوا هستی. وظیفه تو ساخت یک برنامه محتوایی دقیق، خلاق، منظم و ۱۰۰٪ مرتبط برای پلتفرم «${socialMedia}» است.
 
 نوع برنامه: «برنامه هفتگی کامل و واقعی»
+
+
+قوانین مهم:
+- اگر کاربر نام کاربری اینستاگرام داد، **حتماً** از ابزار getInstagramData استفاده کن
+- بدون استفاده از ابزار، هیچ وقت نگو که نمی‌توانی اطلاعات را ببینی
+- اگر نام کاربری معتبر است، ابزار را فراخوانی کن
+-درصورت بروز هرگونه مشکل با دریافت اطلاعات فقط از روی username حدس بزن
 
 ❗ قانون اصلی:
 اگر پلتفرم = LinkedIn  
