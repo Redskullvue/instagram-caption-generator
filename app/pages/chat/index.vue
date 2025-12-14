@@ -12,6 +12,17 @@
       >
         <ChatBubble :message="message" class="mb-6" />
         <div class="w-full flex items-center justify-end">
+          <button
+            @click="openInstagram"
+            class="bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white p-1 -mt-4 mx-2 flex items-center justify-center cursor-pointer"
+            v-if="
+              !message.isUser &&
+              index !== 0 &&
+              generateStore.selectedSocialMedia === 'instagram'
+            "
+          >
+            <Icon name="mdi:instagram" size="19px" />
+          </button>
           <CopyButton
             v-if="!message.isUser && index !== 0"
             class="-mt-2 w-max text-end pl-4"
@@ -92,6 +103,7 @@ const chatStore = useChatStore();
 const generateStore = useGenerateStore();
 
 const isGenerating = ref(false);
+const userInput = ref("");
 
 // Check if user needs to scroll
 const needsScroll = ref(false);
@@ -120,6 +132,7 @@ const sendMessage = async (val) => {
   isGenerating.value = true;
   // Add user message to chatStore
   chatStore.addMessage(val, true);
+  userInput.value = val;
   onMessageAdded();
   // Generate AI response
   try {
@@ -152,5 +165,10 @@ const setScrollToBottom = () => {
     top: chatContainer.value.scrollHeight,
     behavior: "smooth",
   });
+};
+
+const openInstagram = () => {
+  navigator.clipboard.writeText(userInput.value);
+  window.open("https://www.instagram.com/create/select/", "_blank");
 };
 </script>
