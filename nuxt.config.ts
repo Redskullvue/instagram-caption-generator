@@ -91,6 +91,9 @@ export default defineNuxtConfig({
     mailApiKey: "",
     // This is used to return the right link in production when user wants to reset password
     mailUrl: "",
+    // Used for instagram scraping 1000 reqs / month
+    rapidApiHost: "",
+    rapidApiKey: "",
   },
 
   app: {
