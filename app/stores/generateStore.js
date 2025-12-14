@@ -8,8 +8,8 @@ export const useGenerateStore = defineStore("generateStore", () => {
   // States
   const selectedMode = ref("captioner");
   const selectedAIEngine = ref("gemeni");
-  const selectedTone = ref("");
-  const selectedSocialMedia = ref("");
+  const selectedTone = ref("causal");
+  const selectedSocialMedia = ref("instagram");
   const usedAllPrompts = ref(false);
   // Actions
   const setTone = (val) => {
