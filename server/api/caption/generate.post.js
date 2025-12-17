@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
       message: "Prompts Is Required",
     });
   }
-  if (prompt.length > 150) {
+  if (prompt.length > 500) {
     throw createError({
       statusCode: 400,
       message: "Prompt too long. Maximum 100 characters.",

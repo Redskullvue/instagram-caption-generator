@@ -56,7 +56,7 @@ const props = defineProps({
   isVerified: { type: Boolean, default: false },
 });
 const toastStore = useToastStore();
-const maxChars = 150;
+const maxChars = 500;
 const inputValue = ref("");
 const currentChars = computed(() => inputValue.value.length);
 
