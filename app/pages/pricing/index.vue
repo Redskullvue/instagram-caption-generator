@@ -130,7 +130,7 @@ const plans = [
     products: [
       { title: "10 محتوا در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
-      { title: "صداگذاری با AI (1 عدد)", isValid: true },
+      { title: "تولید عکس با AI (3 عدد)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: false },
       { title: "امکان استفاده از برنامه ریز", isValid: false },
       { title: "امکان دسترسی به مدل های دیگر", isValid: false },
@@ -145,7 +145,7 @@ const plans = [
     products: [
       { title: "70 محتوا در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
-      { title: "صداگذاری با AI (30 عدد)", isValid: true },
+      { title: "تولید عکس با AI (30 عدد)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
       { title: "امکان استفاده از برنامه ریز", isValid: true },
@@ -160,7 +160,7 @@ const plans = [
     products: [
       { title: " محتوای نامحدود", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
-      { title: "صداگذاری با AI (نامحدود)", isValid: true },
+      { title: "تولید عکس با AI (نامحدود)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
       { title: "امکان استفاده از برنامه ریز", isValid: true },
