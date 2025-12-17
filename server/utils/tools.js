@@ -122,14 +122,9 @@ export async function generateImage(prompt) {
         }),
       }
     );
-    if (!response.ok) {
-      throw new Error(`مشکل در تولید عکس: ${response.statusText}`);
-    }
-    const data = await response.json();
-    console.log(data);
     return {
       success: true,
-      imageUrl: data.generated_image,
+      imageUrl: response.generated_image,
     };
   } catch (error) {
     console.error("Image generation error:", error);
