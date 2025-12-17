@@ -1,6 +1,6 @@
 export const plans = {
   Free: {
-    promptsLimit: 5,
+    promptsLimit: 10,
     durationDays: 30,
     price: 0,
   },

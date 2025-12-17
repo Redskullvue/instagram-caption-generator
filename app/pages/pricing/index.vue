@@ -32,7 +32,7 @@
       <div
         v-for="(plan, index) in plans"
         :key="index"
-        class="bg-white shadow-md shadow-gray-300 p-10 w-full min-h-[680px] rounded-xl flex items-center flex-col"
+        class="bg-white shadow-md shadow-gray-300 p-10 w-full min-h-full rounded-xl flex items-center flex-col"
       >
         <div class="w-full flex items-center justify-center">
           <img
@@ -128,8 +128,9 @@ const plans = [
     image: "/Pricing-1.png",
     description: "برای شروع و آزمایش",
     products: [
-      { title: "5 کپشن در ماه", isValid: true },
+      { title: "10 محتوا در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
+      { title: "صداگذاری با AI (1 عدد)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: false },
       { title: "امکان استفاده از برنامه ریز", isValid: false },
       { title: "امکان دسترسی به مدل های دیگر", isValid: false },
@@ -142,8 +143,9 @@ const plans = [
     image: "/Pricing-2.png",
     description: "برای سازندگان محتوای حرفه‌ای",
     products: [
-      { title: "70 کپشن در ماه", isValid: true },
+      { title: "70 محتوا در ماه", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
+      { title: "صداگذاری با AI (30 عدد)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
       { title: "امکان استفاده از برنامه ریز", isValid: true },
@@ -156,8 +158,9 @@ const plans = [
     image: "/Pricing-3.png",
     description: "برای کسب‌وکارها و آژانس‌ها",
     products: [
-      { title: "کپشن های نامحدود", isValid: true },
+      { title: " محتوای نامحدود", isValid: true },
       { title: "دسترسی به هشتگ ها", isValid: true },
+      { title: "صداگذاری با AI (نامحدود)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: true },
       { title: "امکان دسترسی به مدل های دیگر", isValid: true },
       { title: "امکان استفاده از برنامه ریز", isValid: true },

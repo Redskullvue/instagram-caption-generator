@@ -14,16 +14,16 @@
           >
             <span class="w-2 h-2 rounded-full bg-green-400"></span>
 
-            <p>مورد استفاده بیش از 500 تولید کننده محتوا</p>
+            <p>پشتیبانی از دو مدل هوش مصنوعی (GPT و Gemini)</p>
           </div>
         </Transition>
         <Transition name="fade" appear>
           <h1
             v-show="mounted"
-            class="mr-1 font-bold text-2xl lg:text-3xl text-center md:text-start"
+            class="mr-1 font-bold text-2xl lg:text-3xl text-center"
             style="animation-delay: 0.5s"
           >
-            کپشن اینستاگرام در
+            مدیریت هوشمند اینستاگرام در
             <span
               class="bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
               >چند ثانیه</span
@@ -36,9 +36,11 @@
             style="animation-delay: 0.7s"
             class="mt-6 text-gray-600 font-light text-base w-[38ch] lg:w-[50ch] text-center text-balance"
           >
-            دیگر به صفحه خالی خیره نشوید ، به کمک هوش مصنوعی کپشن ساز ، کپشن های
-            جذاب و هماهنگ با برند خودتون رو بسازید و باعث رشد تعامل در پیج
-            خودتون باشید
+            کپشن‌ساز فقط کپشن نمی‌سازد. پیج اینستاگرام شما را تحلیل می‌کند، بر
+            اساس آن برنامه محتوایی می‌دهد و به شما اجازه می‌دهد بین دو مدل هوش
+            مصنوعی برای تولید محتوا انتخاب کنید.
+            <br />
+            نه فقط یک AI، بلکه یک انتخاب هوشمند
           </p>
         </Transition>
         <div
@@ -52,7 +54,7 @@
                 class="bg-linear-to-r min-w-max w-full lg:w-[350px] from-purple-600 justify-center to-pink-600 transition-all duration-300 hover:opacity-70 text-white px-3 py-4 rounded-xl text-sm font-light cursor-pointer flex items-center gap-x-1"
               >
                 <Icon name="mdi:instagram" size="20px" />
-                دریافت 5 پست رایگان در ماه
+                شروع رایگان
               </NuxtLink>
             </div>
           </Transition>
@@ -86,11 +88,10 @@
       class="w-full min-h-[450px] bg-slate-50 flex flex-col p-6 relative"
     >
       <h2 class="w-full text-center mt-6 font-bold text-2xl lg:text-3xl">
-        کپشن طراحی شده در 3 مرحله
+        یک پلتفرم، دو هوش مصنوعی، بی‌نهایت محتوا
       </h2>
       <p class="text-gray-600 w-full text-center mt-4 text-sm">
-        ژنراتور هوش مصنوعی ما کپشن‌های جذاب و هماهنگ با برند شما را متناسب با
-        محتوایتان می‌سازد
+        هوش مصنوعی ما برند شما رو بررسی میکنه و بهتون کمک میکنه تا دیده بشید
       </p>
       <!-- Line -->
       <div
@@ -163,14 +164,14 @@
         <div class="w-full text-center border-b border-gray-200 min-h-[200px]">
           <h2 class="font-bold mb-2">آماده صرفه جویی در ساعت ها زمان؟</h2>
           <p class="text-gray-600 mb-10">
-            به صدها تولیدکننده محتوا بپیوندید که برای همیشه با مشکل نوشتن کپشن
-            خداحافظی کرده‌اند.
+            به صد ها تولید کننده محتوا بپیوندید و همین حالا برای خودتون بهترین
+            ادمین ممکن رو استخدام کنید
           </p>
           <NuxtLink
             to="/chat"
             class="py-2 px-4 bg-linear-to-r from-purple-600 to-pink-600 rounded-xl text-white mx-4"
           >
-            تولید کپشن رایگان
+            شروع رایگان
           </NuxtLink>
         </div>
         <div
@@ -190,7 +191,7 @@
             >
               10K+
             </p>
-            <p>کپشن تولید شده</p>
+            <p>محتوا تولید شده</p>
           </div>
           <div>
             <p
@@ -213,12 +214,14 @@
 
 <script setup>
 useHead({
-  title: "تولید کپشن و پست به صورت هوشمند با هوش مصنوعی",
+  title: "تولید محتوا و برنامه‌ریزی هوشمند",
   meta: [
     {
       name: "description",
-      content:
-        "فقط در چند ثانیه کپشن های حرفه ای بسازید و راه خودتون رو برای رسیدن به اکسپلور و دیده شدن هموار کنید",
+      content: `کپشن‌ساز یک پلتفرم مدیریت اینستاگرام با هوش مصنوعی است
+که با امکان سوییچ بین GPT و Gemini،
+تحلیل پیج و برنامه‌ریزی محتوا،
+به رشد حرفه‌ای پیج شما کمک می‌کند.`,
     },
     {
       property: "og:title",
@@ -253,21 +256,25 @@ onMounted(() => {
 
 const boxesData = [
   {
-    title: "موضوع خود را وارد کنید",
-    description:
-      "به ما بگویید پست شما درباره چیست - معرفی محصول، روتین روزانه، عکس سفر، هر چیزی!",
+    title: "انتخاب هوش مصنوعی",
+    description: `بین GPT و Gemini جابجا شوید و
+بر اساس لحن، خلاقیت یا دقت،
+مدل مناسب محتوای خود را انتخاب کنید.`,
     icon: "icon-park-outline:write",
   },
   {
-    title: "لحن خود را انتخاب کنید",
-    description:
-      "از بین صمیمی، رسمی، شوخ یا انگیزشی انتخاب کنید تا با صدای برند شما هماهنگ باشد",
+    title: "تحلیل پیج و استراتژی محتوا",
+    description: `
+    با بررسی پیج اینستاگرام شما،
+بهترین نوع پست، زمان انتشار
+و سبک محتوا پیشنهاد می‌شود.
+`,
     icon: "lets-icons:setting-vert",
   },
   {
-    title: "دریافت کپشن آماده انتشار",
-    description:
-      " کپشن منحصر به فرد و جذاب دریافت کنید. کپی کنید، پیست کنید و شاهد افزایش تعامل باشید",
+    title: "تولید محتوای آماده انتشار",
+    description: `کپشن، هشتگ و به‌زودی صدا (TTS)،
+همه در یک جریان هوشمند.`,
     icon: "mingcute:ai-fill",
   },
 ];
