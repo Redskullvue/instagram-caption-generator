@@ -74,7 +74,7 @@
       <div class="flex-1 md:p-6 mb-4 flex items-center justify-center">
         <Transition name="fade" appear>
           <NuxtImg
-            src="/preview.png"
+            src="/preview-1.png"
             style="animation-delay: 0.7s"
             v-show="mounted"
             alt="instagram-caption-generator-preview"
