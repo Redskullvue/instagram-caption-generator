@@ -95,6 +95,8 @@ export default defineNuxtConfig({
     // Used for instagram scraping 1000 reqs / month
     rapidApiHost: "",
     rapidApiKey: "",
+    // Image generator API host
+    rapidApiImageGeneratorHost: "",
   },
 
   gtag: {

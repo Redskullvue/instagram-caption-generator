@@ -125,6 +125,14 @@ const userSchema = new mongoose.Schema({
       type: Number,
       default: 5,
     },
+    imagesGenerated: {
+      type: Number,
+      default: 0,
+    },
+    imagesLimit: {
+      type: Number,
+      default: 3, // Free plan default
+    },
     resetDate: {
       type: Date,
       default: () => getNextResetDate(),
@@ -244,6 +252,8 @@ userSchema.methods.getUsage = function () {
   return {
     promptsUsed: this.usage.promptsUsed,
     promptsLimit: this.usage.promptsLimit,
+    imagesGenerated: this.usage.imagesGenerated,
+    imagesLimit: this.usage.imagesLimit,
     resetDate: this.usage.resetDate,
   };
 };
@@ -253,6 +263,7 @@ userSchema.methods.checkAndResetUsage = function () {
   const now = new Date();
   if (this.usage.resetDate && now >= this.usage.resetDate) {
     this.usage.promptsUsed = 0;
+    this.usage.imagesGenerated = 0;
     this.usage.resetDate = getNextResetDate();
     return true; // reset succesfull
   }
@@ -266,6 +277,16 @@ userSchema.methods.incrementUsage = async function () {
     throw new Error("Usage Limit Reached");
   }
   this.usage.promptsUsed += 1;
+  await this.save();
+  return this.getUsage();
+};
+
+userSchema.methods.incrementImageUsage = async function () {
+  this.checkAndResetUsage();
+  if (this.usage.imagesGenerated >= this.usage.imagesLimit) {
+    throw new Error("Image Generation Limit Reached");
+  }
+  this.usage.imagesGenerated += 1;
   await this.save();
   return this.getUsage();
 };
@@ -378,6 +399,7 @@ userSchema.methods.updatePlan = async function (newPlan, transId, amount) {
   const config = plans[newPlan];
   this.plan = newPlan;
   this.usage.promptsLimit = config.promptsLimit || 5;
+  this.usage.imagesLimit = config.imagesLimit || 3;
   this.planExpiresAt =
     newPlan === "Free"
       ? null

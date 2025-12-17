@@ -1,5 +1,3 @@
-// server/utils/tools.js (or utils/tools.js)
-
 export const tools = [
   {
     type: "function",
@@ -36,6 +34,25 @@ export const tools = [
           },
         },
         required: ["username"], // ✅ FIXED: Added required field
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "generateImage",
+      description:
+        "Generate an AI image based on a text description. Always translate Persian/Farsi prompts to English before calling this function. Use this when users ask to create, generate, or make an image.",
+      parameters: {
+        type: "object",
+        properties: {
+          prompt: {
+            type: "string",
+            description:
+              "The English description of the image to generate. If user prompt is in Persian, translate it to English first.",
+          },
+        },
+        required: ["prompt"],
       },
     },
   },
@@ -82,6 +99,43 @@ export async function getInstagramData(username) {
       message: "مشکلی در بررسی داده های اینستاگرام پیش آمده",
       followers: 0,
       bio: "",
+    };
+  }
+}
+
+export async function generateImage(prompt) {
+  const config = useRuntimeConfig();
+  if (!prompt) {
+    throw new Error("بدون مشخصات نمیتونم عکس تولید کنم");
+  }
+  try {
+    const response = await $fetch(
+      "https://open-ai21.p.rapidapi.com/texttoimage2",
+      {
+        method: "POST",
+        headers: {
+          "x-rapidapi-host": config.rapidApiImageGeneratorHost,
+          "X-RapidAPI-Key": config.rapidApiKey,
+        },
+        body: JSON.stringify({
+          text: prompt,
+        }),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`مشکل در تولید عکس: ${response.statusText}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    return {
+      success: true,
+      imageUrl: data.generated_image,
+    };
+  } catch (error) {
+    console.error("Image generation error:", error);
+    return {
+      success: false,
+      error: error.message,
     };
   }
 }
