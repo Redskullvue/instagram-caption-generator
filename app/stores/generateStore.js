@@ -121,6 +121,43 @@ export const useGenerateStore = defineStore("generateStore", () => {
     }
   };
 
+  const generateImage = async (userInput) => {
+    try {
+      const response = await $fetch("/api/imagegenrator/generate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+        body: {
+          prompt: userInput,
+          chatId: chatStore.currentChatId,
+        },
+      });
+      chatStore.currentChatId = response.chatId;
+      chatStore.addMessage(response.message, false, true, response.imageUrl);
+      usageStore.usage = response.usage;
+
+      await chatStore.loadChatHistory();
+    } catch (error) {
+      if (error.data?.data?.code === "LIMIT_REACHED") {
+        usedAllPrompts.value = true;
+        usageStore.usage = error.data.data.usage;
+
+        chatStore.addMessage(
+          "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
+          false,
+          true
+        );
+      } else {
+        chatStore.addMessage(
+          "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
+          false,
+          true
+        );
+      }
+    }
+  };
+
   return {
     selectedMode,
     selectedAIEngine,
@@ -133,5 +170,6 @@ export const useGenerateStore = defineStore("generateStore", () => {
     setMode,
     generateCaption,
     generatePlan,
+    generateImage,
   };
 });

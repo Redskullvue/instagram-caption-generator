@@ -1,6 +1,6 @@
 // server/utils/gemini.js
 import OpenAI from "openai";
-
+import { tools, getInstagramData } from "~~/server/utils/tools";
 let openaiClient = null;
 
 function getOpenAIClient() {
@@ -64,6 +64,7 @@ export async function generateGemeniPlan(
       content: `${prompt}`,
     });
 
+    const availableTools = toolPicker("getInstagramData");
     // Use tools if needed
     const response = await client.chat.completions.create({
       model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
@@ -191,5 +192,6 @@ function buildSystemPrompt({
 9. فقط برنامه را بده. هیچ گونه توصیه، مقدمه، یا توضیح اضافه ممنوع است.
 10.اگر${includeHashtags ? "هشتگ نیاز است" : "هشتگ نیاز نیست"}    
 حالا یک برنامه محتوایی کامل هفتگی برای موضوع تولید کن.
+درصورت درخواست عکس توسط کاربر راهنماییش کن که باید مود تصویر ساز رو انتخاب کنه و  ذر هیج صورت از ابزار imageGenerator استفاده نکن
 `;
 }

@@ -1,6 +1,6 @@
 // server/utils/gemini.js
 import OpenAI from "openai";
-
+import { tools, getInstagramData } from "~~/server/utils/tools";
 let openaiClient = null;
 
 function getOpenAIClient() {
@@ -214,6 +214,6 @@ function buildSystemPrompt({
   }
 
 حالا برنامه هفتگی را تولید کن.
-
+درصورت درخواست عکس توسط کاربر راهنماییش کن که باید مود تصویر ساز رو انتخاب کنه و  ذر هیج صورت از ابزار imageGenerator استفاده نکن
 `;
 }

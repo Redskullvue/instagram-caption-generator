@@ -1,5 +1,6 @@
 // server/utils/imageGenerator.js
 import OpenAi from "openai";
+import { tools, generateImage } from "~~/server/utils/tools";
 
 let openaiClient = null;
 
@@ -48,7 +49,6 @@ export async function imagesGenerator(prompt, conversationHistory = []) {
       role: "user",
       content: prompt,
     });
-
     // First AI call - expect tool use
     const response = await client.chat.completions.create({
       model: "google/gemini-2.0-flash-001",
@@ -56,7 +56,7 @@ export async function imagesGenerator(prompt, conversationHistory = []) {
       max_tokens: 1024,
       temperature: 0.7, // Lower temp for more consistent translation
       tools: tools, // Pass tool definition
-      tool_choice: "auto",
+      tool_choice: "required",
     });
 
     const generatedText = response.choices[0]?.message;

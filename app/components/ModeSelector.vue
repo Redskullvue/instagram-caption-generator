@@ -52,6 +52,7 @@ const selectedMode = ref("captioner");
 const modes = ref([
   { title: "کپشن نویس", value: "captioner" },
   { title: "برنامه ریز", value: "planner" },
+  { title: "تصویر ساز", value: "imageGenerator" },
 ]);
 // To show users what has been selected already
 const modeIndex = ref(0);

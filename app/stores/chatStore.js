@@ -85,13 +85,19 @@ export const useChatStore = defineStore("chatStore", () => {
     }
   };
 
-  const addMessage = (text, isUser = true, shouldAnimate = true) => {
+  const addMessage = (
+    text,
+    isUser = true,
+    shouldAnimate = true,
+    imageUrl = null
+  ) => {
     const message = {
       id: Date.now() + Math.random(),
       text,
       isUser,
       timestamp: new Date(),
       shouldAnimate,
+      imageUrl,
     };
     messages.value.push(message);
     return message;

@@ -63,7 +63,6 @@ export default defineEventHandler(async (event) => {
     // Add user message to chat
     user.addMessageToChat(currentChatId, "user", prompt, false);
 
-    // Generate image (AWAIT THIS!)
     const result = await imagesGenerator(prompt, conversationHistory);
 
     if (!result.success || !result.imageUrl) {
@@ -71,10 +70,16 @@ export default defineEventHandler(async (event) => {
     }
 
     // Create assistant message with image info
-    const assistantMessage = `${result.message}\n\n🖼️ تصویر: ${result.imageUrl}`;
+    const assistantMessage = `${result.message}`;
 
     // Add AI response to chat
-    user.addMessageToChat(currentChatId, "assistant", assistantMessage, true);
+    user.addMessageToChat(
+      currentChatId,
+      "assistant",
+      assistantMessage,
+      true,
+      result.imageUrl
+    );
 
     // Update current chat ID
     user.currentChatId = currentChatId;

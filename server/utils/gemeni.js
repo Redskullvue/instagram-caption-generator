@@ -1,6 +1,5 @@
 // server/utils/gemini.js
 import OpenAI from "openai";
-import { tools, newsForm } from "./tools";
 
 let openaiClient = null;
 
@@ -70,8 +69,6 @@ export async function generateCaption(
       messages: messages,
       max_tokens: 512,
       temperature: 1,
-      tools: tools,
-      tool_choice: "auto",
     });
 
     const generatedText = response.choices[0]?.message;
@@ -201,6 +198,7 @@ LinkedIn → حرفه‌ای، ارزش‌افزا، مودبانه
 
 📌 قانون گفتگوهای چندمرحله‌ای:
 اگر کاربر نسخه بهبود‌یافته خواست، فقط یک نسخه بهتر بده و همه قوانین حفظ شود.
+درصورت درخواست عکس توسط کاربر راهنماییش کن که باید مود تصویر ساز رو انتخاب کنه
 
 ---------------------------------------------------------------------
 

@@ -142,6 +142,9 @@ const sendMessage = async (val) => {
     if (generateStore.selectedMode === "planner") {
       await generateStore.generatePlan(val);
     }
+    if (generateStore.selectedMode === "imageGenerator") {
+      await generateStore.generateImage(val);
+    }
   } catch (error) {
     console.log(error);
   } finally {

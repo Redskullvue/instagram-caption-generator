@@ -57,6 +57,10 @@ export const tools = [
     },
   },
 ];
+// Pick selected Tools
+export function toolPicker(name) {
+  return tools.filter((tool) => tool.function.name === name);
+}
 
 export function newsForm(subject) {
   return `کپشن نوشته شده باید در مورد ${subject} باشه 

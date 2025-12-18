@@ -49,6 +49,10 @@ const messageSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  imageUrl: {
+    type: String,
+    default: null,
+  },
 });
 
 const chatSchema = new mongoose.Schema({
@@ -316,7 +320,8 @@ userSchema.methods.addMessageToChat = function (
   chatId,
   role,
   content,
-  shouldAnimate = false
+  shouldAnimate = false,
+  imageUrl = null
 ) {
   const chat = this.chats.id(chatId);
   if (!chat) {
@@ -328,6 +333,7 @@ userSchema.methods.addMessageToChat = function (
     content,
     timestamp: new Date(),
     shouldAnimate,
+    imageUrl,
   };
   chat.messages.push(message);
   chat.updateAt = new Date();
@@ -368,6 +374,7 @@ userSchema.methods.getChat = function (chatId) {
       id: msg._id,
       text: msg.content,
       isUser: msg.role === "user",
+      imageUrl: msg.imageUrl || null,
       timestamp: msg.timestamp,
       shouldAnimate: false,
     })),
