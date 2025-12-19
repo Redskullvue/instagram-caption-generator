@@ -64,6 +64,12 @@ export default defineNuxtConfig({
         ban: 3600,
       },
       {
+        path: "/api/imagegenrator/generate",
+        max: 1,
+        duration: 60,
+        ban: 3600,
+      },
+      {
         path: "/api/auth/sendmail",
         max: 1, // custom max requests
         duration: 120,
@@ -97,6 +103,7 @@ export default defineNuxtConfig({
     rapidApiKey: "",
     // Image generator API host
     rapidApiImageGeneratorHost: "",
+    rapidApiFluxImageGeneratorHost: "",
   },
 
   gtag: {

@@ -2,7 +2,7 @@
   <div class="w-full flex items-center max-h-[79vh] flex-col">
     <!-- Chat box -->
     <div
-      class="w-full lg:max-h-[60vh] lg:min-h-[55vh] max-h-[44vh] overflow-y-scroll px-2 py-1"
+      class="w-full lg:max-h-[60vh] lg:min-h-[55vh] max-h-[44vh] overflow-y-scroll px-2 py-1 overflow-x-hidden"
       ref="chatContainer"
       @scroll="handleScroll"
     >

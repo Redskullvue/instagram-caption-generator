@@ -107,6 +107,36 @@ export async function getInstagramData(username) {
   }
 }
 
+// Fallback imageGenerator
+async function fluxImageGenerator(prompt) {
+  const config = useRuntimeConfig();
+  if (!prompt) {
+    throw new Error("بدون مشخصات نمیتونم عکس تولید کنم");
+  }
+  try {
+    const response = await $fetch(
+      `https://flux-api-4-custom-models-100-style.p.rapidapi.com/create-v1?prompt=${prompt}&size=1024x1024&style=default`,
+      {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": config.rapidApiFluxImageGeneratorHost,
+          "X-RapidAPI-Key": config.rapidApiKey,
+        },
+      }
+    );
+    return {
+      success: true,
+      imageUrl: response.urls[0],
+    };
+  } catch (error) {
+    console.error("Image Generation failed from FLUX : ", error);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
 export async function generateImage(prompt) {
   const config = useRuntimeConfig();
   if (!prompt) {
@@ -131,10 +161,14 @@ export async function generateImage(prompt) {
       imageUrl: response.generated_image,
     };
   } catch (error) {
-    console.error("Image generation error:", error);
-    return {
-      success: false,
-      error: error.message,
-    };
+    try {
+      return await fluxImageGenerator(prompt);
+    } catch (error) {
+      console.error("All API's Failed To generate Image", error);
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
 }
