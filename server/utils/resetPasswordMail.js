@@ -1,7 +1,9 @@
 import { Resend } from "resend";
-const config = useRuntimeConfig();
-const resend = new Resend(config.mailApiKey);
+
 export async function resetPasswordMail(email, token, userId) {
+  const config = useRuntimeConfig();
+  const resend = new Resend(config.mailApiKey);
+  n;
   const { data, error } = await resend.emails.send({
     from: "  تغییر پسورد <info@captionsaz.ir>",
     to: [email],

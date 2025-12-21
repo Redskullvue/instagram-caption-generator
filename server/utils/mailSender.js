@@ -1,7 +1,8 @@
 import { Resend } from "resend";
-const config = useRuntimeConfig();
-const resend = new Resend(config.mailApiKey);
+
 export async function sendMail(email, name, token, userId) {
+  const config = useRuntimeConfig();
+  const resend = new Resend(config.mailApiKey);
   const { data, error } = await resend.emails.send({
     from: "فعال سازی ایمیل <info@captionsaz.ir>",
     to: [email],
