@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 
 export async function resetPasswordMail(email, token, userId) {
+  // Init the resend
   const config = useRuntimeConfig();
   const resend = new Resend(config.mailApiKey);
   n;
