@@ -73,7 +73,7 @@
       <!-- Left Side -->
       <div class="flex-1 md:p-6 mb-4 flex items-center justify-center">
         <Transition name="fade" appear>
-          <NuxtImg
+          <img
             src="/preview-1.png"
             style="animation-delay: 0.7s"
             v-show="mounted"
@@ -155,7 +155,7 @@
         class="w-full md:w-7/12 rounded-xl bg-white shadow-md shadow-gray-400 p-6 flex items-center justify-start flex-col min-h-[450px] md:min-h-[400px]"
       >
         <div class="w-full flex items-center justify-center">
-          <NuxtImg
+          <img
             src="/logo-2.png"
             alt="captionsaz-logo"
             class="w-[150px] h-[150px] object-contain"
