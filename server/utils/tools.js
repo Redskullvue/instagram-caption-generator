@@ -88,6 +88,20 @@ export async function getInstagramData(username) {
       }
     );
 
+    const recentPosts = await $fetch(
+      "https://instagram120.p.rapidapi.com/api/instagram/reels",
+      {
+        method: "POST",
+        headers: {
+          "x-rapidapi-host": config.rapidApiHost,
+          "X-RapidAPI-Key": config.rapidApiKey,
+        },
+        body: {
+          username: username,
+        },
+      }
+    );
+
     // ✅ FIXED: Added proper error handling for missing data
     return {
       followers:
@@ -95,6 +109,7 @@ export async function getInstagramData(username) {
         response.result.edge_followed_by ||
         0,
       bio: response.result.biography || "",
+      recentReels: recentPosts.result.edges.slice(0, 10),
     };
   } catch (error) {
     console.error("Instagram API Error:", error.message);
@@ -103,6 +118,7 @@ export async function getInstagramData(username) {
       message: "مشکلی در بررسی داده های اینستاگرام پیش آمده",
       followers: 0,
       bio: "",
+      recentReels: [],
     };
   }
 }
