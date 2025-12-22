@@ -120,7 +120,7 @@ const plans = [
   },
   {
     title: "Pro",
-    price: "۶۹.۹۰۰ تومان",
+    price: "۱۵۹.۹۰۰ تومان",
     mainPrice: "۱۹۹,۹۰۰",
     image: "/Pricing-2.png",
     description: "برای سازندگان محتوای حرفه‌ای",
@@ -135,7 +135,7 @@ const plans = [
   },
   {
     title: "Enterprise",
-    price: "۲۴۹.۰۰۰ تومان ",
+    price: "۳۴۹.۰۰۰ تومان ",
     mainPrice: "۴۱۹,۹۰۰",
     image: "/Pricing-3.png",
     description: "برای کسب‌وکارها و آژانس‌ها",
