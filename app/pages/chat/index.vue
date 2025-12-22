@@ -32,28 +32,39 @@
       </template>
       <TypingIndicator v-if="isGenerating === true" />
     </div>
-    <div class="absolute bottom-[40%] lg:bottom-[30%] lg:left-[50%] left-[48%]">
+    <div class="absolute bottom-[45%] lg:bottom-[30%] lg:left-[50%] left-[48%]">
       <ScrollButton v-if="needsScroll" @click="setScrollToBottom" />
     </div>
 
     <!-- Buttons and input Selector -->
     <div
-      class="w-full p-2 overflow-y-scroll flex flex-col min-h-[16vh] lg:absolute lg:right-4 lg:top-[100px] lg:w-[340px] lg:h-[83vh]"
+      class="w-full p-2 overflow-y-scroll flex flex-col h-min lg:absolute lg:right-4 lg:top-[100px] lg:w-[340px] lg:h-[83vh]"
     >
-      <AiSelector
-        class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4"
-      />
+      <Transition name="fade">
+        <AiSelector
+          v-show="generateStore.isComponentVisible('aiEngine')"
+          class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4"
+        />
+      </Transition>
+
       <ModeSelector
+        v-show="generateStore.isComponentVisible('mode')"
         class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
       />
-      <ToneSelector
-        class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
-      />
-      <SocialSelector
-        class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
-      />
+      <Transition name="fade">
+        <ToneSelector
+          v-show="generateStore.isComponentVisible('tone')"
+          class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
+        />
+      </Transition>
+      <Transition name="fade">
+        <SocialSelector
+          v-show="generateStore.isComponentVisible('social')"
+          class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
+        />
+      </Transition>
     </div>
-    <div class="w-full">
+    <div class="w-full h-full">
       <InputBar
         class="w-full mt-3 lg:mt-0"
         @generate="sendMessage"
@@ -175,3 +186,22 @@ const openInstagram = () => {
   window.open("https://www.instagram.com/create/select/", "_blank");
 };
 </script>
+
+<style scoped>
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-enter-active {
+  animation: fade 0.7s;
+  opacity: 0;
+}
+.fade-leave-active {
+  animation: fade 0.4s reverse;
+  opacity: 1;
+}
+</style>

@@ -11,6 +11,20 @@ export const useGenerateStore = defineStore("generateStore", () => {
   const selectedTone = ref("causal");
   const selectedSocialMedia = ref("instagram");
   const usedAllPrompts = ref(false);
+
+  // These rules determine which selectors to show in the chat page
+  const visibilityRules = ref({
+    captioner: ["tone", "social", "aiEngine", "mode"],
+    planner: ["social", "mode", "aiEngine"],
+    imageGenerator: ["mode"],
+  });
+
+  //getters
+  const isComponentVisible = computed(() => (value) => {
+    if (!selectedMode.value) return true;
+    return visibilityRules.value[selectedMode.value]?.includes(value) ?? false;
+  });
+
   // Actions
   const setTone = (val) => {
     selectedTone.value = val;
@@ -159,11 +173,15 @@ export const useGenerateStore = defineStore("generateStore", () => {
   };
 
   return {
+    //states
     selectedMode,
     selectedAIEngine,
     selectedTone,
     selectedSocialMedia,
     usedAllPrompts,
+    //getters
+    isComponentVisible,
+    //actions
     setTone,
     setSocial,
     setAi,
