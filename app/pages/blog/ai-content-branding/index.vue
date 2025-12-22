@@ -72,4 +72,31 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "ـولید محتوا و برندسازی به همراه کپشن نویسی با هوش مصنوعی",
+  meta: [
+    {
+      name: "description",
+      content:
+        "درباره تیم کپشن ساز و ماموریت ما : کمک به تولید کنندگان محتوا برای بهتر دیده شدن در شبکه های مجازی و افزایش سرعت تولید محتوای این افراد",
+    },
+    { property: "og:title", content: "وبلاگ | کپشن ساز" },
+    {
+      property: "og:description",
+      content:
+        "آشنایی با تیم و هدف کپشن‌ساز؛ چطور به تولیدکنندگان کمک می‌کنیم در اکسپلور دیده شوند.",
+    },
+    {
+      property: "og:url",
+      content: "https://captionsaz.ir/blog/ai-content-branding",
+    },
+  ],
+  link: [
+    {
+      rel: "canonical",
+      href: "https://captionsaz.ir/blog/ai-content-branding",
+    },
+  ],
+});
+</script>
