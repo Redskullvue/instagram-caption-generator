@@ -83,7 +83,7 @@ export async function generateGemeniPlan(
       // Add the assistant's message with tool_calls to the conversation
       const cleanAssistantMessage = {
         role: generatedText.role,
-        content: generatedText.content || null,
+        content: generatedText.content || "",
       };
       messages.push(cleanAssistantMessage);
 
