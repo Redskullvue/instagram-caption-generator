@@ -132,8 +132,8 @@ const plans = [
       { title: "دسترسی به هشتگ ها", isValid: true },
       { title: "تولید عکس با AI (3 عدد)", isValid: true },
       { title: "پشتیبانی اولویت دار", isValid: false },
-      { title: "امکان استفاده از برنامه ریز", isValid: false },
       { title: "امکان دسترسی به مدل های دیگر", isValid: false },
+      { title: "امکان استفاده از برنامه ریز", isValid: false },
     ],
   },
   {
