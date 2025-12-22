@@ -14,10 +14,10 @@ export async function typeLine(text, callback) {
     callback(current);
 
     await nextTick();
-    await wait(20 + Math.random() * 40);
+    await wait(20 + Math.random() * 20);
   }
 
-  await wait(50);
+  await wait(10);
 
   return current;
 }
