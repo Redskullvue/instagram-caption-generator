@@ -76,11 +76,18 @@ export async function generateGptPlan(
 
     if (generatedText.tool_calls) {
       console.log("AI USING TOOLS TO PLAN");
+      // Clean tool_calls by removing the 'index' field
+      const cleanedToolCalls = generatedText.tool_calls.map((tc) => ({
+        id: tc.id,
+        type: tc.type,
+        function: tc.function,
+      }));
 
       // Add the assistant's message with tool_calls to the conversation
       const cleanAssistantMessage = {
         role: generatedText.role,
-        content: generatedText.content || null,
+        content: generatedText.content || "",
+        tool_calls: cleanedToolCalls,
       };
       messages.push(cleanAssistantMessage);
 
@@ -99,14 +106,12 @@ export async function generateGptPlan(
 
       // Get final response after tool execution
       const finalResponse = await client.chat.completions.create({
-        model: "google/gemini-2.0-flash-001",
+        model: "openai/gpt-5-nano",
         messages: messages,
-        max_tokens: 1024,
-        temperature: 1,
       });
 
       if (!finalResponse) {
-        throw new Error("No Caption Generated");
+        throw new Error("No Plan Generated");
       }
 
       return {
