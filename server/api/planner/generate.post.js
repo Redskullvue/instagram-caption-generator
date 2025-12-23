@@ -73,10 +73,10 @@ export default defineEventHandler(async (event) => {
     // Update current chat ID
     user.currentChatId = currentChatId;
 
-    // For Planning We should do 3 increments per usage
-    await user.incrementUsage();
-    await user.incrementUsage();
-    await user.incrementUsage();
+    // For Planning We should do 5 increments per usage
+    for (let i = 0; i <= 6; i++) {
+      await user.incrementUsage();
+    }
 
     await user.saveContentPlan({
       prompt: prompt,
