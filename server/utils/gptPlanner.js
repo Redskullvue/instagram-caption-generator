@@ -113,9 +113,16 @@ export async function generateGptPlan(
       if (!finalResponse) {
         throw new Error("No Plan Generated");
       }
+      const jsonPlan = await generateStructuredJson(
+        client,
+        finalResponse.choices[0].message.content,
+        generatedText.content,
+        { tone, socialMedia, includeEmojis, includeHashtags }
+      );
 
       return {
         plan: finalResponse.choices[0].message.content.trim(),
+        jsonPlanData: jsonPlan,
         usage: {
           promptTokens:
             (response.usage?.prompt_tokens || 0) +
@@ -133,9 +140,15 @@ export async function generateGptPlan(
       if (!generatedText) {
         throw new Error("No caption generated");
       }
-
+      const jsonPlan = await generateStructuredJson(
+        client,
+        "",
+        generatedText.content,
+        { tone, socialMedia, includeEmojis, includeHashtags }
+      );
       return {
         plan: generatedText.content.trim(),
+        jsonPlanData: jsonPlan,
         usage: {
           promptTokens: response.usage?.prompt_tokens || 0,
           completionTokens: response.usage?.completion_tokens || 0,
@@ -146,6 +159,99 @@ export async function generateGptPlan(
   } catch (error) {
     console.error("Gemini API error:", error);
     throw new Error(error.message || "Failed to generate caption");
+  }
+}
+
+async function generateStructuredJson(
+  client,
+  textPlan,
+  instagramData,
+  options
+) {
+  const { tone, socialMedia, includeEmojis, includeHashtags } = options;
+
+  const jsonSystemPrompt = `
+تو یک تحلیلگر داده هستی. یک برنامه محتوایی متنی به تو داده می‌شود و باید آن را به JSON ساختاریافته تبدیل کنی.
+
+فرمت خروجی دقیقاً باید این باشد:
+
+{
+  "metadata": {
+    "platform": "${socialMedia}",
+    "tone": "${tone}",
+    "createdAt": "تاریخ فعلی ISO",
+    "hasInstagramData": ${instagramData ? "true" : "false"}
+  },
+  "schedule": [
+    {
+      "day": "نام روز",
+      "dayNumber": شماره روز (1-7) ، روز اول هفته شنبه =1,
+      "title": "عنوان ایده",
+      "description": "توضیح کوتاه",
+      "contentType": "نوع محتوا",
+      "category": "دسته‌بندی",
+      "emoji": "${includeEmojis ? "ایموجی" : ""}",
+      "hashtags": ${includeHashtags ? "آرایه هشتگ‌ها" : "[]"},
+      "estimatedTime": "زمان پیشنهادی (مثلاً 18:00)",
+      "priority": "high/medium/low"
+    }
+  ],
+  "summary": {
+    "totalPosts": تعداد کل,
+    "contentTypesDistribution": {},
+    "keyFocus": "محور اصلی"
+  }
+}
+
+قوانین:
+- خروجی فقط JSON معتبر (بدون markdown)
+- همه روزهای هفته باید وجود داشته باشند
+- contentType: "ریلز" | "پست" | "کاروسل" | "استوری" | "ویدیو"
+- category: "آموزشی" | "تعاملی" | "الهام‌بخش" | "تبلیغاتی" | "سرگرمی"
+- priority را بر اساس اهمیت محتوا تعیین کن
+`;
+
+  try {
+    const jsonResponse = await client.chat.completions.create({
+      model: "openai/gpt-5-nano",
+      messages: [
+        {
+          role: "system",
+          content: jsonSystemPrompt,
+        },
+        {
+          role: "user",
+          content: `برنامه متنی:\n\n${textPlan}\n\nاین برنامه را به JSON تبدیل کن.`,
+        },
+      ],
+    });
+
+    const jsonContent = jsonResponse.choices[0]?.message?.content?.trim();
+
+    // Try to extract and parse JSON
+    const jsonMatch = jsonContent.match(/```json\n([\s\S]*?)\n```/);
+    const jsonString = jsonMatch ? jsonMatch[1] : jsonContent;
+
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.error("Failed to generate structured JSON:", error);
+    // Return a basic structure if parsing fails
+    return {
+      metadata: {
+        platform: socialMedia,
+        tone: tone,
+        createdAt: new Date().toISOString(),
+        hasInstagramData: !!instagramData,
+        parseError: true,
+      },
+      schedule: [],
+      summary: {
+        totalPosts: 0,
+        contentTypesDistribution: {},
+        keyFocus: "خطا در تجزیه برنامه",
+      },
+      rawText: textPlan,
+    };
   }
 }
 
