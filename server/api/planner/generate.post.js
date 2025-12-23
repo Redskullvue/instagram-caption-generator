@@ -77,10 +77,16 @@ export default defineEventHandler(async (event) => {
     await user.incrementUsage();
     await user.incrementUsage();
     await user.incrementUsage();
+
+    await user.saveContentPlan({
+      prompt: prompt,
+      textPlan: result.plan,
+      jsonPlanData: result.jsonPlanData,
+      usage: result.usage,
+    });
     return {
       success: true,
       plan: result.plan,
-      jsonPlanData: result.jsonPlanData,
       usage: user.getUsage(),
       chatId: currentChatId.toString(),
       tokens: result.usage,

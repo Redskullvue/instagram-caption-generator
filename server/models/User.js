@@ -1,6 +1,105 @@
 import mongoose from "mongoose";
 import { plans } from "~~/server/utils/plans";
 import crypto from "crypto";
+//This is for the planning section of the app
+// This schema will determine how each day would look like on DB
+const planDaySchema = new mongoose.Schema({
+  day: {
+    type: String,
+    required: true,
+  },
+  dayNumber: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 7,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  contentType: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  emoji: {
+    type: String,
+    default: "",
+  },
+  hashtags: [String],
+  estimatedTime: {
+    type: String,
+    default: "",
+  },
+  priority: {
+    type: String,
+    enum: ["high", "medium", "low"],
+    default: "medium",
+  },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  notes: {
+    type: String,
+    default: "",
+  },
+});
+// This schema defines the shape of plan for each page
+const contentPlanSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    default: "برنامه محتوایی",
+  },
+  prompt: {
+    type: String,
+    required: true,
+  },
+  textPlan: {
+    type: String,
+    required: true,
+  },
+  metadata: {
+    platform: String,
+    tone: String,
+    createdAt: Date,
+    hasInstagramData: Boolean,
+  },
+  schedule: [planDaySchema],
+  summary: {
+    totalPosts: Number,
+    contentTypesDistribution: mongoose.Schema.Types.Mixed,
+    keyFocus: String,
+  },
+  options: {
+    tone: String,
+    socialMedia: String,
+    includeEmojis: Boolean,
+    includeHashtags: Boolean,
+  },
+  usage: {
+    promptTokens: Number,
+    completionTokens: Number,
+    totalTokens: Number,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 // In order to track created transactions
 const transactionSchema = new mongoose.Schema({
   transId: {
@@ -100,6 +199,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
+
+  // Planning
+  contentPlans: [contentPlanSchema],
 
   name: {
     type: String,
@@ -443,6 +545,87 @@ userSchema.methods.getChatForContext = function (chatId) {
   }));
 };
 
+// Methods for planning Section
+// This method will only be called on server to save the plan into DB
+userSchema.methods.saveContentPlan = async function (planData) {
+  const { prompt, textPlan, jsonPlanData, options, usage } = planData;
+
+  // Set title from first line of prompt or default
+  const title = prompt.split("\n")[0].substring(0, 50) || "برنامه محتوایی";
+
+  const newPlan = {
+    title,
+    prompt,
+    textPlan,
+    metadata: jsonPlanData.metadata || {},
+    schedule: jsonPlanData.schedule || [],
+    summary: jsonPlanData.summary || {},
+    options: options || {},
+    usage: usage || {},
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  this.contentPlans.push(newPlan);
+  await this.save();
+
+  return {
+    id: this.contentPlans[this.contentPlans.length - 1]._id,
+    ...newPlan,
+  };
+};
+
+// This method will be used in server endpoint to send the data to front-end
+userSchema.methods.getContentPlans = function () {
+  return this.contentPlans
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .map((plan) => ({
+      id: plan._id,
+      title: plan.title,
+      platform: plan.metadata.platform,
+      tone: plan.options.tone,
+      totalPosts: plan.summary.totalPosts || 0,
+      completedPosts: plan.schedule.filter((day) => day.completed).length,
+      createdAt: plan.createdAt,
+      updatedAt: plan.updatedAt,
+    }));
+};
+
+// This plan will be used on endpoint to get an specific plan from plans list
+userSchema.methods.getContentPlan = function (planId) {
+  const plan = this.contentPlans.id(planId);
+  if (!plan) {
+    return null;
+  }
+
+  return {
+    id: plan._id,
+    title: plan.title,
+    prompt: plan.prompt,
+    textPlan: plan.textPlan,
+    metadata: plan.metadata,
+    schedule: plan.schedule.map((day) => ({
+      id: day._id,
+      day: day.day,
+      dayNumber: day.dayNumber,
+      title: day.title,
+      description: day.description,
+      contentType: day.contentType,
+      category: day.category,
+      emoji: day.emoji,
+      hashtags: day.hashtags,
+      estimatedTime: day.estimatedTime,
+      priority: day.priority,
+      completed: day.completed,
+      notes: day.notes,
+    })),
+    summary: plan.summary,
+    options: plan.options,
+    usage: plan.usage,
+    createdAt: plan.createdAt,
+    updatedAt: plan.updatedAt,
+  };
+};
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
