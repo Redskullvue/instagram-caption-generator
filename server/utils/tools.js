@@ -109,7 +109,7 @@ export async function getInstagramData(username) {
         response.result.edge_followed_by ||
         0,
       bio: response.result.biography || "",
-      recentReels: recentPosts.result.edges.slice(0, 10),
+      recentReels: recentPosts.result.edges.slice(0, 10) || [],
     };
   } catch (error) {
     console.error("Instagram API Error:", error.message);

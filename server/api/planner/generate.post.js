@@ -80,15 +80,16 @@ export default defineEventHandler(async (event) => {
     return {
       success: true,
       plan: result.plan,
+      jsonPlanData: result.jsonPlanData,
       usage: user.getUsage(),
       chatId: currentChatId.toString(),
       tokens: result.usage,
     };
   } catch (error) {
-    console.error("Caption Generation Error : ", error);
+    console.error("Plan Generation Error : ", error);
     throw createError({
       statusCode: 500,
-      message: "Failed to generate captions",
+      message: "مشکل در بررسی پیج و تولید محتوا",
     });
   }
 });
