@@ -124,14 +124,14 @@ export async function getInstagramData(username) {
 }
 
 // Fallback imageGenerator
-async function fluxImageGenerator(prompt) {
+async function nanoBananaImageGenrator(prompt) {
   const config = useRuntimeConfig();
   if (!prompt) {
     throw new Error("بدون مشخصات نمیتونم عکس تولید کنم");
   }
   try {
     const response = await $fetch(
-      `https://flux-api-4-custom-models-100-style.p.rapidapi.com/create-v1?prompt=${prompt}&size=1024x1024&style=default`,
+      `https://flux-api-4-custom-models-100-style.p.rapidapi.com/create-v15?prompt=${prompt}&size=1024x1024&style=default`,
       {
         method: "GET",
         headers: {
@@ -142,10 +142,10 @@ async function fluxImageGenerator(prompt) {
     );
     return {
       success: true,
-      imageUrl: response.urls[0],
+      imageUrl: response.data.images[0].url,
     };
   } catch (error) {
-    console.error("Image Generation failed from FLUX : ", error);
+    console.error("Image Generation failed from Nano-Banana : ", error);
     return {
       success: false,
       error: error.message,
@@ -178,7 +178,7 @@ export async function generateImage(prompt) {
     };
   } catch (error) {
     try {
-      return await fluxImageGenerator(prompt);
+      return await nanoBananaImageGenrator(prompt);
     } catch (error) {
       console.error("All API's Failed To generate Image", error);
       return {

@@ -29,6 +29,7 @@ export async function imagesGenerator(prompt, conversationHistory = []) {
 4. بعد از دریافت لینک تصویر، یک پاسخ کوتاه و دوستانه به فارسی بده
 5. درصورت وجود چت های قبلی حتما به کلمات این،آن،خوب و بد توجه کن و پرامپت جدید و بر اساس فیدبک اصلاح کن
 6. در پاسخ آخرت نیازی نیست لینک رو بزاری فقط اطلاع آماده شدن تصویر رو بده
+7.لازم به توضیح نیست فقط اطلاع آماده شدن تصویر رو بده
 مثال پرامپت خوب انگلیسی:
 "A serene mountain landscape at sunset, with golden light reflecting on a calm lake, photorealistic, 4k quality"
 
