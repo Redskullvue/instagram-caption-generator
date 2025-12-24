@@ -17,7 +17,7 @@
           <h2 class="font-bold">کپشن ساز</h2>
         </div>
         <p class="text-sm text-white w-full text-start mt-2">
-          در چند ثانیه کپشن جذاب بسازید
+          درچند ثانیه از برنامه ریزی تا تولید محتوا
         </p>
       </div>
       <button
