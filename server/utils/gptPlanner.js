@@ -198,7 +198,7 @@ async function generateStructuredJson(
   ],
   "summary": {
     "totalPosts": تعداد کل,
-    "contentTypesDistribution": {english titles} ,
+   "contentTypesDistribution": {reels , post , video , carousel , story} ,
     "keyFocus": "محور اصلی"
   }
 }
@@ -299,6 +299,7 @@ function buildSystemPrompt({
 -اولین روز هفته در ایران شنبه میباشد پس روز اول رو همیشه شنبه در نظر بگیر
 خروجی باید دقیقاً شامل ۷ بخش باشد (برای هر روز هفته):
 -روز هفته
+- هر روز میتواند بیشتر از یک نوع محتوا قرار بگیرد این رو با توجه به اطلاعات دریافتی از ابزار تایین کن
 - عنوان ایده محتوا
 - توضیح کوتاه یک‌خطی
 - فرم محتوا مخصوص همان پلتفرم  
