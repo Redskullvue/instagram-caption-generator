@@ -8,8 +8,8 @@
           <ScheduleMetadataBox
             v-for="(box, index) in metaDataBoxes"
             :key="index"
-            icon="fluent-color:calendar-data-bar-28"
             :title="box.title"
+            :icon="box.icon"
             :value="box.value"
           />
         </div>
@@ -31,9 +31,11 @@
             <p class="w-full text-center">هنوز برنامه ای ایجاد نشده</p>
             <NuxtLink
               to="/chat"
-              class="rounded-xl bg-purple-500 py-2 px-4 text-white"
-              >ایجاد برنامه</NuxtLink
+              class="rounded-xl bg-purple-500 py-2 px-4 text-white flex items-center gap-x-1"
             >
+              ایجاد برنامه
+              <Icon name="ic:outline-plus" size="24px" />
+            </NuxtLink>
           </div>
         </div>
       </ClientOnly>
@@ -51,18 +53,22 @@ const planStore = usePlanStore();
 const metaDataBoxes = [
   {
     title: "کل کار ها",
+    icon: "ant-design:rise-outlined",
     value: planStore.totalPostsEver,
   },
   {
     title: "کل استوری ها",
+    icon: "streamline-sharp:story-post",
     value: planStore.totalStoriesEver,
   },
   {
     title: "برنامه ها",
+    icon: "uil:calender",
     value: planStore.allPlans.length,
   },
   {
     title: "تکمیل شده ها",
+    icon: "lets-icons:done-ring-round",
     value: planStore.completedPlans,
   },
 ];

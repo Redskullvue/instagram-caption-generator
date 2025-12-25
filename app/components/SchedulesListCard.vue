@@ -86,10 +86,12 @@
       <div class="w-full flex justify-between gap-x-4 text-sm h-full items-end">
         <NuxtLink
           :to="'/schedules/' + planInformation.id"
-          class="rounded-xl py-2 text-white px-3 transition-all duration-300 hover:opacity-70"
+          class="rounded-xl py-2 text-white px-3 transition-all duration-300 hover:opacity-70 flex items-center gap-x-1"
           :class="'bg-' + color + '-500'"
-          >مشاهده جزییات</NuxtLink
         >
+          <Icon name="mdi:eye-outline" size="20px" />
+          مشاهده جزییات
+        </NuxtLink>
         <button
           class="border boder-gray-300 border-dashed px-3 py-2 rounded-xl"
         >

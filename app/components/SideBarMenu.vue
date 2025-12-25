@@ -12,11 +12,22 @@
         <Icon name="ic:outline-plus" size="24px" />
         ایجاد گفتگو جدید
       </button>
-      <NuxtLink
-        to="/upgrade?plan=Enterprise"
-        class="rounded-xl bg-gray-200 py-2 flex items-center justify-center transition-colors duration-300 hover:bg-gray-300 text-sm"
-        >ارتقا/تمدید پلن</NuxtLink
-      >
+      <div class="flex items-center justify-between gap-x-4">
+        <NuxtLink
+          to="/upgrade?plan=Enterprise"
+          class="rounded-xl border border-dashed border-purple-500 py-2 w-full flex items-center justify-center transition-colors duration-300 hover:bg-gray-100 text-xs text-purple-500"
+        >
+          <Icon name="material-symbols:upgrade" size="20px" />
+          ارتقا/تمدید پلن
+        </NuxtLink>
+        <NuxtLink
+          to="/schedules"
+          class="rounded-xl border border-dashed border-purple-400 py-2 w-full text-xs flex items-center justify-center text-purple-500 gap-x-1 transition-colors duration-300 hover:bg-gray-100"
+        >
+          <Icon name="uil:calender" size="20px" />
+          تقویم برنامه ریزی
+        </NuxtLink>
+      </div>
     </div>
     <div class="w-full h-full p-3">
       <h2 class="mb-2 text-xs text-gray-500">تاریخچه گفت گو ها</h2>
