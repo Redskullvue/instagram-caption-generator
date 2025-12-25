@@ -41,7 +41,10 @@
     >
       <div class="w-full flex items-center justify-between text-sm">
         <div>
-          <Tag text="پایان" color="blue" />
+          <Tag
+            :text="remainingPercentage === 100 ? 'اتمام' : 'فعال'"
+            :color="remainingPercentage === 100 ? 'blue' : 'green'"
+          />
         </div>
         <div class="flex items-center gap-x-1 text-gray-500">
           <Icon name="ant-design:rise-outlined" size="20px" />
