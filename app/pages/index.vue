@@ -214,28 +214,33 @@
 
 <script setup>
 useHead({
-  title: "تولید محتوا و برنامه‌ریزی هوشمند",
+  title: "کپشن‌ساز | تولید محتوای اینستاگرام با هوش مصنوعی GPT و Gemini",
   meta: [
     {
       name: "description",
-      content: `کپشن‌ساز یک پلتفرم مدیریت اینستاگرام با هوش مصنوعی است
-که با امکان سوییچ بین GPT و Gemini،
-تحلیل پیج و برنامه‌ریزی محتوا،
-به رشد حرفه‌ای پیج شما کمک می‌کند.`,
+      content:
+        "ابزار هوشمند مدیریت اینستاگرام با AI. تولید کپشن، برنامه‌ریزی محتوا، تحلیل رقبا و ساخت تصویر با GPT و Gemini. رایگان شروع کنید.",
     },
     {
       property: "og:title",
-      content:
-        "کپشن‌ساز — تولید کپشن برای نمایش در اکسپلور اینستاگرام و سایر شبکه های مجازی",
+      content: "کپشن‌ساز - تولید کپشن و محتوای اینستاگرام با AI",
     },
     {
       property: "og:description",
       content:
-        "کپشن‌ساز به شما کمک می‌کند کپشن‌های جذاب و ترند بسازید تا پست‌های شما مخاطب بیشتری جذب کنند.",
+        "مدیریت حرفه‌ای اینستاگرام با هوش مصنوعی. تولید کپشن، برنامه‌ریزی محتوا، و تحلیل رقبا در یک پلتفرم.",
     },
     { property: "og:url", content: "https://captionsaz.ir/" },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: "https://captionsaz.ir/og-image.jpg" }, // Add this!
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "robots", content: "index, follow" },
   ],
   link: [{ rel: "canonical", href: "https://captionsaz.ir/" }],
+  htmlAttrs: {
+    lang: "fa",
+    dir: "rtl",
+  },
 });
 
 const observerTarget = ref(null);
