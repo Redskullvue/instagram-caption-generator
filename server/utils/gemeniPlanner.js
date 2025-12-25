@@ -185,6 +185,7 @@ async function generateStructuredJson(
     "hasInstagramData": ${instagramData ? "true" : "false"}
   },
   "schedule": [
+  // Can Have Multiple Jobs in one day Ex : stories and posts in one day
     {
       "day": "نام روز",
       "dayNumber": شماره روز (1-7) ، روز اول هفته شنبه =1,

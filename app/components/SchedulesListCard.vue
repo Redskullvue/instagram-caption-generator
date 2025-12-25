@@ -45,7 +45,7 @@
         </div>
         <div class="flex items-center gap-x-1 text-gray-500">
           <Icon name="ant-design:rise-outlined" size="20px" />
-          {{ planInformation.totalPosts }} پست
+          {{ planInformation.totalPosts }} کار
         </div>
         <div class="flex items-center gap-x-1 text-gray-500">
           <Icon name="streamline-sharp:story-post" size="20px" />
@@ -62,7 +62,8 @@
         <!-- ProgressBar -->
         <div class="w-full rounded-xl bg-gray-200 mt-3 h-1 mb-2">
           <div
-            class="rounded-xl h-full bg-green-400"
+            class="rounded-xl h-full"
+            :class="'bg-' + color + '-400'"
             :style="{ width: remainingPercentage + '%' }"
           ></div>
         </div>
@@ -71,11 +72,7 @@
         >
           <p>{{ planInformation.completedPosts }} عدد انجام شده</p>
           <p>
-            {{
-              planInformation.totalPosts +
-              planInformation.contentType?.story -
-              planInformation.completedPosts
-            }}
+            {{ planInformation.totalPosts - planInformation.completedPosts }}
             عدد باقی مانده
           </p>
         </div>
@@ -118,9 +115,7 @@ const { formatDate } = useDateChanger();
 
 const remainingPercentage = computed(() =>
   Math.floor(
-    (props.planInformation.completedPosts /
-      (props.planInformation.totalPosts +
-        props.planInformation.contentType?.story)) *
+    (props.planInformation.completedPosts / props.planInformation.totalPosts) *
       100
   )
 );

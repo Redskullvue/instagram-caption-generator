@@ -1,15 +1,20 @@
 <template>
   <div class="w-full h-full flex justify-center">
     <div class="w-full 2xl:w-[90%] h-full">
-      <div class="w-full grid grid-cols-1 lg:grid-cols-4 gap-x-4 gap-y-5 mt-4">
-        <ScheduleMetadataBox
-          v-for="i in 4"
-          :key="i"
-          icon="fluent-color:calendar-data-bar-28"
-          title="کل پست ها"
-          value="10"
-        />
-      </div>
+      <ClientOnly>
+        <div
+          class="w-full grid grid-cols-1 lg:grid-cols-4 gap-x-4 gap-y-5 mt-4"
+        >
+          <ScheduleMetadataBox
+            v-for="(box, index) in metaDataBoxes"
+            :key="index"
+            icon="fluent-color:calendar-data-bar-28"
+            :title="box.title"
+            :value="box.value"
+          />
+        </div>
+      </ClientOnly>
+
       <!-- Plan Cards -->
       <ClientOnly>
         <div class="w-full grid grid-cols-1 lg:grid-cols-4 mt-15 gap-4">
@@ -19,6 +24,17 @@
               :color="randomColor()"
             />
           </template>
+          <div
+            v-if="planStore.allPlans.length <= 0"
+            class="flex items-center justify-center flex-col gap-y-4 col-span-4"
+          >
+            <p class="w-full text-center">هنوز برنامه ای ایجاد نشده</p>
+            <NuxtLink
+              to="/chat"
+              class="rounded-xl bg-purple-500 py-2 px-4 text-white"
+              >ایجاد برنامه</NuxtLink
+            >
+          </div>
         </div>
       </ClientOnly>
     </div>
@@ -32,14 +48,29 @@ definePageMeta({
 });
 
 const planStore = usePlanStore();
-
+const metaDataBoxes = [
+  {
+    title: "کل کار ها",
+    value: planStore.totalPostsEver,
+  },
+  {
+    title: "کل استوری ها",
+    value: planStore.totalStoriesEver,
+  },
+  {
+    title: "برنامه ها",
+    value: planStore.allPlans.length,
+  },
+  {
+    title: "تکمیل شده ها",
+    value: planStore.completedPlans,
+  },
+];
 // This section is to assign random colors to each plan header for better UX
 const colors = ref(["purple", "yellow", "green", "red", "blue"]);
 const randomColor = () => {
   const selectedColor =
     colors.value[Math.floor(Math.random() * colors.value.length)];
-
-  console.log(selectedColor);
   return selectedColor;
 };
 </script>

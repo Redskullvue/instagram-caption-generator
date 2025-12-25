@@ -8,8 +8,34 @@ export const usePlanStore = defineStore("planstore", () => {
   // States
   const allPlans = ref([]);
 
-  //actions
+  //Getters
+  const totalPostsEver = computed(() => {
+    let totalPosts = 0;
+    allPlans.value.forEach((plan) => {
+      totalPosts += plan.totalPosts;
+    });
+    return totalPosts;
+  });
 
+  const totalStoriesEver = computed(() => {
+    let totalStories = 0;
+    allPlans.value.forEach((plan) => {
+      totalStories += plan.contentType?.story;
+    });
+    return totalStories;
+  });
+
+  const completedPlans = computed(() => {
+    let completedPlans = 0;
+    allPlans.value.forEach((plan) => {
+      if (plan.completedPosts === plan.totalPosts) {
+        completedPlans += 1;
+      }
+    });
+    return completedPlans;
+  });
+
+  //Actions
   const getAllPlans = async () => {
     try {
       const userPlans = await $fetch("/api/planner/getall", {
@@ -33,6 +59,10 @@ export const usePlanStore = defineStore("planstore", () => {
   return {
     // States
     allPlans,
+    //Computed(Getters)
+    totalPostsEver,
+    totalStoriesEver,
+    completedPlans,
     // Actions
     getAllPlans,
     hydrate,
