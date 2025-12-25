@@ -4,7 +4,7 @@
       <SchedulesHeader />
     </header>
     <!-- Slot -->
-    <main class="w-full h-max bg-pink-50 2xl:p-10 p-2">
+    <main class="w-full min-h-screen bg-pink-50 2xl:p-10 p-2">
       <slot />
     </main>
   </div>

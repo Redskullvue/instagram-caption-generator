@@ -17,7 +17,9 @@
 
       <!-- Plan Cards -->
       <ClientOnly>
-        <div class="w-full grid grid-cols-1 lg:grid-cols-4 mt-15 gap-4">
+        <div
+          class="w-full grid grid-cols-1 lg:grid-cols-4 mt-15 gap-x-4 gap-y-8"
+        >
           <template v-for="(plan, index) in planStore.allPlans" :key="index">
             <SchedulesListCard
               :plan-information="plan"
