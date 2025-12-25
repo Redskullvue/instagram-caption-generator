@@ -11,9 +11,16 @@
         />
       </div>
       <!-- Plan Cards -->
-      <div class="w-full grid grid-cols-1 lg:grid-cols-4 mt-15 gap-4">
-        <SchedulesListCard v-for="i in 4" :key="i" />
-      </div>
+      <ClientOnly>
+        <div class="w-full grid grid-cols-1 lg:grid-cols-4 mt-15 gap-4">
+          <template v-for="(plan, index) in planStore.allPlans" :key="index">
+            <SchedulesListCard
+              :plan-information="plan"
+              :color="randomColor()"
+            />
+          </template>
+        </div>
+      </ClientOnly>
     </div>
   </div>
 </template>
@@ -23,4 +30,16 @@ definePageMeta({
   layout: "schedules",
   middleware: "auth",
 });
+
+const planStore = usePlanStore();
+
+// This section is to assign random colors to each plan header for better UX
+const colors = ref(["purple", "yellow", "green", "red", "blue"]);
+const randomColor = () => {
+  const selectedColor =
+    colors.value[Math.floor(Math.random() * colors.value.length)];
+
+  console.log(selectedColor);
+  return selectedColor;
+};
 </script>

@@ -586,6 +586,7 @@ userSchema.methods.getContentPlans = function () {
       tone: plan.options.tone,
       totalPosts: plan.summary.totalPosts || 0,
       contentType: plan.summary.contentTypesDistribution || [],
+      keyFocus: plan.summary.keyFocus || "",
       completedPosts: plan.schedule.filter((day) => day.completed).length,
       createdAt: plan.createdAt,
       updatedAt: plan.updatedAt,
