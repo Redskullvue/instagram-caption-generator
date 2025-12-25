@@ -186,7 +186,7 @@ async function generateStructuredJson(
     {
       "day": "نام روز",
       "dayNumber": شماره روز (1-7) ، روز اول هفته شنبه =1,
-      "title": "عنوان ایده",
+      "title": "عنوان ایده رو خودت خلاصه کن بنویس",
       "description": "توضیح کوتاه",
       "contentType": "نوع محتوا",
       "category": "دسته‌بندی",
@@ -198,7 +198,7 @@ async function generateStructuredJson(
   ],
   "summary": {
     "totalPosts": تعداد کل,
-    "contentTypesDistribution": {},
+    "contentTypesDistribution": {english titles} ,
     "keyFocus": "محور اصلی"
   }
 }
