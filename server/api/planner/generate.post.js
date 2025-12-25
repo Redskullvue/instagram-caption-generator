@@ -78,7 +78,7 @@ export default defineEventHandler(async (event) => {
       await user.incrementUsage();
     }
 
-    await user.saveContentPlan({
+    const savedPlan = await user.saveContentPlan({
       prompt: prompt,
       textPlan: result.plan,
       jsonPlanData: result.jsonPlanData,
@@ -87,6 +87,7 @@ export default defineEventHandler(async (event) => {
     return {
       success: true,
       plan: result.plan,
+      planId: savedPlan.id,
       usage: user.getUsage(),
       chatId: currentChatId.toString(),
       tokens: result.usage,
