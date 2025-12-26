@@ -6,7 +6,7 @@
     </div>
     <div class="w-full flex gap-x-3 flex-wrap">
       <div
-        class="bg-purple-400 rounded-xl py-1 px-3 text-white hover:bg-purple-500 transition-colors duration-300 cursor-pointer"
+        class="bg-purple-400 rounded-xl py-1 px-3 text-white hover:bg-purple-500 transition-colors duration-300 cursor-pointer my-1"
         v-for="(hashtag, index) in hashtags"
         :key="index"
       >
