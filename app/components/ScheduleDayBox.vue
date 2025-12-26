@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full rounded-xl text-white bg-linear-to-r overflow-hidden from-purple-600 to-pink-500 flex flex-col items-start cursor-pointer transition-all duration-300 hover:opacity-85"
-    :class="showInformation ? 'h-[400px]' : 'h-20'"
+    :class="showInformation ? ' max-h-[1000px]' : 'max-h-20'"
     @click="toggleBox"
   >
     <div class="w-full flex items-center gap-x-4 p-3">
@@ -9,8 +9,8 @@
         <Icon name="uil:calender" size="35px" />
       </div>
       <div class="flex flex-col gap-y-2 w-full">
-        <p>شنبه</p>
-        <p class="text-xs">روز اول</p>
+        <p>{{ data[0]?.day || "امروز روز استراحته" }}</p>
+        <p class="text-xs">روز {{ data[0]?.dayNumber || "بدون محتوا" }}</p>
       </div>
       <div class="flex items-center justify-center font-bold mt-1">
         <Icon
@@ -25,43 +25,67 @@
       class="w-full bg-white h-full mt-4 rounded-br-xl rounded-bl-xl shadow-md shadow-gray-300 p-3"
     >
       <div
-        class="w-full rounded-xl border border-dashed border-purple-300 h-max mt-1 flex flex-col gap-y-3 text-gray-700 p-4"
+        class="w-full rounded-xl border border-dashed border-purple-300 h-max mt-1 flex flex-col gap-y-3 text-gray-700 p-4 my-2"
+        v-for="task in data"
+        :key="task.id"
       >
         <!-- Title And Priority -->
         <div class="w-full flex items-center">
           <div class="w-full">
-            <p>✨ نکات طلایی کپشن نویسی</p>
+            <p>✨ {{ task.title }}</p>
             <p class="text-sm mt-3 mr-2">
-              ۵ نکته حرفه‌ای برای نوشتن کپشن‌های جذاب که فالوورهایت را متحول
-              می‌کند
+              {{ task.description }}
             </p>
           </div>
           <!-- Priority Tag -->
           <div class="flex items-center justify-center">
-            <div
-              class="text-red-600 bg-red-100 px-4 py-2 text-xs border border-red-400 rounded-xl"
-            >
-              بالا
-            </div>
+            <Tag
+              :text="
+                task.priority === 'high'
+                  ? 'بالا'
+                  : task.priority === 'medium'
+                  ? 'متوسط'
+                  : 'کم'
+              "
+              :color="
+                task.priority === 'high'
+                  ? 'red'
+                  : task.priority === 'medium'
+                  ? 'yellow'
+                  : 'blue'
+              "
+            />
           </div>
         </div>
         <!-- Content Inforation -->
-        <div class="w-full grid grid-cols-2 mr-2 mt-6 gap-y-4 text-gray-500">
+        <div
+          class="w-full grid grid-cols-1 md:grid-cols-2 mr-2 mt-6 gap-y-4 text-gray-500"
+        >
           <div>
             نوع :
-            <span class="text-purple-600 font-bold">پست</span>
+            <span class="text-purple-600 font-bold">{{
+              task.contentType
+            }}</span>
           </div>
           <div>
             زمان انتشار :
-            <span class="text-purple-600 font-bold">20:30</span>
+            <span class="text-purple-600 font-bold">{{
+              task.estimatedTime
+            }}</span>
           </div>
           <div>
             دسته بندی :
-            <span class="text-purple-600 font-bold">ترفندها</span>
+            <span class="text-purple-600 font-bold">{{ task.category }}</span>
           </div>
           <div>
             هشتگ ها :
-            <span class="text-purple-600 font-bold"># تست # تست </span>
+            <span
+              class="text-purple-600 font-bold"
+              v-for="(hashtag, index) in task.hashtags"
+              :key="index"
+            >
+              #{{ hashtag }}
+            </span>
           </div>
         </div>
         <!-- Take Action Buttons -->
@@ -83,8 +107,8 @@
 </template>
 
 <script setup>
+const props = defineProps(["data"]);
 const showInformation = ref(false);
-
 const toggleBox = () => {
   showInformation.value = !showInformation.value;
 };

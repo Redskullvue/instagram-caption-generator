@@ -7,6 +7,7 @@ export const usePlanStore = defineStore("planstore", () => {
 
   // States
   const allPlans = ref([]);
+  const currentPlan = ref(null);
 
   //Getters
   const totalPostsEver = computed(() => {
@@ -35,6 +36,22 @@ export const usePlanStore = defineStore("planstore", () => {
     return completedPlans;
   });
 
+  const currentPlanHighPriorityList = computed(() => {
+    const schedule = currentPlan.value?.schedule ?? [];
+    const list = schedule.filter((day) => day.priority === "high");
+    return list.length || 0;
+  });
+  const currentPlanHashtagList = computed(() => {
+    const schedule = currentPlan.value?.schedule ?? [];
+    const list = [];
+    schedule.forEach((day) => {
+      // Just mutating the same array here instead of reassign using concat
+      list.push(...day.hashtags);
+    });
+
+    return list;
+  });
+
   //Actions
   const getAllPlans = async () => {
     try {
@@ -51,20 +68,48 @@ export const usePlanStore = defineStore("planstore", () => {
     }
   };
 
+  const getSinglePlan = async (planId) => {
+    try {
+      const response = await $fetch(`/api/planner/${planId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      });
+      currentPlan.value = response.plan;
+    } catch (error) {
+      throw new Error("خطا در ارتباط با سرور");
+    }
+  };
+
   const hydrate = async () => {
     if (authStore.isAuthenticated) {
       await getAllPlans();
     }
   };
+
+  //This function will recive an index from /schedules/[id] to return the days tasks
+  const taskSorter = (index) => {
+    let day = currentPlan.value.schedule.filter(
+      (item) => item.dayNumber === index
+    );
+    return day;
+  };
+
   return {
     // States
     allPlans,
+    currentPlan,
     //Computed(Getters)
     totalPostsEver,
     totalStoriesEver,
     completedPlans,
+    currentPlanHighPriorityList,
+    currentPlanHashtagList,
     // Actions
     getAllPlans,
+    getSinglePlan,
+    taskSorter,
     hydrate,
   };
 });

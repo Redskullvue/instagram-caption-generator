@@ -56,22 +56,22 @@ const metaDataBoxes = [
   {
     title: "کل کار ها",
     icon: "ant-design:rise-outlined",
-    value: planStore.totalPostsEver,
+    value: planStore.totalPostsEver ?? 0,
   },
   {
     title: "کل استوری ها",
     icon: "streamline-sharp:story-post",
-    value: planStore.totalStoriesEver,
+    value: planStore.totalStoriesEver ?? 0,
   },
   {
     title: "برنامه ها",
     icon: "uil:calender",
-    value: planStore.allPlans.length,
+    value: planStore.allPlans.length ?? 0,
   },
   {
     title: "تکمیل شده ها",
     icon: "lets-icons:done-ring-round",
-    value: planStore.completedPlans,
+    value: planStore.completedPlans ?? 0,
   },
 ];
 // This section is to assign random colors to each plan header for better UX
