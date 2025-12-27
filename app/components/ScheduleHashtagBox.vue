@@ -9,6 +9,7 @@
         class="bg-purple-400 rounded-xl py-1 px-3 text-white hover:bg-purple-500 transition-colors duration-300 cursor-pointer my-1"
         v-for="(hashtag, index) in hashtags"
         :key="index"
+        @click="copyHashtag(hashtag)"
       >
         # {{ hashtag }}
       </div>
@@ -18,4 +19,10 @@
 
 <script setup>
 const props = defineProps(["hashtags"]);
+const toastStore = useToastStore();
+const copyHashtag = (value) => {
+  toastStore.clearToasts();
+  navigator.clipboard.writeText(value);
+  toastStore.addToast("success", "کپی شد");
+};
 </script>
