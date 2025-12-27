@@ -89,7 +89,9 @@
           </div>
         </div>
         <!-- Take Action Buttons -->
-        <div class="w-full flex items-center gap-x-4 mt-6">
+        <div
+          class="w-full flex items-center gap-x-4 mt-6 flex-wrap justify-center lg:justify-start gap-y-3"
+        >
           <button
             class="rounded-xl border border-purple-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
           >
@@ -99,6 +101,18 @@
             class="rounded-xl border border-pink-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
           >
             تولید کپشن
+          </button>
+
+          <button
+            class="rounded-xl border border-purple-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
+          >
+            تولید سناریو
+          </button>
+
+          <button
+            class="rounded-xl border border-pink-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
+          >
+            اتمام کار
           </button>
         </div>
       </div>
