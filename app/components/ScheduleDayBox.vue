@@ -2,9 +2,8 @@
   <div
     class="w-full rounded-xl text-white bg-linear-to-r overflow-hidden from-purple-600 to-pink-500 flex flex-col items-start cursor-pointer transition-all duration-300 hover:opacity-85"
     :class="showInformation ? ' max-h-[1000px]' : 'max-h-20'"
-    @click="toggleBox"
   >
-    <div class="w-full flex items-center gap-x-4 p-3">
+    <div class="w-full flex items-center gap-x-4 p-3" @click="toggleBox">
       <div class="bg-pink-400 p-2 flex items-center justify-center rounded-xl">
         <Icon name="uil:calender" size="35px" />
       </div>
@@ -94,20 +93,27 @@
           class="w-full flex items-center gap-x-4 mt-6 flex-wrap justify-center lg:justify-start gap-y-3"
         >
           <button
-            class="rounded-xl border border-purple-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
+            @click="generateImageFromSchedule(task.title, task.description)"
+            :disabled="generateStore.isGenerating"
+            class="rounded-xl border border-purple-500 disabled:opacity-80 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
           >
-            تولید عکس پست
+            <p v-if="!generateStore.isGenerating">تولید عکس پست</p>
+            <p v-else>درحال تولید</p>
           </button>
           <button
-            class="rounded-xl border border-pink-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
+            :disabled="generateStore.isGenerating"
+            class="rounded-xl border border-pink-500 w-[250px] disabled:opacity-80 py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
           >
-            تولید کپشن
+            <p v-if="!generateStore.isGenerating">تولید کپشن</p>
+            <p v-else>درحال تولید</p>
           </button>
 
           <button
-            class="rounded-xl border border-purple-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
+            :disabled="generateStore.isGenerating"
+            class="rounded-xl border border-purple-500 disabled:opacity-80 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-purple-500 hover:text-white"
           >
-            تولید سناریو
+            <p v-if="!generateStore.isGenerating">تولید سناریو</p>
+            <p v-else>درحال تولید</p>
           </button>
 
           <button
@@ -128,6 +134,7 @@
 const props = defineProps(["data"]);
 const showInformation = ref(false);
 const planStore = usePlanStore();
+const generateStore = useGenerateStore();
 const route = useRoute();
 const toggleBox = () => {
   showInformation.value = !showInformation.value;
@@ -135,6 +142,20 @@ const toggleBox = () => {
 
 const setStatus = (planId, scheduleId, status) => {
   planStore.updateTaskStatus(planId, scheduleId, status);
+};
+
+const generateImageFromSchedule = async (title, description) => {
+  const input = `تیتر : ${title ?? ""}
+  توضیحات: ${description ?? ""} 
+  این عکس باید برای فضای مجازی ساخته شود
+  `;
+  try {
+    await generateStore.generateImage(input);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    navigateTo("/chat");
+  }
 };
 </script>
 

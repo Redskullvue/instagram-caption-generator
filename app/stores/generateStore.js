@@ -11,6 +11,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
   const selectedTone = ref("causal");
   const selectedSocialMedia = ref("instagram");
   const usedAllPrompts = ref(false);
+  const isGenerating = ref(false);
 
   // These rules determine which selectors to show in the chat page
   const visibilityRules = ref({
@@ -40,6 +41,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
   };
 
   const generateCaption = async (userInput) => {
+    isGenerating.value = true;
     try {
       const response = await $fetch("/api/caption/generate", {
         method: "POST",
@@ -83,10 +85,13 @@ export const useGenerateStore = defineStore("generateStore", () => {
           true
         );
       }
+    } finally {
+      isGenerating.value = false;
     }
   };
 
   const generatePlan = async (userInput) => {
+    isGenerating.value = true;
     {
       try {
         const response = await $fetch("/api/planner/generate", {
@@ -131,11 +136,14 @@ export const useGenerateStore = defineStore("generateStore", () => {
             true
           );
         }
+      } finally {
+        isGenerating.value = false;
       }
     }
   };
 
   const generateImage = async (userInput) => {
+    isGenerating.value = true;
     try {
       const response = await $fetch("/api/imagegenrator/generate", {
         method: "POST",
@@ -169,6 +177,8 @@ export const useGenerateStore = defineStore("generateStore", () => {
           true
         );
       }
+    } finally {
+      isGenerating.value = false;
     }
   };
 
@@ -179,6 +189,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
     selectedTone,
     selectedSocialMedia,
     usedAllPrompts,
+    isGenerating,
     //getters
     isComponentVisible,
     //actions
