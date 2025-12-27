@@ -48,7 +48,7 @@
 <script setup>
 definePageMeta({
   layout: "schedules",
-  middleware: "auth",
+  middleware: ["auth", "schedule"],
 });
 
 const planStore = usePlanStore();

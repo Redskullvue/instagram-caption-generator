@@ -52,7 +52,7 @@
 
 <script setup>
 definePageMeta({
-  middleware: "auth",
+  middleware: ["auth", "schedule"],
 });
 const route = useRoute();
 const planStore = usePlanStore();
