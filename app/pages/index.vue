@@ -237,6 +237,27 @@ useHead({
     { name: "robots", content: "index, follow" },
   ],
   link: [{ rel: "canonical", href: "https://captionsaz.ir/" }],
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "کپشن‌ساز",
+        applicationCategory: "BusinessApplication",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "IRR",
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.8",
+          ratingCount: "50",
+        },
+      }),
+    },
+  ],
   htmlAttrs: {
     lang: "fa",
     dir: "rtl",
