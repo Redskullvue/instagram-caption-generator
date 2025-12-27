@@ -20,9 +20,15 @@ export const useToastStore = defineStore("toastStore", () => {
     toasts.value = toasts.value.filter((toast) => toast.id !== id);
   };
 
+  // Remove All Toasts together
+  const clearToasts = () => {
+    toasts.value = [];
+  };
+
   return {
     toasts,
     addToast,
     removeToast,
+    clearToasts,
   };
 });
