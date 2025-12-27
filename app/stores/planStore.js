@@ -101,6 +101,27 @@ export const usePlanStore = defineStore("planstore", () => {
     }
   };
 
+  const updateTaskStatus = async (planId, scheduleId, status) => {
+    try {
+      const response = await $fetch("/api/planner/complete", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+        body: {
+          planId: planId,
+          scheduleId: scheduleId,
+          completed: status,
+        },
+      });
+
+      await hydrate();
+      toastStore.addToast("success", "به‌روزرسانی شد");
+    } catch (error) {
+      throw new Error("خطا در ارتباط با سرور");
+    }
+  };
+
   const hydrate = async () => {
     if (authStore.isAuthenticated) {
       await getAllPlans();
@@ -130,6 +151,7 @@ export const usePlanStore = defineStore("planstore", () => {
     getSinglePlan,
     deletePlan,
     taskSorter,
+    updateTaskStatus,
     hydrate,
   };
 });

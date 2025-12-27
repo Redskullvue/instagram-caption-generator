@@ -634,6 +634,25 @@ userSchema.methods.deleteContentPlan = function (planId) {
     plan.deleteOne();
   }
 };
+
+userSchema.methods.updateScheduleCompletion = function (
+  planId,
+  scheduleId,
+  completed
+) {
+  const plan = this.contentPlans.id(planId);
+  if (!plan) {
+    throw new Error("Content plan not found");
+  }
+
+  const scheduleItem = plan.schedule.id(scheduleId);
+  if (!scheduleItem) {
+    throw new Error("Schedule item not found");
+  }
+
+  scheduleItem.completed = completed;
+  return scheduleItem;
+};
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

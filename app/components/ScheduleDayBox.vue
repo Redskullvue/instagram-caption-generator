@@ -86,6 +86,7 @@
             >
               #{{ hashtag }}
             </span>
+            <span v-if="task.hashtags.length <= 0">هشنگی پیشنهاد نشده</span>
           </div>
         </div>
         <!-- Take Action Buttons -->
@@ -110,9 +111,12 @@
           </button>
 
           <button
-            class="rounded-xl border border-pink-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
+            @click="setStatus(route.params.id, task.id, true)"
+            :disabled="task.completed"
+            class="rounded-xl border border-pink-500 w-[250px] py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white disabled:opacity-40"
           >
-            اتمام کار
+            <p v-if="!task.completed">پایان</p>
+            <p v-else>پایان یافته</p>
           </button>
         </div>
       </div>
@@ -123,8 +127,14 @@
 <script setup>
 const props = defineProps(["data"]);
 const showInformation = ref(false);
+const planStore = usePlanStore();
+const route = useRoute();
 const toggleBox = () => {
   showInformation.value = !showInformation.value;
+};
+
+const setStatus = (planId, scheduleId, status) => {
+  planStore.updateTaskStatus(planId, scheduleId, status);
 };
 </script>
 
