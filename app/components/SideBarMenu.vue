@@ -21,7 +21,7 @@
           ارتقا/تمدید پلن
         </NuxtLink>
         <NuxtLink
-          to="/schedules"
+          :to="authStore.user.plan === 'Free' ? '/pricing' : '/schedules'"
           class="rounded-xl border border-dashed border-purple-400 py-2 w-full text-xs flex items-center justify-center text-purple-500 gap-x-1 transition-colors duration-300 hover:bg-gray-100"
         >
           <Icon name="uil:calender" size="20px" />
