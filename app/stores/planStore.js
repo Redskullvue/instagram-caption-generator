@@ -82,6 +82,25 @@ export const usePlanStore = defineStore("planstore", () => {
     }
   };
 
+  const deletePlan = async (planId) => {
+    try {
+      const response = await $fetch(`/api/planner/${planId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      });
+      const planIndex = allPlans.value.findIndex((plan) => plan.id === planId);
+      if (planIndex !== -1) {
+        allPlans.value.splice(planIndex, 1);
+      }
+      return true;
+    } catch (error) {
+      toastStore.addToast("error", error.message);
+      throw new Error("خطا در ارتباط با سرور");
+    }
+  };
+
   const hydrate = async () => {
     if (authStore.isAuthenticated) {
       await getAllPlans();
@@ -109,6 +128,7 @@ export const usePlanStore = defineStore("planstore", () => {
     // Actions
     getAllPlans,
     getSinglePlan,
+    deletePlan,
     taskSorter,
     hydrate,
   };

@@ -28,7 +28,8 @@
         class="w-[150px] h-[150px] rounded-xl bg-white flex justify-center shadow-md p-3 shadow-gray-300 left-4 absolute top-[75%] z-50"
       >
         <button
-          class="text-red-500 h-max w-full text-start text-sm border-b border-gray-300 p-1 items-center flex gap-x-2"
+          @click="deletePlan(planInformation.id)"
+          class="text-red-500 h-max w-full text-start text-sm border-b border-gray-300 p-1 items-center flex gap-x-2 cursor-pointer hover:bg-gray-100 rounded-xl transition-colors duration-300"
         >
           <Icon name="line-md:trash" size="20px" />
           حذف
@@ -117,6 +118,7 @@ const props = defineProps({
   },
 });
 const { formatDate } = useDateChanger();
+const planStore = usePlanStore();
 
 const remainingPercentage = computed(() =>
   Math.floor(
@@ -125,4 +127,9 @@ const remainingPercentage = computed(() =>
   )
 );
 const showMenu = ref(false);
+
+const deletePlan = (planId) => {
+  planStore.deletePlan(planId);
+  showMenu.value = false;
+};
 </script>

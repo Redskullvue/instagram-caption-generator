@@ -628,6 +628,12 @@ userSchema.methods.getContentPlan = function (planId) {
     updatedAt: plan.updatedAt,
   };
 };
+userSchema.methods.deleteContentPlan = function (planId) {
+  const plan = this.contentPlans.id(planId);
+  if (plan) {
+    plan.deleteOne();
+  }
+};
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
