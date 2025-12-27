@@ -114,9 +114,13 @@ export const usePlanStore = defineStore("planstore", () => {
           completed: status,
         },
       });
-
+      // Update the realtime schedule
+      let index = currentPlan.value.schedule.findIndex(
+        (item) => item.id === scheduleId
+      );
       await hydrate();
       toastStore.addToast("success", "به‌روزرسانی شد");
+      currentPlan.value.schedule[index].completed = status;
     } catch (error) {
       throw new Error("خطا در ارتباط با سرور");
     }
