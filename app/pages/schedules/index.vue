@@ -52,6 +52,10 @@ definePageMeta({
 });
 
 const planStore = usePlanStore();
+
+onMounted(async () => {
+  await planStore.hydrate();
+});
 const metaDataBoxes = [
   {
     title: "کل کار ها",
