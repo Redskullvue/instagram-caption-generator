@@ -101,6 +101,7 @@
             <p v-else>درحال تولید</p>
           </button>
           <button
+            @click="generateCaptionFromSchedule(task.title, task.description)"
             :disabled="generateStore.isGenerating"
             class="rounded-xl border border-pink-500 w-[250px] disabled:opacity-80 py-3 cursor-pointer transition-colors duration-300 hover:bg-pink-500 hover:text-white"
           >
@@ -151,6 +152,20 @@ const generateImageFromSchedule = async (title, description) => {
   `;
   try {
     await generateStore.generateImage(input);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    navigateTo("/chat");
+  }
+};
+
+const generateCaptionFromSchedule = async (title, description) => {
+  const input = `این پست برای اینستاگرامه و هدفش رسیدن به اکسپلوره
+  موضوع : ${title}, توضیحات : ${description}
+  `;
+
+  try {
+    await generateStore.generateCaption(input);
   } catch (error) {
     console.log(error);
   } finally {

@@ -51,7 +51,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
         body: {
           prompt: userInput,
           chatId: chatStore.currentChatId,
-          selectedAIEngine: selectedAIEngine.value,
+          selectedAIEngine: selectedAIEngine.value ?? "gemeni",
           options: {
             tone: selectedTone.value,
             socialMedia: selectedSocialMedia.value,
