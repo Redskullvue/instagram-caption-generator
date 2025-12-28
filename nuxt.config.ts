@@ -39,7 +39,8 @@ export default defineNuxtConfig({
       "/contact-us",
       "/login",
       "/signup",
-      "/blog/تولید-کپشن-با-هوش-مصنوعی",
+      "/blog/ai-content-branding",
+      "/blog/how-to-plan-for-instagram",
     ],
   },
   nuxtApiShield: {
