@@ -56,7 +56,7 @@ const planStore = usePlanStore();
 onMounted(async () => {
   await planStore.hydrate();
 });
-const metaDataBoxes = [
+const metaDataBoxes = computed(() => [
   {
     title: "کل کار ها",
     icon: "ant-design:rise-outlined",
@@ -70,14 +70,14 @@ const metaDataBoxes = [
   {
     title: "برنامه ها",
     icon: "uil:calender",
-    value: planStore.allPlans.length ?? 0,
+    value: planStore.allPlans?.length ?? 0,
   },
   {
     title: "تکمیل شده ها",
     icon: "lets-icons:done-ring-round",
     value: planStore.completedPlans ?? 0,
   },
-];
+]);
 // This section is to assign random colors to each plan header for better UX
 const colors = ref(["purple", "yellow", "green", "red", "blue"]);
 const randomColor = () => {
