@@ -39,12 +39,9 @@
 const usageStore = useUsageStore();
 const authStore = useAuthStore();
 const { formatDate } = useDateChanger();
-const date = ref(null);
-onMounted(() => {
-  if (authStore.user.planExpiresAt) {
-    date.value = formatDate(authStore.user.planExpiresAt);
-  } else {
-    date.value = formatDate(usageStore.usage.resetDate);
-  }
+const date = computed(() => {
+  return formatDate(
+    authStore.user?.planExpiresAt || usageStore.usage?.resetDate
+  );
 });
 </script>
