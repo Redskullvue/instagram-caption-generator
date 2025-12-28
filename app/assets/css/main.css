@@ -1,4 +1,13 @@
 @import "tailwindcss";
-@source inline("bg-{red,blue,green,yellow,purple}-{300,400,500}");
-@source inline("text-red-600" ,"text-yellow-600" , "text-purple-600" , "text-blue-600" , "text-green-600")
 
+@source "../../components/**/*.{vue,js,ts}";
+@source "../../pages/**/*.{vue,js,ts}";
+@source "../../layouts/**/*.{vue,js,ts}";
+@source "../../app.{vue,js,ts}";
+@source inline("bg-{red,blue,green,yellow,purple}-{300,400,500}");
+@source inline("text-red-600" ,"text-yellow-600" , "text-purple-600" , "text-blue-600" , "text-green-600");
+
+
+html {
+  direction: rtl;
+}
