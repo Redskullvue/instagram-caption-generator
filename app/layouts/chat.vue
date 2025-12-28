@@ -28,6 +28,7 @@
       </button>
       <Transition name="slideInRight" appear>
         <div
+          @click.self="toggleMenu = false"
           v-if="toggleMenu"
           class="fixed inset-0 z-50 backdrop-blur-lg lg:pointer-events-none lg:backdrop-blur-none"
         >
