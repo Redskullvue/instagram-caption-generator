@@ -287,7 +287,6 @@ const userSchema = new mongoose.Schema({
 function getNextResetDate() {
   const now = new Date();
   now.setMonth(now.getMonth() + 1);
-  now.setDate(1);
   now.setHours(0, 0, 0, 0);
   return now;
 }
