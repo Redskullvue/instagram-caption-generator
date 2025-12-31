@@ -43,6 +43,4 @@
   </div>
 </template>
 
-<script setup>
-const config = useRuntimeConfig();
-</script>
+<script setup></script>
