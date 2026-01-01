@@ -19,6 +19,7 @@
       <NuxtLink to="/about">درباره ما</NuxtLink>
       <NuxtLink to="/pricing">قیمت ها</NuxtLink>
       <NuxtLink to="/contact-us">تماس با ما</NuxtLink>
+      <NuxtLink to="/blog">وبلاگ</NuxtLink>
     </div>
     <div class="flex items-center justify-center">
       <a
