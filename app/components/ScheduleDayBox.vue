@@ -21,7 +21,7 @@
     </div>
 
     <div
-      class="w-full bg-white h-full mt-4 rounded-br-xl rounded-bl-xl shadow-md shadow-gray-300 p-3"
+      class="w-full bg-white h-full mt-4 rounded-br-xl rounded-bl-xl shadow-md shadow-gray-300 p-3 overflow-y-scroll"
     >
       <div
         class="w-full rounded-xl border border-dashed border-purple-300 h-max mt-1 flex flex-col gap-y-3 text-gray-700 p-4 my-2"
