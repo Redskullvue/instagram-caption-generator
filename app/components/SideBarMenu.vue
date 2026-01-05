@@ -32,7 +32,7 @@
     <div class="w-full h-full p-3">
       <h2 class="mb-2 text-xs text-gray-500">تاریخچه گفت گو ها</h2>
       <ul
-        class="w-full h-[68vh] rounded-xl p-4 overflow-y-auto pb-10"
+        class="w-full h-[68vh] rounded-xl p-4 overflow-y-auto pb-[150px]"
         v-if="chatStore.chatHistory.length >= 1"
       >
         <li
@@ -72,7 +72,16 @@
         هنوز گفتگویی ایجاد نکردید
       </p>
     </div>
-    <div class="fixed bottom-0 p-2 mb-2 w-full lg:w-[20%] bg-white">
+    <div
+      class="fixed -bottom-2 h-[100px] p-2 mb-2 w-full lg:w-[20%] bg-white text-sm"
+    >
+      <NuxtLink
+        to="/support"
+        class="text-purple-500 flex items-center gap-x-1 mb-1 w-full cursor-pointer hover:bg-purple-100 p-2 rounded-xl transition-colors duration-300"
+      >
+        <Icon name="bx:support" size="21px" />
+        پشتیبانی
+      </NuxtLink>
       <button
         @click="authStore.logOut"
         class="text-red-500 flex items-center gap-x-1 w-full cursor-pointer hover:bg-red-100 p-2 rounded-xl transition-colors duration-300"
