@@ -14,7 +14,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const tickets = await Ticket.find({ createdBy: userId });
+    const tickets = await Ticket.find({ createdBy: userId }).sort({
+      createdAt: -1,
+    });
     return {
       success: true,
       tickets: tickets,
