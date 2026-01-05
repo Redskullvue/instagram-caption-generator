@@ -219,9 +219,7 @@
       <p class="text-gray-600 w-full text-center mt-4 text-sm mb-6">
         پاسخ به سوالات شما در مورد کپشن ساز
       </p>
-      <div
-        class="w-full grid grid-cols-1 lg:grid-cols-2 mt-6 2xl:p-10 p-2 gap-x-3 gap-y-6"
-      >
+      <div class="w-full grid grid-cols-1 mt-6 2xl:p-10 p-2 gap-x-3 gap-y-6">
         <QuestionBox
           v-for="question in questionData"
           :key="question.title"
