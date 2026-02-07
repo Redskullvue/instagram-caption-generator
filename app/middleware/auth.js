@@ -5,10 +5,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (import.meta.server) {
     return;
   }
-  const protectedRoutes = ["/chat", "/upgrade", "/schedules"];
+  const protectedRoutes = ["/chat", "/upgrade", "/schedules", "/support"];
   // Check if the path starts with any protected route
   const isProtectedRoute = protectedRoutes.some((route) =>
-    to.path.startsWith(route)
+    to.path.startsWith(route),
   );
   if (!isProtectedRoute) {
     return;
