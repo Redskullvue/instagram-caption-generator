@@ -2,17 +2,19 @@
   <div
     class="w-max max-w-[90%] whitespace-pre-line lg:min-h-[70px] mt-4 p-3 rounded-xl min-h-[10] shadow-md shadow-gray-400 flex items-center justify-center lg:text-sm flex-col"
     :class="
-      message.isUser
+      message.isUser || message.senderType === 'user'
         ? 'ml-auto bg-linear-to-r  from-purple-600 to-pink-600 text-white'
         : 'mr-auto bg-gray-100'
     "
   >
     <p
-      v-if="!message.isUser"
+      v-if="!message.isUser && message.senderType !== 'user'"
       class="text-purple-800 text-start"
       v-html="display"
     ></p>
-    <p v-if="message.isUser">{{ message.text }}</p>
+    <p v-if="message.isUser || message.senderType === 'user'">
+      {{ message.text }}
+    </p>
     <div class="relative group cursor-pointer">
       <img
         v-if="message.imageUrl"
@@ -34,6 +36,10 @@ const props = defineProps({
     type: Object,
     required: true,
     default: () => ({ text: "", isUser: false }),
+    senderType: {
+      type: String,
+      default: "admin",
+    },
     isUser: {
       type: Boolean,
       default: false,
