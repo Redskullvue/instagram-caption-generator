@@ -23,7 +23,7 @@
           برگشت به چت
         </NuxtLink>
         <NuxtLink
-          to="/support"
+          to="/support/new"
           class="rounded-xl border border-dashed text-sm border-purple-400 py-3 2xl:w-[200px] w-[150px] text-purple-500 2xl:py-4 text-center flex items-center justify-center gap-x-1 transition-colors duration-300 hover:bg-purple-400 hover:text-white"
         >
           <Icon name="ic:outline-plus" size="20px" />
