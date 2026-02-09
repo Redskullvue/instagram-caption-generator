@@ -65,7 +65,7 @@ export const useTicketStore = defineStore("ticketStore", () => {
       return currentTicket.value;
     } catch (error) {
       toastStore.addToast("error", " خطا در دریافت اطلاعات");
-      throw new Error("خطا در دریافت اطلاعات");
+      return navigateTo("/support");
     }
   };
 
@@ -114,6 +114,32 @@ export const useTicketStore = defineStore("ticketStore", () => {
     }
   };
 
+  const submitTicket = async (ticket) => {
+    if (ticket.subject.trim() !== "" && ticket.message.trim() !== "") {
+      try {
+        const response = await $fetch("/api/tickets/create", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authStore.token}`,
+          },
+          body: {
+            subject: ticket.subject,
+            priority: ticket.priority,
+            message: ticket.message,
+          },
+        });
+        if (response.success) {
+          currentTicket.value = response.ticket;
+          return navigateTo(`/support/${response.ticket._id}`);
+        }
+      } catch (error) {
+        throw new Error("خطا در ثبت تیکت");
+      }
+    } else {
+      throw new Error("لطفا فیلد های اجباری رو پر کنید");
+    }
+  };
+
   return {
     // States
     allTickets,
@@ -127,5 +153,6 @@ export const useTicketStore = defineStore("ticketStore", () => {
     getCurrentTicket,
     sendReplyToTicket,
     closeTicket,
+    submitTicket,
   };
 });

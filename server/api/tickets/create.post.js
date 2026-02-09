@@ -15,6 +15,7 @@ export default defineEventHandler(async (event) => {
   const ticket = await Ticket.create({
     subject: body.subject,
     priority: body.priority || "low",
+    status: body.status || "pending",
     createdBy: userId,
     messages: [
       {
