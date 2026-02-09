@@ -13,11 +13,17 @@ export default defineEventHandler(async (event) => {
       });
     }
     const ticket = await Ticket.findById(ticketId);
-
-    return {
-      success: true,
-      ticket: ticket,
-    };
+    if (ticket.createdBy.toString() === userId) {
+      return {
+        success: true,
+        ticket: ticket,
+      };
+    } else {
+      throw createError({
+        statusCode: 403,
+        message: "Unauthorized",
+      });
+    }
   } catch (error) {
     throw createError({
       statusCode: 500,
