@@ -29,7 +29,7 @@
           >
             <p class="w-full text-center">هنوز تیکتی ایجاد نشده</p>
             <NuxtLink
-              to="/chat"
+              to="/support/new"
               class="rounded-xl bg-purple-500 py-2 px-4 text-white flex items-center gap-x-1"
             >
               ایجاد تیکت
