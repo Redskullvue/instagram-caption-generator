@@ -88,6 +88,7 @@ export async function sendMail(email, name, token, userId) {
     `,
   });
   if (error) {
+    console.log(error);
     throw createError({
       statusCode: 500,
       message: "خطا در ارسال ایمیل",
