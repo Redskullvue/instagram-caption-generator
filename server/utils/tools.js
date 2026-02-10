@@ -49,7 +49,7 @@ export const tools = [
           prompt: {
             type: "string",
             description:
-              "The English description of the image to generate. If user prompt is in Persian, translate it to English first.",
+              "The English description of the image to generate. If user prompt is in Persian, translate it to English first.Do not translate names or anything that user wants to be on the image.",
           },
         },
         required: ["prompt"],
@@ -85,7 +85,7 @@ export async function getInstagramData(username) {
         body: {
           username: username,
         },
-      }
+      },
     );
 
     const recentPosts = await $fetch(
@@ -99,7 +99,7 @@ export async function getInstagramData(username) {
         body: {
           username: username,
         },
-      }
+      },
     );
 
     // ✅ FIXED: Added proper error handling for missing data
@@ -138,7 +138,7 @@ async function nanoBananaImageGenrator(prompt) {
           "x-rapidapi-host": config.rapidApiFluxImageGeneratorHost,
           "X-RapidAPI-Key": config.rapidApiKey,
         },
-      }
+      },
     );
     return {
       success: true,
@@ -170,7 +170,7 @@ export async function generateImage(prompt) {
         body: JSON.stringify({
           text: prompt,
         }),
-      }
+      },
     );
     return {
       success: true,
