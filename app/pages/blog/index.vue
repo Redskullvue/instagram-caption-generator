@@ -32,6 +32,13 @@ const posts = ref([
     image: "/blog-1.png",
     link: "/blog/how-to-plan-for-instagram",
   },
+  {
+    title: "      هوش مصنوعی چگونه مدیریت اینستاگرام را متحول کرده است؟",
+    description:
+      "با استفاده از هوش مصنوعی، مدیریت اینستاگرام را حرفه‌ای‌تر انجام دهید. برنامه‌ریز محتوا، تولید کپشن، تصویر و سناریو با Captionsaz.",
+    image: "/blog-5.png",
+    link: "/blog/ai-for-instagram",
+  },
 ]);
 useHead({
   title: "بلاگ کپشن ساز | آموزش تولید محتوا با هوش مصنوعی",
