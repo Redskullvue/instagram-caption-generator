@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { aiEngines } from "./aiList";
 
 let openaiClient = null;
-
+const config = useRuntimeConfig();
 function getOpenAIClient(apiKey, baseURL) {
   if (!openaiClient) {
     openaiClient = new OpenAI({
@@ -23,6 +23,14 @@ export async function generateCaption(
   const selectedAI = aiEngines.find(
     (engine) => engine.name === selectedAiEngine,
   );
+  if (!selectedAI) {
+    selectedAI = {
+      name: "gemeni",
+      model: "google/gemini-2.0-flash-001",
+      baseURL: config.geminiBaseUrl,
+      apiKey: config.geminiApiKey,
+    };
+  }
   const {
     tone = "casual",
     socialMedia = "instagram",
