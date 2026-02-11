@@ -1,6 +1,5 @@
 import { requireAuth } from "~~/server/utils/auth";
 import { generateCaption } from "~~/server/utils/gemeni";
-import { generateGptCaption } from "~~/server/utils/gpt";
 import User from "~~/server/models/User";
 import { checkPlanExpiry } from "~~/server/utils/checkPlanExpiry";
 export default defineEventHandler(async (event) => {
@@ -61,9 +60,19 @@ export default defineEventHandler(async (event) => {
           message: "متاسفانه شما قابلیت استفاده از این هوش مصنوعی را ندارید",
         });
       }
-      result = await generateGptCaption(prompt, options, conversationHistory);
+      result = await generateCaption(
+        prompt,
+        options,
+        conversationHistory,
+        selectedAIEngine,
+      );
     } else if (selectedAIEngine === "gemeni") {
-      result = await generateCaption(prompt, options, conversationHistory);
+      result = await generateCaption(
+        prompt,
+        options,
+        conversationHistory,
+        selectedAIEngine,
+      );
     } else {
       result = await generateCaption(prompt, options, conversationHistory);
     }

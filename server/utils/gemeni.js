@@ -1,26 +1,28 @@
 // server/utils/gemini.js
 import OpenAI from "openai";
+import { aiEngines } from "./aiList";
 
 let openaiClient = null;
 
-function getOpenAIClient() {
+function getOpenAIClient(apiKey, baseURL) {
   if (!openaiClient) {
-    const config = useRuntimeConfig();
-
     openaiClient = new OpenAI({
-      apiKey: config.geminiApiKey,
-      baseURL: config.geminiBaseUrl, // Liara's endpoint
+      apiKey: apiKey,
+      baseURL: baseURL,
     });
   }
 
   return openaiClient;
 }
-
 export async function generateCaption(
   prompt,
   options = {},
-  conversationHistory = []
+  conversationHistory = [],
+  selectedAiEngine,
 ) {
+  const selectedAI = aiEngines.find(
+    (engine) => engine.name === selectedAiEngine,
+  );
   const {
     tone = "casual",
     socialMedia = "instagram",
@@ -40,7 +42,7 @@ export async function generateCaption(
   });
 
   try {
-    const client = getOpenAIClient();
+    const client = getOpenAIClient(selectedAI.apiKey, selectedAI.baseURL);
 
     // In here we get sure that gemeni gets the context of last messages so It can be relateable
     const messages = [
@@ -65,10 +67,8 @@ export async function generateCaption(
     });
 
     const response = await client.chat.completions.create({
-      model: "google/gemini-2.0-flash-001", // Check Liara docs for exact model name
+      model: selectedAI.model, // Check Liara docs for exact model name
       messages: messages,
-      max_tokens: 512,
-      temperature: 1,
     });
 
     const generatedText = response.choices[0]?.message;
@@ -82,10 +82,8 @@ export async function generateCaption(
         content: JSON.stringify(functionResponse), // Must be a string
       });
       const finalResponse = await client.chat.completions.create({
-        model: "google/gemini-2.0-flash-001",
+        model: selectedAI.model,
         messages: messages,
-        max_tokens: 512,
-        temperature: 1,
       });
       return {
         caption: finalResponse.choices[0].message.content.trim(),
