@@ -1,8 +1,7 @@
 import { requireAuth } from "~~/server/utils/auth";
-import { generateGemeniPlan } from "~~/server/utils/gemeniPlanner";
 import User from "~~/server/models/User";
 import { checkPlanExpiry } from "~~/server/utils/checkPlanExpiry";
-import { generateGptPlan } from "~~/server/utils/gptPlanner";
+import { generatePlan } from "~~/server/utils/planGenerator";
 export default defineEventHandler(async (event) => {
   const userId = await requireAuth(event);
   const user = await User.findById(userId);
@@ -54,18 +53,26 @@ export default defineEventHandler(async (event) => {
     const conversationHistory = user.getChatForContext(currentChatId);
     // Add user message to chat
     user.addMessageToChat(currentChatId, "user", prompt, false);
-    if (selectedAIEngine === "gpt") {
+    if (selectedAIEngine !== "gemeni") {
       if (user.plan === "Free") {
         throw createError({
           statusCode: 404,
           message: "متاسفانه شما قابلیت استفاده از این هوش مصنوعی را ندارید",
         });
       }
-      result = await generateGptPlan(prompt, options, conversationHistory);
-    } else if (selectedAIEngine === "gemeni") {
-      result = await generateGemeniPlan(prompt, options, conversationHistory);
+      result = await generatePlan(
+        prompt,
+        options,
+        conversationHistory,
+        selectedAIEngine,
+      );
     } else {
-      result = await generateGemeniPlan(prompt, options, conversationHistory);
+      result = await generatePlan(
+        prompt,
+        options,
+        conversationHistory,
+        "gemeni",
+      );
     }
     // Add AI response to chat
     user.addMessageToChat(currentChatId, "assistant", result.plan, true);

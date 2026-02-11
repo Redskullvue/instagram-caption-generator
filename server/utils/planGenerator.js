@@ -2,26 +2,34 @@
 import OpenAI from "openai";
 import { tools, getInstagramData } from "~~/server/utils/tools";
 import { buildSystemPrompt, generateStructuredJson } from "./plannerFunction";
+import { aiEngines } from "./aiList";
 let openaiClient = null;
-
-function getOpenAIClient() {
+const config = useRuntimeConfig();
+function getOpenAIClient(apiKey, baseURL) {
   if (!openaiClient) {
-    const config = useRuntimeConfig();
-
     openaiClient = new OpenAI({
-      apiKey: config.gptApiKey,
-      baseURL: config.geminiBaseUrl, // Liara's endpoint
+      apiKey: apiKey,
+      baseURL: baseURL,
     });
   }
 
   return openaiClient;
 }
-
-export async function generateGptPlan(
+export async function generatePlan(
   prompt,
   options = {},
   conversationHistory = [],
+  selectedAiEngine,
 ) {
+  let selectedAI = aiEngines.find((engine) => engine.name === selectedAiEngine);
+  if (!selectedAI) {
+    selectedAI = {
+      name: "gemeni",
+      model: "google/gemini-2.0-flash-001",
+      baseURL: config.geminiBaseUrl,
+      apiKey: config.geminiApiKey,
+    };
+  }
   const {
     tone = "casual",
     socialMedia = "instagram",
@@ -41,7 +49,7 @@ export async function generateGptPlan(
   });
 
   try {
-    const client = getOpenAIClient();
+    const client = getOpenAIClient(selectedAI.apiKey, selectedAI.baseURL);
 
     // In here we get sure that gemeni gets the context of last messages so It can be relateable
     const messages = [
@@ -66,7 +74,7 @@ export async function generateGptPlan(
     });
 
     const response = await client.chat.completions.create({
-      model: "openai/gpt-5-nano", // Check Liara docs for exact model name
+      model: selectedAI.model, // Check Liara docs for exact model name
       messages: messages,
       max_tokens: 1024,
       tools: tools,
@@ -107,7 +115,7 @@ export async function generateGptPlan(
 
       // Get final response after tool execution
       const finalResponse = await client.chat.completions.create({
-        model: "openai/gpt-5-nano",
+        model: selectedAI.model,
         messages: messages,
       });
 
