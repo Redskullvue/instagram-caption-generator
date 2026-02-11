@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
     const conversationHistory = user.getChatForContext(currentChatId);
     // Add user message to chat
     user.addMessageToChat(currentChatId, "user", prompt, false);
-    if (selectedAIEngine === "gpt") {
+    if (selectedAIEngine !== "gemeni") {
       if (user.plan === "Free") {
         throw createError({
           statusCode: 404,
@@ -66,15 +66,13 @@ export default defineEventHandler(async (event) => {
         conversationHistory,
         selectedAIEngine,
       );
-    } else if (selectedAIEngine === "gemeni") {
+    } else {
       result = await generateCaption(
         prompt,
         options,
         conversationHistory,
-        selectedAIEngine,
+        "gemeni",
       );
-    } else {
-      result = await generateCaption(prompt, options, conversationHistory);
     }
 
     // Add AI response to chat
