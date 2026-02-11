@@ -1,5 +1,5 @@
 import { requireAuth } from "~~/server/utils/auth";
-import { generateCaption } from "~~/server/utils/gemeni";
+import { generateCaption } from "~~/server/utils/captionGenerator";
 import User from "~~/server/models/User";
 import { checkPlanExpiry } from "~~/server/utils/checkPlanExpiry";
 export default defineEventHandler(async (event) => {
