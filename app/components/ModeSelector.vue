@@ -35,7 +35,7 @@
         "
         v-for="(social, index) in modes"
         :key="index"
-        @click="setMode(social.value, index)"
+        @click="setMode(social.value, index, social.needsPremium)"
       >
         {{ social.title }}
       </button>
@@ -50,9 +50,9 @@ const authStore = useAuthStore();
 const toastStore = useToastStore();
 const selectedMode = ref("captioner");
 const modes = ref([
-  { title: "کپشن نویس", value: "captioner" },
-  { title: "برنامه ریز", value: "planner" },
-  { title: "تصویر ساز", value: "imageGenerator" },
+  { title: "کپشن نویس", value: "captioner", needsPremium: false },
+  { title: "برنامه ریز", value: "planner", needsPremium: true },
+  { title: "تصویر ساز", value: "imageGenerator", needsPremium: false },
 ]);
 // To show users what has been selected already
 const modeIndex = ref(0);
@@ -65,8 +65,8 @@ onMounted(() => {
 });
 
 // Set the Mode
-const setMode = (value, index) => {
-  if (authStore.user.plan === "Free") {
+const setMode = (value, index, isPremium) => {
+  if (authStore.user.plan === "Free" && isPremium) {
     toastStore.addToast("error", "در پلن رایگان این مورد پشتیبانی نمیشود");
     return;
   }
