@@ -18,6 +18,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
     captioner: ["tone", "social", "aiEngine", "mode"],
     planner: ["social", "mode", "aiEngine"],
     imageGenerator: ["mode"],
+    freeTalk: ["aiEngine", "mode", "tone"],
   });
 
   //getters
@@ -76,13 +77,13 @@ export const useGenerateStore = defineStore("generateStore", () => {
         chatStore.addMessage(
           "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
           false,
-          true
+          true,
         );
       } else {
         chatStore.addMessage(
           "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
           false,
-          true
+          true,
         );
       }
     } finally {
@@ -127,13 +128,13 @@ export const useGenerateStore = defineStore("generateStore", () => {
           chatStore.addMessage(
             "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
             false,
-            true
+            true,
           );
         } else {
           chatStore.addMessage(
             "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
             false,
-            true
+            true,
           );
         }
       } finally {
@@ -168,13 +169,56 @@ export const useGenerateStore = defineStore("generateStore", () => {
         chatStore.addMessage(
           "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
           false,
-          true
+          true,
         );
       } else {
         chatStore.addMessage(
           "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
           false,
-          true
+          true,
+        );
+      }
+    } finally {
+      isGenerating.value = false;
+    }
+  };
+
+  const generateFreeTalkAnswers = async (userInput) => {
+    isGenerating.value = true;
+    try {
+      const response = await $fetch("/api/freetalk/generate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+        body: {
+          prompt: userInput,
+          chatId: chatStore.currentChatId,
+          selectedAIEngine: selectedAIEngine.value ?? "gemeni",
+          tone: selectedTone.value,
+        },
+      });
+      chatStore.currentChatId = response.chatId;
+      chatStore.addMessage(response.caption, false, true);
+      usageStore.usage = response.usage;
+      // Refresh history to update title/count
+      await chatStore.loadChatHistory();
+    } catch (error) {
+      // Check if limit reached
+      if (error.data?.data?.code === "LIMIT_REACHED") {
+        usedAllPrompts.value = true;
+        usageStore.usage = error.data.data.usage;
+
+        chatStore.addMessage(
+          "متاسفانه تمام پرامپت‌های رایگان شما تمام شده! برای ادامه، لطفا اکانت خود را ارتقا دهید.",
+          false,
+          true,
+        );
+      } else {
+        chatStore.addMessage(
+          "متاسفانه خطایی رخ داد. لطفا دوباره تلاش کنید.",
+          false,
+          true,
         );
       }
     } finally {
@@ -200,5 +244,6 @@ export const useGenerateStore = defineStore("generateStore", () => {
     generateCaption,
     generatePlan,
     generateImage,
+    generateFreeTalkAnswers,
   };
 });

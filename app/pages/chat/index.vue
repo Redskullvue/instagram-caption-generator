@@ -156,6 +156,9 @@ const sendMessage = async (val) => {
     if (generateStore.selectedMode === "imageGenerator") {
       await generateStore.generateImage(val);
     }
+    if (generateStore.selectedMode === "freeTalk") {
+      await generateStore.generateFreeTalkAnswers(val);
+    }
   } catch (error) {
     console.log(error);
   } finally {

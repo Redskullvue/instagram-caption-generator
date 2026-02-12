@@ -53,6 +53,7 @@ const modes = ref([
   { title: "کپشن نویس", value: "captioner", needsPremium: false },
   { title: "برنامه ریز", value: "planner", needsPremium: true },
   { title: "تصویر ساز", value: "imageGenerator", needsPremium: false },
+  { title: "گفت و گو", value: "freeTalk", needsPremium: false },
 ]);
 // To show users what has been selected already
 const modeIndex = ref(0);
