@@ -34,5 +34,8 @@
     "tailwindcss": "^4.1.17",
     "vue": "^3.5.24",
     "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "baseline-browser-mapping": "^2.9.19"
   }
 }
