@@ -12,4 +12,10 @@ export const aiEngines = [
     baseURL: config.geminiBaseUrl,
     apiKey: config.gptApiKey,
   },
+  {
+    name: "gpt-4o-mini",
+    model: "openai/gpt-4o-mini",
+    baseURL: config.geminiBaseUrl,
+    apiKey: config.gptOMiniKey,
+  },
 ];

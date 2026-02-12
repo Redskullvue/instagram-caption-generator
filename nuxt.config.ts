@@ -94,6 +94,8 @@ export default defineNuxtConfig({
     jwtSecret: "",
     geminiApiKey: "",
     gptApiKey: "",
+    // NUXT_GPT_O_MINI_KEY
+    gptOMiniKey: "",
     geminiBaseUrl: "",
     gatewayApiKey: "",
     gatewayRedirectUrl: "",

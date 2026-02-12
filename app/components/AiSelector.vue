@@ -52,6 +52,11 @@ const selectedAi = ref("gemeni");
 const AiList = ref([
   { title: "Gpt5-Nano", value: "gpt", needsPremium: true },
   { title: "Gemeni-2.0 ", value: "gemeni", needsPremium: false },
+  {
+    title: "GPT-4o-Mini",
+    value: "gpt-4o-mini",
+    needsPremium: true,
+  },
 ]);
 // To show users what has been selected already
 const AiIndex = ref(1);
@@ -78,7 +83,7 @@ const setAi = (value, index) => {
   } else {
     toastStore.addToast(
       "error",
-      "با پلن رایگان نمیتوانید هوش مصنوعی خود را تغییر دهید"
+      "با پلن رایگان نمیتوانید هوش مصنوعی خود را تغییر دهید",
     );
   }
 };
