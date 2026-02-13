@@ -64,7 +64,7 @@ const modes = ref([
     icon: "icon-park-outline:plan",
   },
   {
-    title: "تصویر ساز",
+    title: "متن به تصویر",
     value: "imageGenerator",
     needsPremium: false,
     icon: "material-symbols:image-outline",
