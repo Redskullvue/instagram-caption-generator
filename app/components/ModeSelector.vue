@@ -49,7 +49,7 @@ const width = window.innerWidth;
 const generateStore = useGenerateStore();
 const authStore = useAuthStore();
 const toastStore = useToastStore();
-const selectedMode = ref("captioner");
+const selectedMode = ref("freeTalk");
 const modes = ref([
   {
     title: "کپشن نویس",

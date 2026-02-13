@@ -6,7 +6,7 @@ export const useGenerateStore = defineStore("generateStore", () => {
   const authStore = useAuthStore();
   const usageStore = useUsageStore();
   // States
-  const selectedMode = ref("captioner");
+  const selectedMode = ref("freeTalk");
   const selectedAIEngine = ref("gemeni");
   const selectedTone = ref("causal");
   const selectedSocialMedia = ref("instagram");
