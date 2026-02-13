@@ -27,7 +27,7 @@
       v-if="showAiSelector"
     >
       <button
-        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300"
+        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300 flex items-center justify-center"
         :class="
           selectedAi === ai.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
@@ -37,6 +37,7 @@
         :key="index"
         @click="setAi(ai.value, index)"
       >
+        <Icon :name="ai.icon" size="20px" class="mx-2" />
         {{ ai.title }}
       </button>
     </div>
@@ -50,12 +51,23 @@ const authStore = useAuthStore();
 const toastStore = useToastStore();
 const selectedAi = ref("gemeni");
 const AiList = ref([
-  { title: "Gpt5-Nano", value: "gpt", needsPremium: true },
-  { title: "Gemeni-2.0 ", value: "gemeni", needsPremium: false },
+  {
+    title: "Gpt5-Nano",
+    value: "gpt",
+    needsPremium: true,
+    icon: "hugeicons:chat-gpt",
+  },
+  {
+    title: "Gemeni-2.0 ",
+    value: "gemeni",
+    needsPremium: false,
+    icon: "ri:gemini-line",
+  },
   {
     title: "GPT-4o-Mini",
     value: "gpt-4o-mini",
     needsPremium: true,
+    icon: "hugeicons:chat-gpt",
   },
 ]);
 // To show users what has been selected already
