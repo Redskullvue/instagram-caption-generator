@@ -18,6 +18,7 @@
             v-if="
               !message.isUser &&
               index !== 0 &&
+              generateStore.selectedMode === 'captioner' &&
               generateStore.selectedSocialMedia === 'instagram'
             "
           >
