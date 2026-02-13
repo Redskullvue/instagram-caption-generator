@@ -27,7 +27,7 @@
       v-if="showModeSelector"
     >
       <button
-        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300"
+        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300 flex items-center justify-center"
         :class="
           selectedMode === social.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
@@ -37,6 +37,7 @@
         :key="index"
         @click="setMode(social.value, index, social.needsPremium)"
       >
+        <Icon :name="social.icon" size="19px" class="mx-2" />
         {{ social.title }}
       </button>
     </div>
@@ -50,10 +51,30 @@ const authStore = useAuthStore();
 const toastStore = useToastStore();
 const selectedMode = ref("captioner");
 const modes = ref([
-  { title: "کپشن نویس", value: "captioner", needsPremium: false },
-  { title: "برنامه ریز", value: "planner", needsPremium: true },
-  { title: "تصویر ساز", value: "imageGenerator", needsPremium: false },
-  { title: "گفت و گو", value: "freeTalk", needsPremium: false },
+  {
+    title: "کپشن نویس",
+    value: "captioner",
+    needsPremium: false,
+    icon: "flowbite:caption-outline",
+  },
+  {
+    title: "برنامه ریز",
+    value: "planner",
+    needsPremium: true,
+    icon: "icon-park-outline:plan",
+  },
+  {
+    title: "تصویر ساز",
+    value: "imageGenerator",
+    needsPremium: false,
+    icon: "material-symbols:image-outline",
+  },
+  {
+    title: "گفت و گو",
+    value: "freeTalk",
+    needsPremium: false,
+    icon: "mdi:chat-outline",
+  },
 ]);
 // To show users what has been selected already
 const modeIndex = ref(0);
