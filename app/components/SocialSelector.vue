@@ -27,7 +27,7 @@
       v-if="showMediaSelector"
     >
       <button
-        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300"
+        class="m-1 rounded-xl cursor-pointer py-3 transition-colors duration-300 shadow-sm shadow-gray-300 flex items-center justify-center"
         :class="
           selectedMedia === social.value
             ? 'bg-linear-to-r from-purple-600 to-pink-600 text-white'
@@ -37,6 +37,7 @@
         :key="index"
         @click="setSocial(social.value, index)"
       >
+        <Icon :name="social.icon" size="19px" class="mx-2" />
         {{ social.title }}
       </button>
     </div>
@@ -48,10 +49,10 @@ const width = window.innerWidth;
 const generateStore = useGenerateStore();
 const selectedMedia = ref("instagram");
 const socials = ref([
-  { title: "اینستاگرام", value: "instagram" },
-  { title: "تیک تاک", value: "tiktok" },
-  { title: "یوتیوب", value: "youtube" },
-  { title: "لینکداین", value: "linkedin" },
+  { title: "اینستاگرام", value: "instagram", icon: "mdi:instagram" },
+  { title: "تیک تاک", value: "tiktok", icon: "ic:baseline-tiktok" },
+  { title: "یوتیوب", value: "youtube", icon: "mdi:youtube" },
+  { title: "لینکداین", value: "linkedin", icon: "mdi:linkedin" },
 ]);
 // To show users what has been selected already
 const mediaIndex = ref(0);
