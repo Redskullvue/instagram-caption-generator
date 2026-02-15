@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       "/blog/ai-content-branding",
       "/blog/how-to-plan-for-instagram",
       "/blog/ai-for-instagram",
+      "/blog/text-to-image-generating",
     ],
   },
   nuxtApiShield: {
