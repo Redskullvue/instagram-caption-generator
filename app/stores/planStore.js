@@ -118,7 +118,7 @@ export const usePlanStore = defineStore("planstore", () => {
       toastStore.addToast("success", "به‌روزرسانی شد");
       // Update the realtime schedule
       let index = currentPlan.value.schedule.findIndex(
-        (item) => item.id === scheduleId
+        (item) => item.id === scheduleId,
       );
       currentPlan.value.schedule[index].completed = status;
     } catch (error) {
@@ -135,9 +135,18 @@ export const usePlanStore = defineStore("planstore", () => {
   //This function will recive an index from /schedules/[id] to return the days tasks
   const taskSorter = (index) => {
     let day = currentPlan.value.schedule.filter(
-      (item) => item.dayNumber === index
+      (item) => item.dayNumber === index,
     );
     return day;
+  };
+
+  const searchPlans = (input) => {
+    if (input.trim().length > 0) {
+      const searchedPlans = allPlans.value.filter((plan) =>
+        plan.title.includes(input),
+      );
+      return searchedPlans;
+    }
   };
 
   return {
@@ -156,6 +165,7 @@ export const usePlanStore = defineStore("planstore", () => {
     deletePlan,
     taskSorter,
     updateTaskStatus,
+    searchPlans,
     hydrate,
   };
 });
