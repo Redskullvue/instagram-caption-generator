@@ -7,7 +7,7 @@
       <img
         :src="post.image"
         alt="Blog Image"
-        class="max-w-[300px] rounded-xl"
+        class="max-w-[300px] rounded-xl min-h-[300px]"
       />
     </div>
     <!-- Title And Desctiption -->
