@@ -200,6 +200,13 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+    select: true,
+  },
+
   // Planning
   contentPlans: [contentPlanSchema],
 
@@ -347,6 +354,7 @@ userSchema.methods.toClientJSON = function () {
     email: this.email,
     name: this.name,
     plan: this.plan,
+    role: this.role,
     planExpiresAt: this.planExpiresAt,
     isVerified: this.isVerified,
     createdAt: this.createdAt,
@@ -422,7 +430,7 @@ userSchema.methods.addMessageToChat = function (
   role,
   content,
   shouldAnimate = false,
-  imageUrl = null
+  imageUrl = null,
 ) {
   const chat = this.chats.id(chatId);
   if (!chat) {
@@ -637,7 +645,7 @@ userSchema.methods.deleteContentPlan = function (planId) {
 userSchema.methods.updateScheduleCompletion = function (
   planId,
   scheduleId,
-  completed
+  completed,
 ) {
   const plan = this.contentPlans.id(planId);
   if (!plan) {

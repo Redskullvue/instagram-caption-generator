@@ -33,9 +33,14 @@ export default defineEventHandler(async (event) => {
 
     ticket.messages.push({
       sender: userId,
-      senderType: body.role === "admin" ? "admin" : "user",
+      senderType: user.role === "admin" ? "admin" : "user",
       text: body.message,
     });
+    if (user.role === "admin") {
+      ticket.status = "resolved";
+    } else if (user.role === "user") {
+      ticket.status === "pending";
+    }
     ticket.lastMessageAt = new Date();
     ticket.updatedAt = new Date();
 

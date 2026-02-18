@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       });
     }
     const ticket = await Ticket.findById(ticketId);
-    if (ticket.createdBy.toString() === userId) {
+    if (ticket.createdBy.toString() === userId || user.role === "admin") {
       return {
         success: true,
         ticket: ticket,
