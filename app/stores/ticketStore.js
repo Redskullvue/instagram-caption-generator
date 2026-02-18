@@ -71,7 +71,7 @@ export const useTicketStore = defineStore("ticketStore", () => {
 
   const sendReplyToTicket = async (text, ticketId) => {
     currentTicket.value.messages.push({
-      senderType: "user",
+      senderType: authStore.user.role || "user",
       text: text,
     });
 
@@ -82,7 +82,7 @@ export const useTicketStore = defineStore("ticketStore", () => {
           Authorization: `Bearer ${authStore.token}`,
         },
         body: {
-          role: "user",
+          role: authStore.user.role || "user",
           message: text,
         },
       });
