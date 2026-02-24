@@ -18,7 +18,7 @@
             "
             :text="
               ticketStore.currentTicket.priority === 'low'
-                ? 'اولیوت : پایین'
+                ? 'اولویت : پایین'
                 : ticketStore.currentTicket.priority === 'medium'
                   ? 'اولویت : معمولی'
                   : 'اولویت : بالا'
