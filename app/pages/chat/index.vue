@@ -49,7 +49,7 @@
         تنظیمات
       </button>
       <div
-        v-if="showSetting"
+        v-show="showSetting"
         class="absolute w-[97%] h-[95%] rounded-lg bg-white lg:bg-inherit top-0 right-1.5 p-6 lg:p-0 overflow-y-scroll z-50"
       >
         <h2 class="font-bold text-gray-500 mb-6 lg:hidden">تنظیمات</h2>
