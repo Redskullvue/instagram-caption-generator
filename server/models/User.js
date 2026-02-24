@@ -236,7 +236,7 @@ const userSchema = new mongoose.Schema({
     },
     promptsLimit: {
       type: Number,
-      default: 5,
+      default: 10,
     },
     imagesGenerated: {
       type: Number,
