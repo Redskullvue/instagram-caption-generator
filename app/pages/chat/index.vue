@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full flex items-center max-h-[79vh] flex-col">
+  <div class="w-full h-full flex items-center max-h-[79vh] flex-col">
     <!-- Chat box -->
     <div
-      class="w-full lg:max-h-[60vh] lg:min-h-[55vh] max-h-[55vh] overflow-y-scroll px-2 py-1 overflow-x-hidden"
+      class="w-full lg:min-h-10/12 h-full overflow-y-scroll px-2 py-1 overflow-x-hidden"
       ref="chatContainer"
       @scroll="handleScroll"
     >
@@ -84,7 +84,7 @@
         </button>
       </div>
     </div>
-    <div class="w-full h-full">
+    <div class="w-full h-max">
       <InputBar
         class="w-full"
         @generate="sendMessage"

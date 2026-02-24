@@ -4,45 +4,47 @@
       درخواست های باقی مانده : {{ promptsRemaining }} /
       <span class="text-purple-600">{{ promptsLimit }} </span>
     </p>
-    <div
-      class="bg-linear-to-r mt-3 from-purple-600 to-pink-600 flex items-center justify-center p-1 rounded-xl"
-    >
-      <input
-        id="input-bar"
-        type="text"
-        v-model="inputValue"
-        :disabled="!hasPromptsLeft || !isVerified"
-        :placeholder="
-          hasPromptsLeft
-            ? 'موضوع خود را بنویسید'
-            : 'درخواست های شما به پایان رسیده'
-        "
-        class="w-full rounded-lg bg-white p-2 focus:outline-0 disabled:bg-gray-200"
-      />
+    <div class="w-full flex items-center justify-center gap-x-3">
+      <div
+        class="bg-linear-to-r mt-3 from-purple-600 to-pink-600 flex items-center justify-center p-1 rounded-xl w-full"
+      >
+        <input
+          id="input-bar"
+          type="text"
+          v-model="inputValue"
+          :disabled="!hasPromptsLeft || !isVerified"
+          :placeholder="
+            hasPromptsLeft
+              ? 'موضوع خود را بنویسید'
+              : 'درخواست های شما به پایان رسیده'
+          "
+          class="w-full rounded-lg bg-white p-2 focus:outline-0 disabled:bg-gray-200"
+        />
+      </div>
+      <button
+        v-if="hasPromptsLeft"
+        class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 p-4 rounded-full mt-3 disabled:opacity-50 cursor-pointer"
+        @click="generateCaption"
+        :disabled="isGenerating"
+      >
+        <!-- <Icon name="mingcute:ai-fill" size="20px" /> -->
+        <Icon name="tabler:send" size="20px" />
+      </button>
+      <NuxtLink
+        v-if="!hasPromptsLeft"
+        to="/upgrade"
+        class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 mt-4 cursor-pointer"
+      >
+        تمدید
+      </NuxtLink>
     </div>
+
     <small
       class="text-xs w-full flex items-center justify-end mt-2"
       :class="currentChars > maxChars ? 'text-red-500' : 'text-green-500'"
     >
       {{ maxChars }}/{{ currentChars }}</small
     >
-
-    <button
-      v-if="hasPromptsLeft"
-      class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
-      @click="generateCaption"
-      :disabled="isGenerating"
-    >
-      <Icon name="mingcute:ai-fill" size="20px" />
-      تولید کن
-    </button>
-    <NuxtLink
-      v-if="!hasPromptsLeft"
-      to="/"
-      class="bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center gap-x-1 px-6 py-2 rounded-lg disabled:opacity-50 w-full mt-4 cursor-pointer"
-    >
-      خرید درخواست های بیشتر
-    </NuxtLink>
   </div>
 </template>
 
