@@ -77,7 +77,7 @@ const modes = ref([
   },
 ]);
 // To show users what has been selected already
-const modeIndex = ref(0);
+const modeIndex = ref(3);
 // Show or not show the selection in mobile for better UX
 const showModeSelector = ref(false);
 onMounted(() => {
