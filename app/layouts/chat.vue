@@ -3,7 +3,7 @@
     class="w-full h-screen flex justify-center items-center overflow-x-hidden"
   >
     <EmailVerificationModal
-      class="absolute top-4 max-w-[300px]"
+      class="absolute top-[20%] max-w-[300px] lg:min-w-[500px] min-h-[300px]"
       @send-email="sendEmail"
     />
     <div
