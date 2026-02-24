@@ -39,35 +39,54 @@
 
     <!-- Buttons and input Selector -->
     <div
-      class="w-full p-2 overflow-y-scroll flex flex-col h-min lg:absolute lg:right-4 lg:top-[100px] lg:w-[340px] lg:h-[83vh]"
+      class="w-full p-2 flex flex-col h-min lg:absolute lg:right-4 lg:top-[100px] lg:w-[340px] lg:h-[83vh]"
     >
-      <Transition name="fade">
-        <AiSelector
-          v-show="generateStore.isComponentVisible('aiEngine')"
-          class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4"
-        />
-      </Transition>
+      <button
+        @click="toggleSetting"
+        class="lg:hidden bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center rounded-xl my-3 py-2 gap-x-2"
+      >
+        <Icon name="uil:setting" size="24px" />
+        تنظیمات
+      </button>
+      <div
+        v-if="showSetting"
+        class="absolute w-[97%] h-[95%] rounded-lg bg-white lg:bg-inherit top-0 right-1.5 p-6 lg:p-0 overflow-y-scroll z-50"
+      >
+        <h2 class="font-bold text-gray-500 mb-6 lg:hidden">تنظیمات</h2>
+        <Transition name="fade">
+          <AiSelector
+            v-show="generateStore.isComponentVisible('aiEngine')"
+            class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4"
+          />
+        </Transition>
 
-      <ModeSelector
-        v-show="generateStore.isComponentVisible('mode')"
-        class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
-      />
-      <Transition name="fade">
-        <ToneSelector
-          v-show="generateStore.isComponentVisible('tone')"
+        <ModeSelector
+          v-show="generateStore.isComponentVisible('mode')"
           class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
         />
-      </Transition>
-      <Transition name="fade">
-        <SocialSelector
-          v-show="generateStore.isComponentVisible('social')"
-          class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
-        />
-      </Transition>
+        <Transition name="fade">
+          <ToneSelector
+            v-show="generateStore.isComponentVisible('tone')"
+            class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
+          />
+        </Transition>
+        <Transition name="fade">
+          <SocialSelector
+            v-show="generateStore.isComponentVisible('social')"
+            class="w-full h-full lg:max-w-[300px] lg:bg-white lg:rounded-xl lg:p-4 mt-4"
+          />
+        </Transition>
+        <button
+          @click="showSetting = false"
+          class="lg:hidden w-full bg-linear-to-r from-purple-600 to-pink-600 flex items-center text-white justify-center rounded-xl my-3 py-2"
+        >
+          بستن تنظیمات
+        </button>
+      </div>
     </div>
     <div class="w-full h-full">
       <InputBar
-        class="w-full mt-3 lg:mt-0"
+        class="w-full"
         @generate="sendMessage"
         :isGenerating="isGenerating"
         :promptsLimit="usageStore.usage.promptsLimit"
@@ -116,6 +135,7 @@ const generateStore = useGenerateStore();
 
 const isGenerating = ref(false);
 const userInput = ref("");
+const showSetting = ref(false);
 
 // Check if user needs to scroll
 const needsScroll = ref(false);
@@ -124,6 +144,10 @@ const { chatContainer, onMessageAdded } = useChatScroll();
 
 // Fetch usage when page loads
 onMounted(async () => {
+  const width = window.innerWidth;
+  if (width >= 1024) {
+    showSetting.value = true;
+  }
   if (!usageStore.usage.promptsUsed && !usageStore.isLoading) {
     await usageStore.fetchUsage();
     await chatStore.hydrate();
@@ -188,6 +212,10 @@ const setScrollToBottom = () => {
 const openInstagram = () => {
   navigator.clipboard.writeText(userInput.value);
   window.open("https://www.instagram.com/create/select/", "_blank");
+};
+
+const toggleSetting = () => {
+  showSetting.value = true;
 };
 </script>
 
