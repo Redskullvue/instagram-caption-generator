@@ -8,7 +8,7 @@
       <div
         class="bg-linear-to-r mt-3 from-purple-600 to-pink-600 flex items-center justify-center p-1 rounded-xl w-full"
       >
-        <input
+        <textarea
           id="input-bar"
           type="text"
           v-model="inputValue"
@@ -18,8 +18,8 @@
               ? 'موضوع خود را بنویسید'
               : 'درخواست های شما به پایان رسیده'
           "
-          class="w-full rounded-lg bg-white p-2 focus:outline-0 disabled:bg-gray-200"
-        />
+          class="w-full rounded-lg bg-white resize-none focus:outline-0 disabled:bg-gray-200"
+        ></textarea>
       </div>
       <button
         v-if="hasPromptsLeft"
