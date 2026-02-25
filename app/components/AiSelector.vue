@@ -69,6 +69,12 @@ const AiList = ref([
     needsPremium: true,
     icon: "hugeicons:chat-gpt",
   },
+  {
+    title: "Deepseek-3.1",
+    value: "deepseek-3.1",
+    needsPremium: true,
+    icon: "bxl:deepseek",
+  },
 ]);
 // To show users what has been selected already
 const AiIndex = ref(1);

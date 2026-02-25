@@ -18,4 +18,10 @@ export const aiEngines = [
     baseURL: config.geminiBaseUrl,
     apiKey: config.gptOMiniKey,
   },
+  {
+    name: "deepseek-3.1",
+    model: "deepseek/deepseek-chat-v3.1",
+    baseURL: config.geminiBaseUrl,
+    apiKey: config.deepseekKey,
+  },
 ];

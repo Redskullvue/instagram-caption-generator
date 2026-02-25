@@ -99,6 +99,7 @@ export default defineNuxtConfig({
     gptOMiniKey: "",
     nanoBananaKey: "",
     geminiBaseUrl: "",
+    deepseekKey: "",
     gatewayApiKey: "",
     gatewayRedirectUrl: "",
     mailApiKey: "",
