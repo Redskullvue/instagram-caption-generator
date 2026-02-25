@@ -1,21 +1,21 @@
 export const plans = {
   Free: {
     promptsLimit: 10,
-    imagesLimit: 3,
+    imagesLimit: 1,
     durationDays: 30,
     price: 0,
   },
   Pro: {
     promptsLimit: 70,
-    imagesLimit: 30,
+    imagesLimit: 10,
     durationDays: 30,
-    price: 159900,
+    price: 199900,
   },
   Enterprise: {
     promptsLimit: 999999,
-    imagesLimit: 9999,
+    imagesLimit: 40,
     durationDays: 30,
-    price: 349000,
+    price: 449000,
   },
 };
 export function getPlanConfig(planName) {

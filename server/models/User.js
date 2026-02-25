@@ -244,7 +244,7 @@ const userSchema = new mongoose.Schema({
     },
     imagesLimit: {
       type: Number,
-      default: 3, // Free plan default
+      default: 1, // Free plan default
     },
     resetDate: {
       type: Date,
