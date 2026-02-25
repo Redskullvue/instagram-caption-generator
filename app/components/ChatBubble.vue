@@ -7,11 +7,12 @@
         : 'mr-auto bg-gray-100'
     "
   >
-    <p
+    <div
       v-if="!message.isUser && message.senderType !== 'user'"
-      class="text-purple-800 text-start"
+      class="prose prose-sm max-w-none text-start prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:p-4 prose-pre:overflow-x-auto prose-code:text-purple-400"
+      dir="rtl"
       v-html="display"
-    ></p>
+    ></div>
     <p v-if="message.isUser || message.senderType === 'user'">
       {{ message.text }}
     </p>
