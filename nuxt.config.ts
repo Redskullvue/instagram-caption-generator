@@ -97,6 +97,7 @@ export default defineNuxtConfig({
     gptApiKey: "",
     // NUXT_GPT_O_MINI_KEY
     gptOMiniKey: "",
+    nanoBananaKey: "",
     geminiBaseUrl: "",
     gatewayApiKey: "",
     gatewayRedirectUrl: "",
@@ -109,6 +110,9 @@ export default defineNuxtConfig({
     // Image generator API host
     rapidApiImageGeneratorHost: "",
     rapidApiFluxImageGeneratorHost: "",
+    // Keys for storage and CDN
+    storageSecretKey: "",
+    storageAccessKey: "",
   },
 
   gtag: {

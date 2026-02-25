@@ -1,3 +1,7 @@
+import OpenAI from "openai";
+import { uploadImage } from "./uploadGeneratedImage";
+
+const config = useRuntimeConfig();
 export const tools = [
   {
     type: "function",
@@ -123,68 +127,30 @@ export async function getInstagramData(username) {
   }
 }
 
-// Fallback imageGenerator
-async function nanoBananaImageGenrator(prompt) {
-  const config = useRuntimeConfig();
-  if (!prompt) {
-    throw new Error("بدون مشخصات نمیتونم عکس تولید کنم");
-  }
-  try {
-    const response = await $fetch(
-      `https://flux-api-4-custom-models-100-style.p.rapidapi.com/create-v15?prompt=${prompt}&size=1024x1024&style=default`,
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": config.rapidApiFluxImageGeneratorHost,
-          "X-RapidAPI-Key": config.rapidApiKey,
-        },
-      },
-    );
-    return {
-      success: true,
-      imageUrl: response.data.images[0].url,
-    };
-  } catch (error) {
-    console.error("Image Generation failed from Nano-Banana : ", error);
-    return {
-      success: false,
-      error: error.message,
-    };
-  }
-}
-
 export async function generateImage(prompt) {
-  const config = useRuntimeConfig();
-  if (!prompt) {
-    throw new Error("بدون مشخصات نمیتونم عکس تولید کنم");
-  }
+  const openai = new OpenAI({
+    baseURL: config.geminiBaseUrl,
+    apiKey: config.nanoBananaKey,
+  });
   try {
-    const response = await $fetch(
-      "https://open-ai21.p.rapidapi.com/texttoimage2",
-      {
-        method: "POST",
-        headers: {
-          "x-rapidapi-host": config.rapidApiImageGeneratorHost,
-          "X-RapidAPI-Key": config.rapidApiKey,
-        },
-        body: JSON.stringify({
-          text: prompt,
-        }),
-      },
-    );
+    const img = await openai.images.generate({
+      model: "google/gemini-2.5-flash-image",
+      prompt: prompt,
+      n: 1,
+      size: "1:1",
+      quality: "1K",
+    });
+    const imgBuffer = Buffer.from(img.data[0].b64_json, "base64");
+    const imageLink = await uploadImage(imgBuffer);
+
     return {
       success: true,
-      imageUrl: response.generated_image,
+      imageUrl: imageLink,
     };
   } catch (error) {
-    try {
-      return await nanoBananaImageGenrator(prompt);
-    } catch (error) {
-      console.error("All API's Failed To generate Image", error);
-      return {
-        success: false,
-        error: error.message,
-      };
-    }
+    throw createError({
+      statusCode: 500,
+      message: error.message,
+    });
   }
 }
