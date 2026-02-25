@@ -14,7 +14,7 @@
   direction: ltr;
   text-align: left;
   font-weight: 900;
-  overflow-y:auto
+  overflow : auto;
 }
 
 /* Optional: make tables LTR too */
