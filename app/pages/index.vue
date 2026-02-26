@@ -14,10 +14,7 @@
           >
             <span class="w-2 h-2 rounded-full bg-green-400"></span>
 
-            <p>
-              پشتیبانی از چندین هوش مصنوعی (GPT , Gemini , Deepseek ,
-              Nanobanana)
-            </p>
+            <p>پشتیبانی از چندین مدل هوش مصنوعی</p>
           </div>
         </Transition>
         <Transition name="fade" appear>
